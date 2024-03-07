@@ -1,4 +1,4 @@
-import "../../styling/Header.scss"; // Import the CSS file
+import "../../styling/Header.scss"; 
 import img1 from "../../assets/enicon.png";
 import img2 from "../../assets/USDIcon.png";
 export function Header() {
