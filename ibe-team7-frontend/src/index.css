@@ -1,0 +1,15 @@
+:root {
+  font-size: 10px;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.index {
+  /* height: 1024px;
+  width: 1440px; */
+  height: 100vh;
+  width: 100vw;
+}
