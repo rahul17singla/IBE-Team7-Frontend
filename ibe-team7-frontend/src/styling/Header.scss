@@ -1,0 +1,35 @@
+.header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  height: 8.4rem;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 2.4rem;
+  color: #26266d;
+  background-color: white;
+}
+
+.header-left {
+  margin-left: 8.5rem;
+}
+
+.header-right {
+  display: flex;
+  margin-right: 8.5rem;
+  width: 20rem;
+  justify-content: space-between;
+}
+
+.header-right img {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem; /* Add margin here */
+}
+
+.en-text,
+.USD-text {
+  position: relative; /* Add relative positioning */
+}
