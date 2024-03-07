@@ -1,0 +1,25 @@
+.footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8.4rem;
+    position: fixed;
+    color: #ffffff;
+    background-color: #130739;
+    padding: 1rem;
+}
+
+.Kimg {
+    width: 141.43px;
+    height: 25px;
+    position: absolute; // Ensure position is set for top/left properties to take effect
+    bottom: 3.6rem;
+    left: 7.5rem;
+}
+.footerRight {
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-align: right;
+    margin-top: 2.6rem;
+    margin-right: 5rem;
+}
