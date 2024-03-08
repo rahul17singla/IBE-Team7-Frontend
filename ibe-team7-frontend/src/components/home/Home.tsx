@@ -1,6 +1,6 @@
-import "./Main.scss";
+import "./Home.scss";
 
-export function Main() {
+export function Home() {
     const env = import.meta.env.VITE_REACT_APP_ENV;
 
     // Define a method that intentionally throws an error
