@@ -4,12 +4,11 @@ export function Footer() {
     return (
         <div className="footer">
             <div className="footerLeft">
-                <img className="Kimg" src={image} alt="hello" />
+                <img className="Kimg" src={image} alt="Kickdrum" />
             </div>
             <div className="footerRight">
-                © Kickdrum Technology Group LLC.
-                <br />
-                All rights reserved.
+                <div>© Kickdrum Technology Group LLC.</div>
+                <div>All rights reserved.</div>
             </div>
         </div>
     );

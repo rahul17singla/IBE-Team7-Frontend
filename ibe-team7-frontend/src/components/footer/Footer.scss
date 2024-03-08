@@ -2,24 +2,63 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 8.4rem;
+    height: 8rem;
     position: fixed;
     color: #ffffff;
     background-color: #130739;
     padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .Kimg {
-    width: 141.43px;
+    width: 141px;
     height: 25px;
     position: absolute; // Ensure position is set for top/left properties to take effect
-    bottom: 3.6rem;
-    left: 7.5rem;
+    margin-left: 5rem;
+}
+.footerLeft {
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
 }
 .footerRight {
     font-size: 1.6rem;
     font-weight: 400;
     text-align: right;
-    margin-top: 2.6rem;
+    margin-bottom: 1rem;
     margin-right: 5rem;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        height: 10rem;
+    }
+    .Kimg {
+        width: 100px;
+        height: 20px;
+        bottom: 4.5rem;
+        left: 3rem;
+    }
+    .footerRight {
+        font-size: 1.4rem;
+        margin-right: 2rem;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .footer {
+        height: 12rem;
+    }
+    .Kimg {
+        width: 70px;
+        height: 15px;
+        bottom: 5.5rem;
+        left: 1.5rem;
+    }
+    .footerRight {
+        font-size: 1.2rem;
+        margin-right: 1rem;
+    }
 }
