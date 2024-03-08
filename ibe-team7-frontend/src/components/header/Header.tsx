@@ -3,12 +3,12 @@ import language from "../../assets/enicon.png";
 import currency from "../../assets/USDIcon.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import  { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 export function Header() {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
 
-    const handleLanguageChange = (event:ChangeEvent<HTMLSelectElement>) => {
+    const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedLanguage = event.target.value;
         i18n.changeLanguage(selectedLanguage);
     };
@@ -27,7 +27,7 @@ export function Header() {
                     Kickdrum
                 </Link>
                 <Link to={"/"} className="header-left__text">
-                Internet Booking Engine
+                    Internet Booking Engine
                 </Link>
             </div>
             <div className="header-right">
