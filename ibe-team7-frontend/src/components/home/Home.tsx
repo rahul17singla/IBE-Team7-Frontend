@@ -5,6 +5,7 @@ import axios from "axios";
 import { ListProperty } from "../../types/Property";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { ListRoomRate } from "../../types/Room";
 
 export function Home() {
     const env = import.meta.env.VITE_REACT_APP_ENV;
@@ -19,6 +20,7 @@ export function Home() {
     };
 
     const [data, setData] = useState([]);
+    const [rooms, setRooms]= useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,6 +36,24 @@ export function Home() {
         };
         fetchData();
     }, []);
+
+
+
+    useEffect(() => {
+      const fetchRooms = async () => {
+      try {
+        const response = await axios.get("http://localhost:8088/api/v1/rooms");
+        console.log("HERE ARE ROOMS")
+        // console.log(response.data.data.listRoomRates);
+        setRooms(response.data.data.listRoomRates);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchRooms();
+  }, []);
+
+
 
     return (
         <div className="main">
@@ -51,7 +71,7 @@ export function Home() {
 
             <div>{currency + "    " + value}</div>
             <div style={{ fontSize: "2rem" }}>
-                TEST DATA
+                TEST PROPERTY DATA
                 {data.map((property: ListProperty) => (
                     <div key={property.property_id}>
                         <p>{property.property_id}</p>
@@ -59,6 +79,22 @@ export function Home() {
                     </div>
                 ))}
             </div>
+
+
+
+
+
+      <div style={{ fontSize: "2rem" }}>
+        TEST ROOM DATA
+        {rooms.map((room:ListRoomRate) => (
+          <div key={room.basic_nightly_rate}>
+            <p>{room.date}</p>
+            <p>{room.room_rate_id}</p>
+          </div>
+        ))}
+      </div> 
+
+
         </div>
     );
 }
