@@ -1,16 +1,36 @@
 import "./Header.scss";
 import language from "../../assets/enicon.png";
-import currency from "../../assets/USDIcon.png";
+import currencyImg from "../../assets/USDIcon.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
+import { setCurrency } from "../../redux/currencySlice";
 
 export function Header() {
     const { i18n } = useTranslation();
+    const dispatch = useDispatch();
 
     const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedLanguage = event.target.value;
         i18n.changeLanguage(selectedLanguage);
+    };
+
+    const handleCurrencyChange = async (
+        event: ChangeEvent<HTMLSelectElement>
+    ) => {
+        const selectedCurrency = event.target.value.toString();
+        console.log(selectedCurrency);
+
+        const response = await fetch(
+            `https://v6.exchangerate-api.com/v6/f4c2fbc9af7f2297f39b0297/latest/USD`
+        ).then((response) => response.json());
+        dispatch(
+            setCurrency({
+                currency: selectedCurrency,
+                value: response.conversion_rates[selectedCurrency],
+            })
+        );
     };
 
     return (
@@ -44,8 +64,13 @@ export function Header() {
                     </select>
                 </button>
                 <button className="currency">
-                    <img src={currency} alt="USD" />
-                    <select className="currency" name="currency" id="currency">
+                    <img src={currencyImg} alt="USD" />
+                    <select
+                        className="currency"
+                        name="currency"
+                        id="currency"
+                        onChange={handleCurrencyChange}
+                    >
                         <option value="USD">USD</option>
                         <option value="INR">INR</option>
                     </select>
