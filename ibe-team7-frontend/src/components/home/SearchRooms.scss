@@ -3,6 +3,12 @@
     flex-direction: row;
     justify-content: space-around;
 }
+.search-form{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .search-box{
     padding:38px;
     border: 1px solid #000;
@@ -34,6 +40,7 @@
     color:#C1C2C2;
     font-style: italic;
     margin-bottom: 10px;
+    padding: 15px;
   }
 .dropdown-heading{
     min-width: 292px;
@@ -115,6 +122,10 @@
     width: 16px;
     height: 16px;
   }
+  .button-search{
+    display: flex;
+    justify-content: center;
+  }
   .search-btn{
     width: 140px;
     height: 44px;
@@ -160,8 +171,16 @@
     align-items: center;
   }
   .calendar{
+    // border: 1px solid #C1C2C2;
+    border-radius: 5px;
     position: absolute;
     background: white;
+  }
+  .calendar-top{
+    // border: 0;
+  }
+  .calendar-footer{
+    height: 80px;
   }
   .dates{
     display: flex;
@@ -169,10 +188,33 @@
     border: 1px solid #C1C2C2;
     width: 292px;
     height: 48px;
-    padding: 15px;
+    padding: 12px;
   }
 
   .arrow{
     width:16px;
-    height: 16px;
+
+  display: flex;
+  align-items: center;
   }
+  .react-calendar__tile--active{
+    background-color: #C1C2C2;
+    color:#000;
+  }
+  .react-calendar__tile--hasActive{
+    background-color: #26266D;
+    color:#fff;
+  }
+  .react-calendar__month-view__days__day--weekend {
+    color:#000;
+}
+.react-calendar__tile--now {
+  background: white;
+}
+.date-text{
+
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+}
