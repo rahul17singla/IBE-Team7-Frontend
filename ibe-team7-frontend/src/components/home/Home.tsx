@@ -6,6 +6,7 @@ import { ListProperty } from "../../types/Property";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { RoomRate } from "../../types/RoomRate";
+import { Search } from "./SearchRooms";
 
 export function Home() {
     const env = import.meta.env.VITE_REACT_APP_ENV;
@@ -53,6 +54,9 @@ export function Home() {
 
     return (
         <div className="main">
+            <div className="home">
+            <Search/>
+            </div>
             <div>
                 <p>Welcome, {env}</p>
                 <button onClick={methodThatThrowsError} className="btn">
