@@ -2,7 +2,6 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./SearchRooms.scss";
-import { useSSR } from "react-i18next";
 
 export function Search() {
   const [property1, setProperty1] = useState<string>("");
@@ -79,48 +78,39 @@ export function Search() {
       checkboxChecked,
     });
   };
-  const maxSelectableDate = new Date("2024-04-15");
 
-  // Function to calculate the max date (14 days from the selected start date)
-  // const calculateMaxDate = (startDate) => {
-  //   const maxDate = new Date(startDate);
-  //   maxDate.setDate(maxDate.getDate() + 14); // Adding 14 days
-  //   return maxDate;
-  // };
-
-  // Function to handle date change
-  // const handleDateChange = (date) => {
-  //   setSelectedDate(date);
-  // };
 
   const calculateMaxDate = (startDate: Date | null): Date | null => {
     if (!startDate) {
       return null; // Return null if start date is not set
     }
+    else if(endDate && startDate){
+      const maxDate = new Date(startDate);
+      maxDate.setDate(maxDate.getDate() + 90); // Adding 90 days
+      return maxDate;
+    }
+    else{
     const maxDate = new Date(startDate);
     maxDate.setDate(maxDate.getDate() + 14); // Adding 14 days
     return maxDate;
+    }
   };
 
   const handleDateChange = (date: Date) => {
     if (!startDate) {
-      // If start date is not set, set it
       setStartDate(date);
     } else if (!endDate) {
-      // If end date is not set, set it
       setEndDate(date);
     } else {
-      // If both start and end dates are set, reset both
       setStartDate(date);
-      calculateMaxDate(startDate);
       setEndDate(null);
     }
   };
-
   return (
     <div>
       <div className="search-box">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="search-form">
+          <div>
           <label htmlFor="property1" className="dropdown-heading">
             <p>Property name*</p>
           </label>
@@ -139,7 +129,7 @@ export function Search() {
           <p className="dropdown-heading-guest">Select dates</p>
 
           <div className="dates" onClick={() => setShowCalendar(!showCalendar)}>
-            <div className="label-div"> Check-in</div>
+            <div className="date-text"> Check-in</div>
             <div className="arrow">
               <svg
                 width="8"
@@ -154,7 +144,7 @@ export function Search() {
                 />
               </svg>
             </div>
-            <div className="label-div"> Check-out</div>
+            <div className="date-text"> Check-out</div>
 
             <svg
               width="14"
@@ -313,10 +303,12 @@ export function Search() {
             </svg>
             I need an Accessible Room
           </label>
-
+          </div>
+          <div className="button-search">
           <button className="search-btn" type="submit">
             SEARCH
           </button>
+          </div>
         </form>
       </div>
     </div>
