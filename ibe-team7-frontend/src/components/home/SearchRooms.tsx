@@ -20,13 +20,13 @@ export function Search() {
   //for calender
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const getCustomTextForDate = (date: Date) => {
+  // const [selectedDate, setSelectedDate] = useState(null);
+  const getCustomTextForDate = (date: any) => {
     // Replace this with your logic to get custom text for each date
     // You can fetch data from your backend or use a predefined mapping
     return `Custom text for ${date.toDateString()}`;
   };
-  const getPriceForDate = (date: Date) => {
+  const getPriceForDate = (date: any) => {
     // Replace this with your logic to get prices for each date
     // You can fetch data from your backend or use a predefined mapping
     return `$${Math.floor(Math.random() * 100) + 50}`;
@@ -79,9 +79,20 @@ export function Search() {
       checkboxChecked,
     });
   };
-  // const maxSelectableDate = new Date("2024-04-15");
+  const maxSelectableDate = new Date("2024-04-15");
 
   // Function to calculate the max date (14 days from the selected start date)
+  // const calculateMaxDate = (startDate) => {
+  //   const maxDate = new Date(startDate);
+  //   maxDate.setDate(maxDate.getDate() + 14); // Adding 14 days
+  //   return maxDate;
+  // };
+
+  // Function to handle date change
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  // };
+
   const calculateMaxDate = (startDate: Date | null): Date | null => {
     if (!startDate) {
       return null; // Return null if start date is not set
@@ -90,7 +101,6 @@ export function Search() {
     maxDate.setDate(maxDate.getDate() + 14); // Adding 14 days
     return maxDate;
   };
-
 
   const handleDateChange = (date: Date) => {
     if (!startDate) {
@@ -102,14 +112,15 @@ export function Search() {
     } else {
       // If both start and end dates are set, reset both
       setStartDate(date);
+      calculateMaxDate(startDate);
       setEndDate(null);
     }
   };
 
   return (
+    <div>
       <div className="search-box">
-        <form onSubmit={handleSubmit} className="search-form">
-          <div>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="property1" className="dropdown-heading">
             <p>Property name*</p>
           </label>
@@ -128,7 +139,7 @@ export function Search() {
           <p className="dropdown-heading-guest">Select dates</p>
 
           <div className="dates" onClick={() => setShowCalendar(!showCalendar)}>
-            <p className="date-text"> Check-in</p>
+            <div className="label-div"> Check-in</div>
             <div className="arrow">
               <svg
                 width="8"
@@ -143,8 +154,8 @@ export function Search() {
                 />
               </svg>
             </div>
-            <p className="date-text"> Check-out</p>
-            <div className="arrow">
+            <div className="label-div"> Check-out</div>
+
             <svg
               width="14"
               height="16"
@@ -157,7 +168,6 @@ export function Search() {
                 fill="black"
               />
             </svg>
-            </div>
           </div>
           <div className="calendar">
             {showCalendar && (
@@ -166,13 +176,14 @@ export function Search() {
                 value={[startDate, endDate]}
                 tileContent={tileContent}
                 showDoubleView
+                minDate={new Date()}
                 // selectRange
                 // maxDate={maxSelectableDate}
                 maxDate={calculateMaxDate(startDate)}
+                // maxDate={selectedDate ? calculateMaxDate(selectedDate) : undefined} // Set maxDate dynamically based on selectedDate
                 className="calendar-top"
-                />
+              />
             )}
-            {/* <div className="calendar-footer"></div> */}
           </div>
           <div className="guest-rooms">
             <div>
@@ -302,13 +313,12 @@ export function Search() {
             </svg>
             I need an Accessible Room
           </label>
-          </div>
-          <div className="button-search">
+
           <button className="search-btn" type="submit">
             SEARCH
           </button>
-          </div>
         </form>
       </div>
+    </div>
   );
 }
