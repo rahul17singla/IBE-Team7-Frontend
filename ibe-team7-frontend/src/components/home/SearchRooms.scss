@@ -290,9 +290,12 @@
 .react-calendar__navigation__label__divider {
     display: none;
 }
-.react-calendar__month-view__weekdays__weekday {
+.react-calendar__month-view__weekdays__weekday{
     font-size: 1.5rem;
     color: #858685;
+    abbr{
+        text-decoration: none;
+    }
 }
 
 .date-text {
