@@ -1,232 +1,303 @@
-// .home{
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-around;
-// }
+@import "../scss-variables/variables.scss";
+
 .search-form {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .search-box {
-  padding: 38px;
-  border: 1px solid #000;
-  width: 380px;
-  height: 585px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 5px;
-  background-color: white;
+    padding: 38px;
+    border: 1px solid #000;
+    width: 380px;
+    height: 585px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    background-color: $PRIMARY_WHITE;
 }
 .search-text {
-  margin: 0;
+    margin: 0;
 }
 .hi {
-  padding: 10px;
+    padding: 10px;
 }
 .dropdown {
-  border: 1px solid #ccc;
-  background-color: #fff;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
-  background-repeat: no-repeat;
-  background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
-  background-size: 15px; /* Adjust the size of the arrow */
-  border-radius: 5px;
-  width: 292px;
-  min-height: 48px;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  color: #c1c2c2;
-  font-style: italic;
-  margin-bottom: 10px;
-  padding: 15px;
+    border: 1px solid #ccc;
+    background-color: $PRIMARY_WHITE;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
+    background-size: 15px; /* Adjust the size of the arrow */
+    border-radius: 5px;
+    width: 292px;
+    min-height: 48px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    color: $PRIMARY_GRAY;
+    font-style: italic;
+    margin-bottom: 10px;
+    padding: 15px;
 }
 .dropdown-heading {
-  min-width: 292px;
-  margin-bottom: 5px;
-  font-size: 14px;
-  padding-top: 1px;
-  font-weight: 400px;
+    min-width: 292px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    padding-top: 1px;
+    font-weight: 400px;
 }
 .dropdown-guest {
-  border: 1px solid #ccc;
-  background-color: #fff;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
-  background-repeat: no-repeat;
-  background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
-  background-size: 15px; /* Adjust the size of the arrow */
-  border-radius: 5px;
-  display: flex;
-  width: 200px;
-  min-height: 48px;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  color: #c1c2c2;
-  font-style: italic;
-  font-size: 14px;
-  padding: 15px;
+    border: 1px solid #ccc;
+    background-color: $PRIMARY_WHITE;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
+    background-size: 15px; /* Adjust the size of the arrow */
+    border-radius: 5px;
+    display: flex;
+    width: 200px;
+    min-height: 48px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    color: $PRIMARY_GRAY;
+    font-style: italic;
+    font-size: 14px;
+    padding: 15px;
 }
 .dropdown-heading-guest {
-  min-width: 200px;
-  margin-bottom: 5px;
-  font-size: 14px;
-  padding-top: 1px;
-  font-weight: 400px;
+    min-width: 200px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    padding-top: 1px;
+    font-weight: 400px;
 }
 .dropdown-room {
-  border: 1px solid #ccc;
-  background-color: #fff;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
-  background-repeat: no-repeat;
-  background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
-  background-size: 15px; /* Adjust the size of the arrow */
-  border-radius: 5px;
-  width: 100%;
-  width: 77px;
-  min-height: 48px;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  color: #c1c2c2;
-  font-style: italic;
-  font-size: 14px;
-  padding: 15px;
-  margin-left: 15px;
-  margin-top: 5px;
+    border: 1px solid #ccc;
+    background-color: $PRIMARY_WHITE;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
+    background-size: 15px; /* Adjust the size of the arrow */
+    border-radius: 5px;
+    width: 100%;
+    width: 77px;
+    min-height: 48px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    color: $PRIMARY_GRAY;
+    font-style: italic;
+    font-size: 14px;
+    padding: 15px;
+    margin-left: 15px;
+    margin-top: 5px;
 }
 .dropdown-heading-room {
-  width: 77px;
-  // margin-bottom: 5px;
-  font-size: 14px;
-  padding-top: 1px;
-  font-weight: 400;
-  margin-left: 15px;
+    width: 77px;
+    // margin-bottom: 5px;
+    font-size: 14px;
+    padding-top: 1px;
+    font-weight: 400;
+    margin-left: 15px;
 }
 .guest-rooms {
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  max-width: 292px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    max-width: 292px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 .accessible {
-  display: flex;
-  flex-direction: row;
-  justify-self: start;
-  font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-self: start;
+    font-size: 14px;
 }
 .checkbox {
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
 }
 .button-search {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 .search-btn {
-  width: 140px;
-  height: 44px;
-  background-color: #26266d;
-  color: white;
-  border-radius: 5px;
-  font-weight: 700;
+    width: 140px;
+    height: 44px;
+    background-color: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
+    border-radius: 5px;
+    font-weight: 700;
 }
 .guests-dropdown {
-  padding: 17px;
-  border: 1px solid #c1c2c2;
-  border-radius: 3px;
-  position: absolute;
-  background: white;
-  width: 200px;
+    padding: 17px;
+    border: 1px solid $PRIMARY_GRAY;
+    border-radius: 3px;
+    position: absolute;
+    background: $PRIMARY_WHITE;
+    width: 200px;
 }
 .guest-counter {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 .count-btn {
-  background-color: white;
-  border: 0;
-  margin-left: 5px;
-  margin-right: 5px;
+    background-color: $PRIMARY_WHITE;
+    border: 0;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 .count-title {
-  font-size: 16px;
-  font-weight: 700;
+    font-size: 16px;
+    font-weight: 700;
 }
 .count-desc {
-  font-size: 14px;
-  font-weight: 400;
+    font-size: 14px;
+    font-weight: 400;
 }
 .counter-text {
-  font-size: 16px;
-  font-weight: 400;
+    font-size: 16px;
+    font-weight: 400;
 }
 .counter-section {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .calendar {
-  // border: 1px solid #C1C2C2;
-  border-radius: 5px;
-  position: absolute;
-  background: white;
+    border-radius: 5px;
+    position: absolute;
+    background: $PRIMARY_WHITE;
 }
 .calendar-top {
-  // border: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
+
+.tile-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 12px;
+    font-weight: 400;
+}
+
 .calendar-footer {
-  height: 80px;
+    height: 80px;
 }
 .dates {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #c1c2c2;
-  width: 292px;
-  height: 48px;
-  padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #c1c2c2;
+    width: 292px;
+    height: 48px;
+    padding: 12px;
+    background-color: transparent;
 }
 
 .label-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .arrow {
-  width: 16px;
-  display: flex;
-  align-items: center;
+    width: 16px;
+    display: flex;
+    align-items: center;
+}
+.calendar-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 47.7rem;
+    width: 89.6rem;
+    background-color: $PRIMARY_WHITE;
+}
+
+.apply-dates {
+    width: 100%;
+    padding-right: 3rem;
+    display: flex;
+    justify-content: flex-end;
+}
+.apply-dates__button {
+    width: 12.9rem;
+    height: 4rem;
+    background-color: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
+    border-radius: 5px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 4%;
+}
+.react-calendar {
+    width: 100%;
+}
+.react-calendar__viewContainer {
+    gap: 1rem;
+}
+
+.react-calendar__tile {
+    height: 5rem;
 }
 .react-calendar__tile--active {
-  background-color: #c1c2c2;
-  color: #000;
+    background-color: $PRIMARY_GRAY;
+    color: #000;
+}
+.react-calendar__tile--hasActive:enabled:focus {
+    background: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
 }
 .react-calendar__tile--hasActive {
-  background-color: #26266d;
-  color: #fff;
+    background: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
 }
 .react-calendar__month-view__days__day--weekend {
-  color: #000;
+    color: #000;
 }
 .react-calendar__tile--now {
-  background: white;
+    background: $PRIMARY_WHITE;
 }
 .react-calendar__tile--rangeStart {
-  background-color: #26266d;
-  color: white;
+    background-color: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
 }
 .react-calendar__tile--rangeEnd {
-  background-color: #26266d;
-  color: white;
+    background-color: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
 }
+.react-calendar__navigation__next2-button {
+    display: none;
+}
+.react-calendar__navigation__prev2-button {
+    display: none;
+}
+.react-calendar__navigation__label {
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.react-calendar__navigation__label__divider {
+    display: none;
+}
+.react-calendar__month-view__weekdays__weekday {
+    font-size: 1.5rem;
+    color: #858685;
+}
+
 .date-text {
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 400;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 400;
 }

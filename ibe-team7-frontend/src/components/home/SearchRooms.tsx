@@ -4,13 +4,14 @@ import "react-calendar/dist/Calendar.css";
 import "./SearchRooms.scss";
 import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
+import { DateObj } from "../../types/DateObj";
 
 export function Search() {
     const [property1, setProperty1] = useState<string>("");
     const [property3, setProperty3] = useState<string>("");
     const [checkboxChecked, setCheckboxChecked] = useState<boolean>(false);
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
+    const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+    const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
     //for guests count
     const [guestsAdult, setGuestsAdult] = useState(1);
@@ -68,13 +69,18 @@ export function Search() {
         createMap();
     }, [rooms]);
 
-    const tileContent = ({ date }: any) => {
+    const tileContent = ({ date }: DateObj) => {
         const price = roomMap.get(date.toISOString().split("T")[0]) ?? 0;
-        return (
-            <div>
-                <p>{price}</p>
-            </div>
-        );
+        // if date disabled then dont show price
+        if (
+            price === 0 ||
+            (date.getDate() < new Date().getDate() &&
+                date.getMonth() <= new Date().getMonth())
+        ) {
+            return <div className="tile-price"></div>;
+        }
+
+        return <div className="tile-price">${price}</div>;
     };
     const handleAdultIncrement = () => {
         setGuestsAdult(guestsAdult + 1);
@@ -112,9 +118,11 @@ export function Search() {
         });
     };
 
-    const calculateMaxDate = (startDate: Date | null): Date | null => {
+    const calculateMaxDate = (
+        startDate: Date | undefined
+    ): Date | undefined => {
         if (!startDate) {
-            return null; // Return null if start date is not set
+            return undefined; // Return null if start date is not set
         } else if (endDate && startDate) {
             const maxDate = new Date(startDate);
             maxDate.setDate(maxDate.getDate() + 90); // Adding 90 days
@@ -133,9 +141,15 @@ export function Search() {
             setEndDate(date);
         } else {
             setStartDate(date);
-            setEndDate(null);
+            setEndDate(undefined);
         }
     };
+
+    const displayDays = (locale: string, date: Date) => {
+        const days = ["Su", "M", "T", "W", "Th", "F", "S"];
+        return days[date.getDay()];
+    };
+
     return (
         <div>
             <div className="search-box">
@@ -150,7 +164,11 @@ export function Search() {
                             value={property1}
                             onChange={(e) => setProperty1(e.target.value)}
                         >
-                            <option value="">Search all properties</option>
+                            <option value="" disabled>
+                                Search all properties
+                            </option>
+                            {}
+
                             <option value="property1_option1">
                                 Property 1 Option 1
                             </option>
@@ -164,7 +182,7 @@ export function Search() {
 
                         <p className="dropdown-heading-guest">Select dates</p>
 
-                        <div
+                        <button
                             className="dates"
                             onClick={() => setShowCalendar(!showCalendar)}
                         >
@@ -197,31 +215,43 @@ export function Search() {
                                     fill="black"
                                 />
                             </svg>
-                        </div>
+                        </button>
                         <div className="calendar">
                             {showCalendar && (
-                                <Calendar
-                                    onChange={handleDateChange}
-                                    value={[startDate, endDate]}
-                                    tileContent={tileContent}
-                                    showDoubleView
-                                    minDate={new Date()}
-                                    maxDate={calculateMaxDate(startDate)}
-                                    // maxDate={selectedDate ? calculateMaxDate(selectedDate) : undefined} // Set maxDate dynamically based on selectedDate
-                                    className="calendar-top"
-                                />
+                                <div className="calendar-view">
+                                    <Calendar
+                                        onChange={handleDateChange}
+                                        value={[startDate, endDate]}
+                                        tileContent={tileContent}
+                                        showDoubleView
+                                        showNeighboringMonth={false}
+                                        showFixedNumberOfWeeks={false}
+                                        view="month"
+                                        minDate={new Date()}
+                                        maxDate={calculateMaxDate(startDate)}
+                                        tileClassName={"calendar-top"}
+                                        formatShortWeekday={(locale, date) =>
+                                            displayDays(locale, date)
+                                        }
+                                        calendarType="US"
+                                    />
+                                    <div className="apply-dates">
+                                        <button className="apply-dates__button">
+                                            Apply Dates
+                                        </button>
+                                    </div>
+                                </div>
                             )}
                         </div>
                         <div className="guest-rooms">
                             <div>
                                 <p className="dropdown-heading-guest">Guests</p>
-                                <label
-                                    htmlFor="property2"
+                                <button
                                     className="dropdown-guest"
                                     onClick={() => setShowGuests(!showGuests)}
                                 >
                                     Guests
-                                </label>
+                                </button>
 
                                 {showGuests && (
                                     <div className="guests-dropdown">
