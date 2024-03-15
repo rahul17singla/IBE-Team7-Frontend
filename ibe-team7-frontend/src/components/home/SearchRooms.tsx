@@ -69,6 +69,14 @@ export function Search() {
         createMap();
     }, [rooms]);
 
+    useEffect(() => {
+        if (parseInt(property3) > guestsAdult) {
+            setGuestsAdult(parseInt(property3));
+        }
+    }, [property3, guestsAdult]);
+
+
+
     const tileContent = ({ date }: DateObj) => {
         const price = roomMap.get(date.toISOString().split("T")[0]) ?? 0;
         // if date disabled then dont show price
@@ -383,15 +391,17 @@ export function Search() {
                                     className="dropdown-room"
                                     value={property3}
                                     onChange={(e) =>
+                                        {
                                         setProperty3(e.target.value)
+                                        }
                                     }
                                 >
                                     <option value="">
                                         <p className="text">1</p>
                                     </option>
-                                    <option value="property3_option1">2</option>
-                                    <option value="property3_option2">3</option>
-                                    <option value="property3_option3">4</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
                                 </select>
                             </div>
                         </div>
