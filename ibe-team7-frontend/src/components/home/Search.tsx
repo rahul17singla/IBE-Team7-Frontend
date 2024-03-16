@@ -28,6 +28,16 @@ export function Search() {
     // const roomMap = new Map();
     const [roomMap, setRoomMap] = useState(new Map());
 
+    const createMap = () => {
+        for (const room of rooms) {
+            roomMap.set(room.date.split("T")[0], room.basicNightlyRate);
+
+            setRoomMap((prev) =>
+                prev.set(room.date.split("T")[0], room.basicNightlyRate)
+            );
+        }
+    };
+
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
@@ -55,16 +65,6 @@ export function Search() {
         fetchRoomData();
     }, []);
 
-    const createMap = () => {
-        for (const room of rooms) {
-            roomMap.set(room.date.split("T")[0], room.basicNightlyRate);
-
-            setRoomMap((prev) =>
-                prev.set(room.date.split("T")[0], room.basicNightlyRate)
-            );
-        }
-    };
-
     useEffect(() => {
         createMap();
     }, [rooms]);
@@ -74,8 +74,6 @@ export function Search() {
             setGuestsAdult(parseInt(property3));
         }
     }, [property3, guestsAdult]);
-
-
 
     const tileContent = ({ date }: DateObj) => {
         const price = roomMap.get(date.toISOString().split("T")[0]) ?? 0;
@@ -113,8 +111,18 @@ export function Search() {
         setGuestsChildren(guestsChildren - 1);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleSubmit = () => {
+        const errorMsg = document.getElementById("error-msg");
+        if (!property1 || !startDate || !endDate) {
+            // display message in div
+            if (errorMsg) {
+                errorMsg.innerHTML = "*Please fill all the fields";
+            }
+
+            return;
+        }
+
+        errorMsg!.innerHTML = "";
         console.log("Form submitted with data:", {
             property1,
             startDate,
@@ -146,22 +154,35 @@ export function Search() {
         if (!startDate) {
             setStartDate(date);
         } else if (!endDate) {
+            if (date < startDate) {
+                setStartDate(date);
+                setEndDate(undefined);
+            }
             setEndDate(date);
+            //remove disabled class from apply-dates button
+            const applyDatesButton = document.getElementById("apply-dates");
+            if (applyDatesButton) {
+                applyDatesButton.classList.remove("disabled");
+            }
         } else {
             setStartDate(date);
             setEndDate(undefined);
         }
     };
 
-    const displayDays = (locale: string, date: Date) => {
+    const displayDays = (date: Date) => {
         const days = ["Su", "M", "T", "W", "Th", "F", "S"];
         return days[date.getDay()];
+    };
+
+    const applyDatesHandler = () => {
+        setShowCalendar(false);
     };
 
     return (
         <div>
             <div className="search-box">
-                <form onSubmit={handleSubmit} className="search-form">
+                <div className="search-form">
                     <div>
                         <label htmlFor="property1" className="dropdown-heading">
                             <p>Property name*</p>
@@ -175,17 +196,15 @@ export function Search() {
                             <option value="" disabled>
                                 Search all properties
                             </option>
-                            {}
-
-                            <option value="property1_option1">
-                                Property 1 Option 1
-                            </option>
-                            <option value="property1_option2">
-                                Property 1 Option 2
-                            </option>
-                            <option value="property1_option3">
-                                Property 1 Option 3
-                            </option>
+                            {data.map((property: any) => (
+                                <option
+                                    key={property.property_id}
+                                    value={property.property_name}
+                                    className="dropdown-item"
+                                >
+                                    {property.property_name}
+                                </option>
+                            ))}
                         </select>
 
                         <p className="dropdown-heading-guest">Select dates</p>
@@ -194,7 +213,11 @@ export function Search() {
                             className="dates"
                             onClick={() => setShowCalendar(!showCalendar)}
                         >
-                            <div className="date-text"> Check-in</div>
+                            <div className="date-text">
+                                {startDate
+                                    ? startDate.toDateString().substring(4)
+                                    : "Check-in"}
+                            </div>
                             <div className="arrow">
                                 <svg
                                     width="8"
@@ -209,7 +232,11 @@ export function Search() {
                                     />
                                 </svg>
                             </div>
-                            <div className="date-text"> Check-out</div>
+                            <div className="date-text">
+                                {endDate
+                                    ? endDate.toDateString().substring(4)
+                                    : "Check-out"}
+                            </div>
 
                             <svg
                                 width="14"
@@ -229,7 +256,7 @@ export function Search() {
                                 <div className="calendar-view">
                                     <Calendar
                                         onChange={handleDateChange}
-                                        value={[startDate, endDate]}
+                                        value={[startDate!, endDate!]}
                                         tileContent={tileContent}
                                         showDoubleView
                                         showNeighboringMonth={false}
@@ -238,13 +265,17 @@ export function Search() {
                                         minDate={new Date()}
                                         maxDate={calculateMaxDate(startDate)}
                                         tileClassName={"calendar-top"}
-                                        formatShortWeekday={(locale, date) =>
-                                            displayDays(locale, date)
+                                        formatShortWeekday={(_, date) =>
+                                            displayDays(date)
                                         }
-                                        calendarType="US"
+                                        calendarType="gregory"
                                     />
                                     <div className="apply-dates">
-                                        <button className="apply-dates__button">
+                                        <button
+                                            className="apply-dates__button disabled"
+                                            id="apply-dates"
+                                            onClick={applyDatesHandler}
+                                        >
                                             Apply Dates
                                         </button>
                                     </div>
@@ -258,7 +289,16 @@ export function Search() {
                                     className="dropdown-guest"
                                     onClick={() => setShowGuests(!showGuests)}
                                 >
-                                    Guests
+                                    {guestsAdult +
+                                        guestsTeens +
+                                        guestsChildren ===
+                                    1
+                                        ? "1 guest"
+                                        : `${
+                                              guestsAdult +
+                                              guestsTeens +
+                                              guestsChildren
+                                          } guests`}
                                 </button>
 
                                 {showGuests && (
@@ -277,7 +317,11 @@ export function Search() {
                                                     onClick={
                                                         handleAdultDecrement
                                                     }
-                                                    className="count-btn"
+                                                    className={
+                                                        guestsAdult === 1
+                                                            ? "count-btn disabled"
+                                                            : "count-btn"
+                                                    }
                                                 >
                                                     <p className="counter-text">
                                                         -
@@ -315,7 +359,11 @@ export function Search() {
                                                     onClick={
                                                         handleTeensDecrement
                                                     }
-                                                    className="count-btn"
+                                                    className={
+                                                        guestsTeens === 0
+                                                            ? "count-btn disabled"
+                                                            : "count-btn"
+                                                    }
                                                 >
                                                     <p className="counter-text">
                                                         -
@@ -330,7 +378,7 @@ export function Search() {
                                                     onClick={
                                                         handleTeensIncrement
                                                     }
-                                                    className="count-btn"
+                                                    className={"count-btn"}
                                                 >
                                                     <p className="counter-text">
                                                         +
@@ -353,7 +401,11 @@ export function Search() {
                                                     onClick={
                                                         handleChildrenDecrement
                                                     }
-                                                    className="count-btn"
+                                                    className={
+                                                        guestsChildren === 0
+                                                            ? "count-btn disabled"
+                                                            : "count-btn"
+                                                    }
                                                 >
                                                     <p className="counter-text">
                                                         -
@@ -390,11 +442,9 @@ export function Search() {
                                     id="property3"
                                     className="dropdown-room"
                                     value={property3}
-                                    onChange={(e) =>
-                                        {
-                                        setProperty3(e.target.value)
-                                        }
-                                    }
+                                    onChange={(e) => {
+                                        setProperty3(e.target.value);
+                                    }}
                                 >
                                     <option value="">
                                         <p className="text">1</p>
@@ -431,11 +481,12 @@ export function Search() {
                         </label>
                     </div>
                     <div className="button-search">
-                        <button className="search-btn" type="submit">
+                        <button className="search-btn" onClick={handleSubmit}>
                             SEARCH
                         </button>
+                        <div id="error-msg" className="error"></div>
                     </div>
-                </form>
+                </div>
             </div>
             <div></div>
         </div>
