@@ -1,29 +1,29 @@
 .main {
-  // margin-top: 2vh;
-  //   margin-bottom: 8rem;
-  padding: 2rem;
-  width: 100%;
-  height: 85vh;
-  padding-left: 10%;
-  display: flex;
-  //   flex-direction: column;
-  //   justify-content: space-around;
-  //   align-items: center;
-  background-image: url("/public/valeriia-bugaiova-_pPHgeHz1uk-unsplash.jpg");
-  background-size: cover;
+    // margin-top: 2vh;
+    //   margin-bottom: 8rem;
+    padding: 2rem;
+    width: 100%;
+    height: 85vh;
+    padding-left: 10%;
+    display: flex;
+    //   flex-direction: column;
+    //   justify-content: space-around;
+    //   align-items: center;
+    background-image: url("/valeriia-bugaiova-_pPHgeHz1uk-unsplash.jpg");
+    background-size: cover;
 }
 .btn {
-  max-height: 30px;
+    max-height: 30px;
 }
 .home {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  //   overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    //   overflow-y: hidden;
 }
 
 @media screen and (max-width: 512px) {
-  .main {
-    padding: 2rem 1rem;
-  }
+    .main {
+        padding: 2rem 1rem;
+    }
 }
