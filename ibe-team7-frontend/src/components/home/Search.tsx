@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "./SearchRooms.scss";
+import "./Search.scss";
 import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
 import { DateObj } from "../../types/DateObj";
