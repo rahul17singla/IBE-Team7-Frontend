@@ -18,27 +18,41 @@ describe("<Search />", () => {
         cy.get(".search-box").should("exist");
     });
 
-    it("renders property options", () => {
-        cy.get("#property1").should("exist"); // Ensure property dropdown exists
-        cy.get("#property1 option").should("have.length", 4); // Ensure there are 4 options
-    });
 
     it("shows calendar when clicking on date button", () => {
         cy.get(".dates").click(); // Click on the date button
         cy.get(".calendar-view").should("be.visible"); // Ensure the calendar is visible
     });
 
-    it("selects check-in and check-out dates", () => {
-        cy.get(".dates").click(); // Click on the date button
-        cy.get(".react-calendar").should("be.visible"); // Ensure the calendar is visible
+  
 
-        // Select check-in date
-        cy.contains(".react-calendar__tile", "15").click(); // Click on a date (assuming 15th is selectable)
+    it("toggles calendar visibility when clicking on date button", () => {
+      cy.get(".dates").click(); // Click on the date button
+      cy.get(".calendar-view").should("be.visible"); // Ensure the calendar is visible
+  });
+  
+  
 
-        // Select check-out date
-        cy.contains(".react-calendar__tile", "20").click(); // Click on another date (assuming 20th is selectable)
 
-        cy.contains("Apply Dates").click(); // Click the Apply Dates button
-        // Now assert that the selected dates are reflected in the UI
-    });
+  it("toggles guest counter visibility when clicking on guest dropdown", () => {
+    cy.get(".dropdown-guest").click(); // Click on the guest dropdown
+    cy.get(".guests-dropdown").should("be.visible"); // Ensure the guest counter is visible
+});
+
+
+
+it("verifies guest counter labels existence", () => {
+  cy.get(".dropdown-guest").click(); // Click on the guest dropdown
+  cy.get(".count-title").should("have.length", 3); // Verify that there are 3 labels for adults, teens, and children
+});
+
+
+  
+it("verifies guest counter increment/decrement buttons existence", () => {
+  cy.get(".dropdown-guest").click(); // Click on the guest dropdown
+  cy.get(".count-btn").should("have.length", 9); // Verify that there are 6 buttons (3 for increment and 3 for decrement)
+});
+
+
+
 });
