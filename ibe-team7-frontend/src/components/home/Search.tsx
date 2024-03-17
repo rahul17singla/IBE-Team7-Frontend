@@ -207,7 +207,7 @@ export function Search() {
                             ))}
                         </select>
 
-                        <p className="dropdown-heading-guest">Select dates</p>
+                        <p className="dropdown-heading-guest">Select dates*</p>
 
                         <button
                             className="dates"
