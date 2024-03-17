@@ -255,7 +255,7 @@ export function Search() {
                             {showCalendar && (
                                 <div className="calendar-view">
                                     <Calendar
-                                        onChange={() => handleDateChange}
+                                        onChange={handleDateChange}
                                         value={[startDate!, endDate!]}
                                         tileContent={tileContent}
                                         showDoubleView
