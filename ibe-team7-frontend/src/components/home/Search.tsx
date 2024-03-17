@@ -5,6 +5,7 @@ import "./Search.scss";
 import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
 import { DateObj } from "../../types/DateObj";
+import { ListProperty } from "../../types/Property";
 
 export function Search() {
     const [property1, setProperty1] = useState<string>("");
@@ -27,16 +28,6 @@ export function Search() {
     // const roomMap: { [date: string]: number } = {};
     // const roomMap = new Map();
     const [roomMap, setRoomMap] = useState(new Map());
-
-    const createMap = () => {
-        for (const room of rooms) {
-            roomMap.set(room.date.split("T")[0], room.basicNightlyRate);
-
-            setRoomMap((prev) =>
-                prev.set(room.date.split("T")[0], room.basicNightlyRate)
-            );
-        }
-    };
 
     useEffect(() => {
         const fetchRoomData = async () => {
@@ -66,6 +57,15 @@ export function Search() {
     }, []);
 
     useEffect(() => {
+        const createMap = () => {
+            for (const room of rooms) {
+                roomMap.set(room.date.split("T")[0], room.basicNightlyRate);
+
+                setRoomMap((prev) =>
+                    prev.set(room.date.split("T")[0], room.basicNightlyRate)
+                );
+            }
+        };
         createMap();
     }, [rooms]);
 
@@ -196,7 +196,7 @@ export function Search() {
                             <option value="" disabled>
                                 Search all properties
                             </option>
-                            {data.map((property: any) => (
+                            {data.map((property: ListProperty) => (
                                 <option
                                     key={property.property_id}
                                     value={property.property_name}
@@ -255,7 +255,7 @@ export function Search() {
                             {showCalendar && (
                                 <div className="calendar-view">
                                     <Calendar
-                                        onChange={handleDateChange}
+                                        onChange={() => handleDateChange}
                                         value={[startDate!, endDate!]}
                                         tileContent={tileContent}
                                         showDoubleView
