@@ -471,12 +471,30 @@ export function Search() {
                                             setProperty3(e.target.value);
                                         }}
                                     >
-                                        <option value="">
-                                            <p className="text">1</p>
+                                        <option
+                                            className="roomOption"
+                                            value="1"
+                                        >
+                                            1
                                         </option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
+                                        <option
+                                            className="roomOption"
+                                            value="2"
+                                        >
+                                            2
+                                        </option>
+                                        <option
+                                            className="roomOption"
+                                            value="3"
+                                        >
+                                            3
+                                        </option>
+                                        <option
+                                            className="roomOption"
+                                            value="4"
+                                        >
+                                            4
+                                        </option>
                                     </select>
                                 </div>
                             )}
