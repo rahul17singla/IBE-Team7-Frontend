@@ -99,7 +99,7 @@
     color: $PRIMARY_GRAY;
 }
 .dropdown-heading-room {
-    width: 77px;
+    width: 100%;
     // margin-bottom: 5px;
     font-size: 14px;
     padding-top: 1px;
@@ -108,12 +108,24 @@
 }
 .guest-rooms {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: start;
     max-width: 292px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
+.room-feature{
+    width: 7.7rem;
+}
+// .guest-chair{
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: start;
+//     max-width: 292px;
+//     margin-top: 15px;
+//     margin-bottom: 15px;
+// }
 .accessible {
     display: flex;
     flex-direction: row;
@@ -318,6 +330,13 @@
 }
 .error {
     color: red;
+}
+
+.chair-feature{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
 }
 
 @media screen and (max-width: 700px) {
