@@ -88,12 +88,15 @@
     min-height: 48px;
     -moz-appearance: none;
     -webkit-appearance: none;
-    color: $PRIMARY_GRAY;
+    color: black;
     font-style: italic;
     font-size: 14px;
     padding: 15px;
     margin-left: 15px;
     margin-top: 5px;
+}
+.roomOption {
+    color: $PRIMARY_GRAY;
 }
 .dropdown-heading-room {
     width: 77px;
@@ -317,7 +320,6 @@
     color: red;
 }
 
-
 @media screen and (max-width: 700px) {
     .react-calendar--doubleView .react-calendar__viewContainer {
         display: flex;
@@ -325,8 +327,7 @@
         flex-direction: column;
     }
 
-
-    .react-calendar__navigation__label{
+    .react-calendar__navigation__label {
         font-size: 16px;
         font-weight: 700;
         display: flex;
@@ -334,7 +335,7 @@
         justify-content: space-around;
         flex-direction: column;
     }
-    .calendar{
+    .calendar {
         height: 81.8rem;
     }
     .calendar-view {
@@ -344,20 +345,19 @@
         align-items: flex-end;
         width: 40rem;
         background-color: $PRIMARY_WHITE;
-   
     }
-    .react-calendar, .react-calendar *, .react-calendar *:before, .react-calendar *:after {
+    .react-calendar,
+    .react-calendar *,
+    .react-calendar *:before,
+    .react-calendar *:after {
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         width: 40rem;
     }
-
-
 }
 
-
-@media screen and (max-width: 1106px){
+@media screen and (max-width: 1106px) {
     .calendar-view {
         display: flex;
         flex-direction: column;
@@ -366,10 +366,8 @@
         height: 47.7rem;
         width: auto;
         background-color: $PRIMARY_WHITE;
-      
     }
-    .calendar{
+    .calendar {
         margin-right: 5rem;
     }
-
 }
