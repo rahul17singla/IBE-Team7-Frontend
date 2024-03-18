@@ -48,6 +48,7 @@ export function Search() {
                 const response = await axios.get(
                     // "http://localhost:8088/config"
                     "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/config"
+                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
                 );
                 // console.log(response.data.propertyConfig.first.guests.show);
                 setRoomsShow(response.data.propertyConfig.first.rooms.show);
@@ -64,6 +65,7 @@ export function Search() {
                 const response = await axios.get(
                     // "http://localhost:8088/api/v1/rooms"
                     "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/rooms"
+                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/rooms"
                 );
                 setRooms(response.data);
             } catch (error) {
@@ -76,6 +78,7 @@ export function Search() {
                 const response = await axios.get(
                     //   "http://localhost:8088/api/v1/property"
                     "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/property"
+                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/property"
                 );
                 setData(response.data.data.listProperties);
             } catch (error) {
