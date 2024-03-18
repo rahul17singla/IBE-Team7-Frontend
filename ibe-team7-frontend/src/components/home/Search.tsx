@@ -47,7 +47,7 @@ export function Search() {
             try {
                 const response = await axios.get(
                     // "http://localhost:8088/config"
-                    "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/config"
+                    "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
                 );
                 // console.log(response.data.propertyConfig.first.guests.show);
