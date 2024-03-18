@@ -6,8 +6,10 @@ import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
 import { DateObj } from "../../types/DateObj";
 import { ListProperty } from "../../types/Property";
+import {  useTranslation } from "react-i18next";
 
 export function Search() {
+    const { t } = useTranslation();
     const [property1, setProperty1] = useState<string>("");
     const [property3, setProperty3] = useState<string>("");
     const [checkboxChecked, setCheckboxChecked] = useState<boolean>(false);
@@ -185,7 +187,7 @@ export function Search() {
                 <div className="search-form">
                     <div>
                         <label htmlFor="property1" className="dropdown-heading">
-                            <p>Property name*</p>
+                            <p>{t("property-name")}*</p>
                         </label>
                         <select
                             id="property1"
@@ -194,7 +196,7 @@ export function Search() {
                             onChange={(e) => setProperty1(e.target.value)}
                         >
                             <option value="" disabled>
-                                Search all properties
+                            {t("search-properties")}
                             </option>
                             {data.map((property: ListProperty) => (
                                 <option
@@ -207,7 +209,7 @@ export function Search() {
                             ))}
                         </select>
 
-                        <p className="dropdown-heading-guest">Select dates*</p>
+                        <p className="dropdown-heading-guest">{t("select-date")}*</p>
 
                         <button
                             className="dates"
@@ -216,7 +218,7 @@ export function Search() {
                             <div className="date-text">
                                 {startDate
                                     ? startDate.toDateString().substring(4)
-                                    : "Check-in"}
+                                    : t("check-in")}
                             </div>
                             <div className="arrow">
                                 <svg
@@ -235,7 +237,7 @@ export function Search() {
                             <div className="date-text">
                                 {endDate
                                     ? endDate.toDateString().substring(4)
-                                    : "Check-out"}
+                                    : t("check-out")}
                             </div>
 
                             <svg
@@ -286,7 +288,7 @@ export function Search() {
                         </div>
                         <div className="guest-rooms">
                             <div>
-                                <p className="dropdown-heading-guest">Guests</p>
+                                <p className="dropdown-heading-guest"> {t("Guests")}</p>
                                 <button
                                     className="dropdown-guest"
                                     onClick={() => setShowGuests(!showGuests)}
@@ -295,12 +297,12 @@ export function Search() {
                                         guestsTeens +
                                         guestsChildren ===
                                     1
-                                        ? "1 guest"
+                                        ? `1  ${t("guest")}`
                                         : `${
                                               guestsAdult +
                                               guestsTeens +
                                               guestsChildren
-                                          } guests`}
+                                          } ${t("guests")}`}
                                 </button>
 
                                 {showGuests && (
@@ -308,10 +310,10 @@ export function Search() {
                                         <div className="guest-counter">
                                             <div>
                                                 <p className="count-title">
-                                                    Adults
+                                                {t("Adults")}
                                                 </p>
                                                 <p className="count-desc">
-                                                    Age 18+
+                                                {t("Age")} 18+
                                                 </p>
                                             </div>
                                             <div className="counter-section">
@@ -350,10 +352,10 @@ export function Search() {
                                         <div className="guest-counter">
                                             <div>
                                                 <p className="count-title">
-                                                    Teens
+                                                {t("Teens")}
                                                 </p>
                                                 <p className="count-desc">
-                                                    Age 13-17
+                                                {t("Age")} 13-17
                                                 </p>
                                             </div>
                                             <div className="counter-section">
@@ -392,10 +394,10 @@ export function Search() {
                                         <div className="guest-counter">
                                             <div>
                                                 <p className="count-title">
-                                                    Kids
+                                                {t("Kids")}
                                                 </p>
                                                 <p className="count-desc">
-                                                    Age 0-12
+                                                {t("Age")} 0-12
                                                 </p>
                                             </div>
                                             <div className="counter-section">
@@ -438,7 +440,7 @@ export function Search() {
                                     htmlFor="property3"
                                     className="dropdown-heading-room"
                                 >
-                                    Rooms{" "}
+                                   {t("Rooms")}{" "}
                                 </label>
                                 <select
                                     id="property3"
@@ -479,12 +481,12 @@ export function Search() {
                                     fill="black"
                                 />
                             </svg>
-                            I need an Accessible Room
+                            {t("chair")}
                         </label>
                     </div>
                     <div className="button-search">
                         <button className="search-btn" onClick={handleSubmit}>
-                            SEARCH
+                        {t("SEARCH")}
                         </button>
                         <div id="error-msg" className="error"></div>
                     </div>

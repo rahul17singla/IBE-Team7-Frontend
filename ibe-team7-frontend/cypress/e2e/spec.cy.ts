@@ -42,7 +42,6 @@ describe('E2E Integration Tests', () => {
 
 
 
-  // -------------------
 
 
   it('displays the property name dropdown', () => {
