@@ -1,4 +1,26 @@
 {
     "greeting": "Bonjour, Bienvenue !",
-    "description":  "Bienvenue à <1>{{channel}}</1>"
+    "description":  "Bienvenue à <1>{{channel}}</1>",
+
+
+    "Heading":"Moteur de réservation Internet",
+    "chair":"J'ai besoin d'une chambre accessible",
+    "select-date":"Sélectionnez les dates",
+    "property-name":"Nom de la propriété",
+    "check-in":"Enregistrement",
+    "check-out":"Vérifier",
+    "Guests":"Invités",
+    "Rooms":"Pièces",
+    "search-properties":"Rechercher toutes les propriétés",
+    "Property":"Propriété",
+    "Option":"Option",
+    "SEARCH":"RECHERCHE",
+    "Adults":"Adultes",
+    "Teens":"Les adolescents",
+    "Kids":"Enfants",
+    "Age":"Âge",
+    "copyright":"Tous droits réservés",
+    "guest":"invité",
+    "guests":"invités"
+    
 }

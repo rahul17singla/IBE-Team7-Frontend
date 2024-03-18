@@ -10,6 +10,7 @@ import { setCurrency } from "../../redux/currencySlice";
 export function Header() {
     const { i18n } = useTranslation();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedLanguage = event.target.value;
@@ -47,7 +48,7 @@ export function Header() {
                     Kickdrum
                 </Link>
                 <Link to={"/"} className="header-left__text">
-                    Internet Booking Engine
+                {t("Heading")}
                 </Link>
             </div>
             <div className="header-right">

@@ -316,3 +316,60 @@
 .error {
     color: red;
 }
+
+
+@media screen and (max-width: 700px) {
+    .react-calendar--doubleView .react-calendar__viewContainer {
+        display: flex;
+        margin: -0.5em;
+        flex-direction: column;
+    }
+
+
+    .react-calendar__navigation__label{
+        font-size: 16px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+    .calendar{
+        height: 81.8rem;
+    }
+    .calendar-view {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 40rem;
+        background-color: $PRIMARY_WHITE;
+   
+    }
+    .react-calendar, .react-calendar *, .react-calendar *:before, .react-calendar *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 40rem;
+    }
+
+
+}
+
+
+@media screen and (max-width: 1106px){
+    .calendar-view {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 47.7rem;
+        width: auto;
+        background-color: $PRIMARY_WHITE;
+      
+    }
+    .calendar{
+        margin-right: 5rem;
+    }
+
+}
