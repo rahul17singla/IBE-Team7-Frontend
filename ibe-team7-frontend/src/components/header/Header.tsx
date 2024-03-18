@@ -22,16 +22,26 @@ export function Header() {
     ) => {
         const selectedCurrency = event.target.value.toString();
         console.log(selectedCurrency);
-
-        const response = await fetch(
-            `https://v6.exchangerate-api.com/v6/f4c2fbc9af7f2297f39b0297/latest/USD`
-        ).then((response) => response.json());
-        dispatch(
-            setCurrency({
-                currency: selectedCurrency,
-                value: response.conversion_rates[selectedCurrency],
-            })
-        );
+    
+        try {
+            const response = await fetch(
+                `https://v6.exchangerate-api.com/v6/402eb762dd2cda9be698be0d/latest/USD`
+            );
+            if (!response.ok) {
+                throw new Error('Failed to fetch currency conversion rates');
+            }
+            const data = await response.json();
+            console.log(data);
+    
+            dispatch(
+                setCurrency({
+                    currency: selectedCurrency,
+                    value: data.conversion_rates[selectedCurrency],
+                })
+            );
+        } catch (error) {
+            console.error('Error fetching currency conversion rates:', error);
+        }
     };
 
     return (
