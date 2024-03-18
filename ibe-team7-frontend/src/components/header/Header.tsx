@@ -22,17 +22,17 @@ export function Header() {
     ) => {
         const selectedCurrency = event.target.value.toString();
         console.log(selectedCurrency);
-    
+
         try {
             const response = await fetch(
                 `https://v6.exchangerate-api.com/v6/402eb762dd2cda9be698be0d/latest/USD`
             );
             if (!response.ok) {
-                throw new Error('Failed to fetch currency conversion rates');
+                throw new Error("Failed to fetch currency conversion rates");
             }
             const data = await response.json();
             console.log(data);
-    
+
             dispatch(
                 setCurrency({
                     currency: selectedCurrency,
@@ -40,7 +40,7 @@ export function Header() {
                 })
             );
         } catch (error) {
-            console.error('Error fetching currency conversion rates:', error);
+            console.error("Error fetching currency conversion rates:", error);
         }
     };
 
@@ -58,7 +58,7 @@ export function Header() {
                     Kickdrum
                 </Link>
                 <Link to={"/"} className="header-left__text">
-                {t("Heading")}
+                    {t("Heading")}
                 </Link>
             </div>
             <div className="header-right">
