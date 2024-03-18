@@ -6,7 +6,7 @@ import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
 import { DateObj } from "../../types/DateObj";
 import { ListProperty } from "../../types/Property";
-import {  useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 export function Search() {
     const { t } = useTranslation();
@@ -31,7 +31,21 @@ export function Search() {
     // const roomMap = new Map();
     const [roomMap, setRoomMap] = useState(new Map());
 
+    const [roomsShow, setRoomsShow] = useState<boolean>(false);
+
     useEffect(() => {
+        const configLoad = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8088/config"
+                );
+                console.log(response.data.propertyConfig.first);
+                setRoomsShow(response.data.propertyConfig.first.rooms.show);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
         const fetchRoomData = async () => {
             try {
                 const response = await axios.get(
@@ -54,6 +68,7 @@ export function Search() {
             }
         };
 
+        configLoad();
         fetchData();
         fetchRoomData();
     }, []);
@@ -196,7 +211,7 @@ export function Search() {
                             onChange={(e) => setProperty1(e.target.value)}
                         >
                             <option value="" disabled>
-                            {t("search-properties")}
+                                {t("search-properties")}
                             </option>
                             {data.map((property: ListProperty) => (
                                 <option
@@ -209,7 +224,9 @@ export function Search() {
                             ))}
                         </select>
 
-                        <p className="dropdown-heading-guest">{t("select-date")}*</p>
+                        <p className="dropdown-heading-guest">
+                            {t("select-date")}*
+                        </p>
 
                         <button
                             className="dates"
@@ -288,7 +305,10 @@ export function Search() {
                         </div>
                         <div className="guest-rooms">
                             <div>
-                                <p className="dropdown-heading-guest"> {t("Guests")}</p>
+                                <p className="dropdown-heading-guest">
+                                    {" "}
+                                    {t("Guests")}
+                                </p>
                                 <button
                                     className="dropdown-guest"
                                     onClick={() => setShowGuests(!showGuests)}
@@ -310,10 +330,10 @@ export function Search() {
                                         <div className="guest-counter">
                                             <div>
                                                 <p className="count-title">
-                                                {t("Adults")}
+                                                    {t("Adults")}
                                                 </p>
                                                 <p className="count-desc">
-                                                {t("Age")} 18+
+                                                    {t("Age")} 18+
                                                 </p>
                                             </div>
                                             <div className="counter-section">
@@ -352,10 +372,10 @@ export function Search() {
                                         <div className="guest-counter">
                                             <div>
                                                 <p className="count-title">
-                                                {t("Teens")}
+                                                    {t("Teens")}
                                                 </p>
                                                 <p className="count-desc">
-                                                {t("Age")} 13-17
+                                                    {t("Age")} 13-17
                                                 </p>
                                             </div>
                                             <div className="counter-section">
@@ -394,10 +414,10 @@ export function Search() {
                                         <div className="guest-counter">
                                             <div>
                                                 <p className="count-title">
-                                                {t("Kids")}
+                                                    {t("Kids")}
                                                 </p>
                                                 <p className="count-desc">
-                                                {t("Age")} 0-12
+                                                    {t("Age")} 0-12
                                                 </p>
                                             </div>
                                             <div className="counter-section">
@@ -435,29 +455,31 @@ export function Search() {
                                     </div>
                                 )}
                             </div>
-                            <div>
-                                <label
-                                    htmlFor="property3"
-                                    className="dropdown-heading-room"
-                                >
-                                   {t("Rooms")}{" "}
-                                </label>
-                                <select
-                                    id="property3"
-                                    className="dropdown-room"
-                                    value={property3}
-                                    onChange={(e) => {
-                                        setProperty3(e.target.value);
-                                    }}
-                                >
-                                    <option value="">
-                                        <p className="text">1</p>
-                                    </option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                            </div>
+                            {roomsShow && (
+                                <div>
+                                    <label
+                                        htmlFor="property3"
+                                        className="dropdown-heading-room"
+                                    >
+                                        {t("Rooms")}{" "}
+                                    </label>
+                                    <select
+                                        id="property3"
+                                        className="dropdown-room"
+                                        value={property3}
+                                        onChange={(e) => {
+                                            setProperty3(e.target.value);
+                                        }}
+                                    >
+                                        <option value="">
+                                            <p className="text">1</p>
+                                        </option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            )}
                         </div>
 
                         <label className="accessible">
@@ -486,7 +508,7 @@ export function Search() {
                     </div>
                     <div className="button-search">
                         <button className="search-btn" onClick={handleSubmit}>
-                        {t("SEARCH")}
+                            {t("SEARCH")}
                         </button>
                         <div id="error-msg" className="error"></div>
                     </div>
