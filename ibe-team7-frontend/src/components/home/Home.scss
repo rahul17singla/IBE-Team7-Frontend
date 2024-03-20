@@ -1,6 +1,4 @@
 .main {
-    // margin-top: 2vh;
-    //   margin-bottom: 8rem;
     padding: 2rem;
     width: 100%;
     height: 85vh;
@@ -14,7 +12,27 @@
     
 }
 .btn {
-    max-height: 30px;
+    max-height: 3rem;
+}
+.home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    //   overflow-y: hidden;
+}
+
+@media screen and (max-width: 512px) {
+    .main {
+        padding: 2rem 1rem;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .main {
+        height: 100vh;
+        background-size: cover;
+        overflow-y: scroll;
+    }
 }
 .home {
     display: flex;
