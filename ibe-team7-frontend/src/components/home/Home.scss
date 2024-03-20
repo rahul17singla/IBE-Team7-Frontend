@@ -1,20 +1,14 @@
 .main {
-    // margin-top: 2vh;
-    //   margin-bottom: 8rem;
     padding: 2rem;
     width: 100%;
     height: 85vh;
     padding-left: 10%;
     display: flex;
-    //   flex-direction: column;
-    //   justify-content: space-around;
-    //   align-items: center;
     background-image: url("/valeriia-bugaiova-_pPHgeHz1uk-unsplash.jpg");
     background-size: cover;
-    
 }
 .btn {
-    max-height: 30px;
+    max-height: 3rem;
 }
 .home {
     display: flex;
@@ -35,6 +29,4 @@
         background-size: cover;
         overflow-y: scroll;
     }
-
 }
-

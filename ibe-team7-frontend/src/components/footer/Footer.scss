@@ -2,7 +2,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 8rem;
+    height: 6rem;
     position: fixed;
     color: #ffffff;
     background-color: #130739;
@@ -13,8 +13,8 @@
 }
 
 .Kimg {
-    width: 141px;
-    height: 25px;
+    width: 13rem;
+    height: 2rem;
     position: absolute; // Ensure position is set for top/left properties to take effect
     margin-left: 5rem;
 }
@@ -24,41 +24,42 @@
     margin-bottom: 2rem;
 }
 .footerRight {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-weight: 400;
     text-align: right;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
     margin-right: 5rem;
 }
 
 @media screen and (max-width: 768px) {
     .footer {
-        height: 10rem;
+        height: 8rem;
     }
     .Kimg {
-        width: 100px;
-        height: 20px;
-        bottom: 4.5rem;
-        left: 3rem;
+        width: 8rem;
+        height: 1.8rem;
+        bottom: 3.4rem;
+        left: 0rem;
     }
     .footerRight {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         margin-right: 2rem;
     }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 576px) {
     .footer {
-        height: 12rem;
+        height: 8rem;
     }
     .Kimg {
-        width: 70px;
-        height: 15px;
-        bottom: 5.5rem;
-        left: 1.5rem;
+        width: 7rem;
+        height: 1.5rem;
+        bottom: 3.5rem;
+        left: 0rem;
+        margin-left: 2rem;
     }
     .footerRight {
-        font-size: 1.2rem;
+        font-size: 1rem;
         margin-right: 1rem;
     }
 }
