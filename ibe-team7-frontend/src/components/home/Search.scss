@@ -21,6 +21,9 @@
 .search-text {
     margin: 0;
 }
+.hi {
+    padding: 10px;
+}
 .dropdown {
     border: 1px solid #ccc;
     background-color: $PRIMARY_WHITE;
@@ -363,7 +366,6 @@
         flex-direction: column;
     }
     .calendar {
-        // height: 60%;
     }
     .calendar-view {
         display: flex;

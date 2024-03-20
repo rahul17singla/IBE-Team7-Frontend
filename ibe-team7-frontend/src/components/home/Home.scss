@@ -4,8 +4,12 @@
     height: 85vh;
     padding-left: 10%;
     display: flex;
+    //   flex-direction: column;
+    //   justify-content: space-around;
+    //   align-items: center;
     background-image: url("/valeriia-bugaiova-_pPHgeHz1uk-unsplash.jpg");
     background-size: cover;
+    
 }
 .btn {
     max-height: 3rem;
@@ -30,3 +34,25 @@
         overflow-y: scroll;
     }
 }
+.home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    //   overflow-y: hidden;
+}
+
+@media screen and (max-width: 512px) {
+    .main {
+        padding: 2rem 1rem;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .main {
+        height: 100vh;
+        background-size: cover;
+        overflow-y: scroll;
+    }
+
+}
+

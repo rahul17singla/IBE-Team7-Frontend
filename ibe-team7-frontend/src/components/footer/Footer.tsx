@@ -1,6 +1,7 @@
 import "./Footer.scss";
 import image from "../../assets/image.png";
-import { useTranslation } from "react-i18next";
+
+import {  useTranslation } from "react-i18next";
 export function Footer() {
     const { t } = useTranslation();
     return (
