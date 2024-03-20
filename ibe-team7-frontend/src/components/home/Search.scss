@@ -378,8 +378,9 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: flex-end;
-        width: 40rem;
+        align-items: center;
+        height: 47.7rem;
+        width: auto;
         background-color: $PRIMARY_WHITE;
     }
     .react-calendar,
@@ -393,11 +394,11 @@
     }
 }
 
-@media screen and (max-width: 1106px) {
+@media screen and (max-width: 1106px) and (min-width: 700px) {
     .search-box {
         padding: 1.5rem;
         width: 80%;
-        height: 60%;
+        height: 80%;
     }
     .calendar-view {
         display: flex;
