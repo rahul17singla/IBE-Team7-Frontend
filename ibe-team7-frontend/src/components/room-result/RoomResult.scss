@@ -1,0 +1,407 @@
+@import "../scss-variables/variables.scss";
+
+.bagimage {
+    height: 25vh;
+    width: 100%;
+    z-index: -2;
+    background-image: url("room-result-bgunsplash.jpg");
+    background-position: right;
+}
+
+.options {
+    height: 9.2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #e4e4e4;
+}
+
+.css-10mg1vw-MuiStepper-root {
+    width: 60%;
+}
+
+.filter {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 8.5rem;
+    margin-right: 8.5rem;
+}
+
+.filteritem {
+    height: 6.6rem;
+    width: 15rem;
+    border: 1px solid black;
+}
+
+.bottomcontent {
+    margin-top: 3.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 8.5rem;
+    margin-right: 8.5rem;
+}
+.bottomfilter {
+    //   height: 29rem;
+    height: auto;
+    width: 29.3rem;
+    border: 1px solid greenyellow;
+    background-color: #eff0f1;
+}
+
+.itinerary {
+    width: 33rem;
+    height: 49.4rem;
+    border: 1px solid greenyellow;
+}
+
+.result-dropdown-guest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    background-color: $PRIMARY_WHITE;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
+    background-size: 15px; /* Adjust the size of the arrow */
+    border-radius: 5px;
+    width: 264px;
+    // min-height: 68px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    color: black;
+    font-style: italic;
+    font-size: 14px;
+    padding: 15px;
+}
+.result-dropdown-heading-guest {
+    min-width: 200px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    padding-top: 1px;
+    font-weight: 400px;
+    color: #858685;
+}
+.result-dropdown-room {
+    border: 1px solid #ccc;
+    background-color: $PRIMARY_WHITE;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center; /* Shift the arrow 10px to the left */
+    background-size: 15px; /* Adjust the size of the arrow */
+    border-radius: 5px;
+    // width: 100%;
+    width: 9.2rem;
+    // min-height: 6.8rem;
+    height: 100%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    color: black;
+    font-style: italic;
+    font-size: 14px;
+    padding: 17px;
+    // margin-left: 15px;
+}
+.result-roomOption {
+    color: $PRIMARY_GRAY;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    &:hover {
+        background-color: $PRIMARY_BLUE;
+    }
+}
+.result-dropdown-heading-room {
+    // width: 100%;
+    // margin-bottom: 5px;
+    font-size: 14px;
+    padding-top: 1px;
+    font-weight: 400;
+    // margin-left: 15px;
+}
+.guest-rooms {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 292px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.result-room-feature {
+    // width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.result-button-search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+}
+.result-search-btn {
+    width: 100%;
+    height: 100%;
+    background-color: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
+    border-radius: 5px;
+    font-weight: 700;
+}
+.result-guests-dropdown {
+    padding: 17px;
+    border: 1px solid $PRIMARY_GRAY;
+    border-radius: 3px;
+    background: $PRIMARY_WHITE;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+}
+.result-guest-counter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.result-count-btn {
+    background-color: $PRIMARY_WHITE;
+    border: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.result-count-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+.result-count-desc {
+    font-size: 14px;
+    font-weight: 400;
+}
+.result-counter-text {
+    font-size: 16px;
+    font-weight: 400;
+}
+.result-counter-section {
+    display: flex;
+    align-items: center;
+}
+
+.result-calendar {
+    border-radius: 5px;
+    position: absolute;
+    background: $PRIMARY_WHITE;
+}
+.result-calendar-top {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+// .tile-price {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 1rem;
+//   font-size: 12px;
+//   font-weight: 400;
+// }
+
+// .calendar-footer {
+//   height: 80px;
+// }
+.result-dates {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #c1c2c2;
+    width: 40rem;
+    height: 100%;
+    padding: 12px;
+    background-color: transparent;
+}
+
+// .label-div {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .arrow {
+//   width: 16px;
+//   display: flex;
+//   align-items: center;
+// }
+// .calendar-view {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: center;
+//   height: 47.7rem;
+//   width: 89.6rem;
+//   background-color: $PRIMARY_WHITE;
+// }
+
+.result-apply-dates {
+    width: 100%;
+    padding-right: 3rem;
+    display: flex;
+    justify-content: flex-end;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.result-apply-dates__button {
+    width: 12.9rem;
+    height: 4rem;
+    background-color: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
+    border-radius: 5px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 4%;
+}
+// .react-calendar {
+//   width: 100%;
+// }
+// .react-calendar__viewContainer {
+//   gap: 1rem;
+// }
+
+// .react-calendar__tile {
+//   height: 5rem;
+// }
+// .react-calendar__tile--active {
+//   background-color: $PRIMARY_GRAY;
+//   color: #000;
+// }
+// .react-calendar__tile--hasActive:enabled:focus {
+//   background: $PRIMARY_BLUE;
+//   color: $PRIMARY_WHITE;
+// }
+// .react-calendar__tile--hasActive {
+//   background: $PRIMARY_BLUE;
+//   color: $PRIMARY_WHITE;
+// }
+// .react-calendar__month-view__days__day--weekend {
+//   color: #000;
+// }
+// .react-calendar__tile--now {
+//   background: $PRIMARY_WHITE;
+// }
+// .react-calendar__tile--rangeStart {
+//   background-color: $PRIMARY_BLUE;
+//   color: $PRIMARY_WHITE;
+// }
+// .react-calendar__tile--rangeEnd {
+//   background-color: $PRIMARY_BLUE;
+//   color: $PRIMARY_WHITE;
+// }
+// .react-calendar__navigation__next2-button {
+//   display: none;
+// }
+// .react-calendar__navigation__prev2-button {
+//   display: none;
+// }
+// .react-calendar__navigation__label {
+//   font-size: 16px;
+//   font-weight: 700;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-around;
+// }
+// .react-calendar__navigation__label__divider {
+//   display: none;
+// }
+// .react-calendar__month-view__weekdays__weekday {
+//   font-size: 1.5rem;
+//   color: #858685;
+//   abbr {
+//     text-decoration: none;
+//   }
+// }
+
+.room-num {
+    position: absolute;
+    text-align: center;
+    border: 1px solid $PRIMARY_GRAY;
+    width: 100%;
+}
+// .rooms-select {
+//     width: 100%;
+// }
+.result-date-text {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 400;
+}
+.error {
+    color: red;
+}
+
+.heading-filter {
+    font-size: 1.9rem;
+    margin-left: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: 18.6rem;
+    height: 1.9rem;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+.filters-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.filter-btn {
+    height: 2.4rem;
+    width: 2.4rem;
+}
+
+.filters-name {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.arrow-symbol {
+    //   background-color: $PRIMARY_WHITE;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 5px) center; /* Shift the arrow 10px to the left */
+    background-size: 15px; /* Adjust the size of the arrow */
+    border: none;
+    height: 3rem;
+    width: 3rem;
+}
+
+.up {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>'); /* Specify the SVG code for the arrow */
+}
+
+.down {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); /* Specify the SVG code for the arrow */
+}
+.line {
+    width: 24rem;
+}
+
+.input-check {
+    margin-right: 0.5rem;
+}

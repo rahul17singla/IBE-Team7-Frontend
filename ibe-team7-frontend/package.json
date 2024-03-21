@@ -12,6 +12,9 @@
         "test": "vitest"
     },
     "dependencies": {
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.0",
+        "@mui/material": "^5.15.14",
         "@reduxjs/toolkit": "^2.2.1",
         "@sentry/react": "^7.105.0",
         "amazon-cognito-identity-js": "^6.3.12",

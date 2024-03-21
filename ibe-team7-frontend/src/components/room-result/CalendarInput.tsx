@@ -6,7 +6,6 @@ import { RootState } from "../../redux/store";
 import { useEffect, useState } from "react";
 import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
-import "./Search.scss";
 import { setEndDate, setStartDate } from "../../redux/searchSlice";
 
 interface CalendarInputProps {
@@ -136,10 +135,10 @@ export const CalendarInput = ({
     return (
         <>
             <button
-                className="dates"
+                className="result-dates"
                 onClick={() => setShowCalendar(!showCalendar)}
             >
-                <div className="date-text">
+                <div className="result-date-text">
                     {startDate
                         ? startDate.toDateString().substring(4)
                         : t("check-in")}

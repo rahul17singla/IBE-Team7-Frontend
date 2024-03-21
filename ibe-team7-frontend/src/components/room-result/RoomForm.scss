@@ -1,0 +1,13 @@
+.filtercontainer {
+    display: flex;
+    flex-direction: row;
+    padding: 2% 8% 0;
+    justify-content: space-between;
+}
+.result-guest-feature {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    max-width: fit-content;
+}

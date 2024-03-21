@@ -2,20 +2,17 @@ import { useEffect } from "react";
 import { ListProperty } from "../../types/Property";
 import axios from "axios";
 import { t } from "i18next";
+import { setData, setProperty } from "../../redux/searchSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
-interface PropertyInputProps {
-    property: string;
-    setProperty: (property: string) => void;
-    data: ListProperty[];
-    setData: (data: ListProperty[]) => void;
-}
+export const PropertyInput = () => {
+    const dispatch = useDispatch();
+    const property = useSelector(
+        (state: RootState) => state.filterStates.property
+    );
+    const data = useSelector((state: RootState) => state.filterStates.data);
 
-export const PropertyInput = ({
-    property,
-    setProperty,
-    data,
-    setData,
-}: PropertyInputProps) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -24,7 +21,7 @@ export const PropertyInput = ({
                     "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/property"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/property"
                 );
-                setData(response.data.data.listProperties);
+                dispatch(setData(response.data.data.listProperties));
             } catch (error) {
                 console.error(error);
             }
@@ -34,14 +31,14 @@ export const PropertyInput = ({
 
     return (
         <>
-            <label htmlFor="property1" className="dropdown-heading">
+            <label htmlFor="property" className="dropdown-heading">
                 <p>{t("property-name")}*</p>
             </label>
             <select
-                id="property1"
+                id="property"
                 className="dropdown"
                 value={property}
-                onChange={(e) => setProperty(e.target.value)}
+                onChange={(e) => dispatch(setProperty(e.target.value))}
             >
                 <option value="" disabled>
                     {t("search-properties")}
