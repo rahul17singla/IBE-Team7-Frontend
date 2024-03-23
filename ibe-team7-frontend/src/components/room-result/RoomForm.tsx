@@ -22,6 +22,7 @@ import {
     setPriceLessThan,
     setRoomType,
 } from "../../redux/resultSlice";
+import axios from "axios";
 
 export const RoomForm = () => {
     const [showCalendar, setShowCalendar] = useState(false);
@@ -29,6 +30,12 @@ export const RoomForm = () => {
 
     const dispatch = useDispatch();
     const [params] = useSearchParams();
+
+    const roomType = useSelector((state: RootState) => state.results.roomType);
+    const bedTypes = useSelector((state: RootState) => state.results.bedType);
+    const priceLessThan = useSelector(
+        (state: RootState) => state.results.priceLessThan
+    );
 
     const convertToDateObject = (dateString: string) => {
         const [day, month, year] = dateString.split("/").map(Number);
@@ -38,6 +45,8 @@ export const RoomForm = () => {
     };
 
     useEffect(() => {
+
+        const fetchData = async () => {
         console.log(params);
         if (params.has("adults")) {
             dispatch(setGuestsAdult(parseInt(params.get("adults")!)));
@@ -73,7 +82,7 @@ export const RoomForm = () => {
             dispatch(setEndDate(endDateReqd));
         }
         if (params.has("property")) {
-            dispatch(setProperty(parseInt(params.get("property")!)));
+            dispatch(setProperty(params.get("property")!));
         }
         if (params.has("roomType")) {
             const roomTypes = params.get("roomType");
@@ -102,7 +111,37 @@ export const RoomForm = () => {
             const priceLessThan = parseInt(params.get("priceLessThan")!);
             dispatch(setPriceLessThan(priceLessThan));
         }
-    }, []);
+
+
+        try {
+            const response = await axios.post("http://localhost:8088/api/v1/dates", {
+                property: property,
+                startDate: startDate?.toISOString(),
+                endDate: endDate?.toISOString(),
+                roomCount: property3,
+                bedType: bedTypes,
+                roomType: roomType,
+                priceLessThan: priceLessThan,
+                sort: sort
+            });
+            console.log("DATA IS HERE -------------")
+            console.log(startDate?.toISOString()); // Log the response data
+        } catch (error) {
+            console.error("Error:", error); // Log any errors
+        }
+    };
+
+    fetchData(); // Call the asynchronous function
+
+}, []);
+
+
+
+
+
+
+
+
 
     const showGuestFeature = useSelector(
         (state: RootState) => state.filterStates.showGuestFeature
@@ -180,12 +219,75 @@ export const RoomForm = () => {
         dispatch(setGuestsChildren(guestsChildren - 1));
     };
 
-    const handleSubmit = () => {
-        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}`;
+    const sort = useSelector(
+        (state: RootState) => state.results.sort
+    );
+
+
+    const handleSubmit = async() => {
+
+
+
+
+        try {
+            const response = await axios.post("http://localhost:8088/api/v1/dates", {
+                property:property,
+                startDate: startDate?.toISOString(),
+                endDate: endDate?.toISOString(),
+                roomCount: property3,
+                bedType: bedTypes,
+                roomType:roomType,
+                priceLessThan:priceLessThan,
+                sort:sort
+
+            });
+            console.log("DATA IS HERE -------------")
+            console.log(startDate?.toISOString()); // Log the response data
+        } catch (error) {
+            console.error("Error:", error); // Log any errors
+        }
+
+
+        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
 
         // if filters are present then add them in result url
+        if (
+            roomType.length !== 0 &&
+            bedTypes.length !== 0 &&
+            priceLessThan !== 1000000
+        ) {
+            navigate(
+                `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+            );
+        } else if (roomType.length !== 0 && bedTypes.length !== 0) {
+            navigate(`${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}`);
+        } else if (roomType.length !== 0 && priceLessThan !== 1000000) {
+            navigate(
+                `${resultUrl}&roomType=${roomType}&priceLessThan=${priceLessThan}`
+            );
+        } else if (bedTypes.length !== 0 && priceLessThan !== 1000000) {
+            navigate(
+                `${resultUrl}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+            );
+        } else if (roomType.length !== 0) {
+            navigate(`${resultUrl}&roomType=${roomType}`);
+        } else if (bedTypes.length !== 0) {
+            navigate(`${resultUrl}&bedTypes=${bedTypes}`);
+        } else if (priceLessThan !== 1000000) {
+            navigate(`${resultUrl}&priceLessThan=${priceLessThan}`);
+        } else {
+            navigate(resultUrl);
+        }
 
-        navigate(resultUrl);
+        // navigate(resultUrl);
+
+
+        // CALL TO BACKEND HERE
+
+
+      
+
+        
     };
 
     return (

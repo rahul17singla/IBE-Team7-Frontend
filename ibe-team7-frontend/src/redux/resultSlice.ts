@@ -4,12 +4,14 @@ interface ResultFilters {
     roomType: string[];
     bedType: string[];
     priceLessThan: number;
+    sort:number
 }
 
 const initialState: ResultFilters = {
     roomType: [],
     bedType: [],
     priceLessThan: 1000000,
+    sort:0,
 };
 
 const resultSlice = createSlice({
@@ -35,6 +37,9 @@ const resultSlice = createSlice({
         setPriceLessThan(state, action) {
             state.priceLessThan = action.payload;
         },
+        setSort(state, action){
+            state.sort= action.payload;
+        }
     },
 });
 
@@ -44,6 +49,7 @@ export const {
     removeRoomType,
     setPriceLessThan,
     setRoomType,
+    setSort
 } = resultSlice.actions;
 
 export default resultSlice.reducer;

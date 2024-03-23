@@ -8,6 +8,7 @@ import { Footer } from "../footer/Footer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const RoomResult = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
@@ -42,51 +43,84 @@ export const RoomResult = () => {
         (state: RootState) => state.filterStates.guestsChildren
     );
 
+
+    const sort = useSelector(
+        (state: RootState) => state.results.sort
+    );
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}`;
+        const fetchData = async () => {
 
-        if (
-            roomType.length !== 0 &&
-            bedTypes.length !== 0 &&
-            priceLessThan !== 1000000
-        ) {
-            navigate(
-                `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
-            );
-        } else if (roomType.length !== 0 && bedTypes.length !== 0) {
-            navigate(`${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}`);
-        } else if (roomType.length !== 0 && priceLessThan !== 1000000) {
-            navigate(
-                `${resultUrl}&roomType=${roomType}&priceLessThan=${priceLessThan}`
-            );
-        } else if (bedTypes.length !== 0 && priceLessThan !== 1000000) {
-            navigate(
-                `${resultUrl}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
-            );
-        } else if (roomType.length !== 0) {
-            navigate(`${resultUrl}&roomType=${roomType}`);
-        } else if (bedTypes.length !== 0) {
-            navigate(`${resultUrl}&bedTypes=${bedTypes}`);
-        } else if (priceLessThan !== 1000000) {
-            navigate(`${resultUrl}&priceLessThan=${priceLessThan}`);
-        } else {
-            navigate(resultUrl);
-        }
+            try {
+                const response = await axios.post("http://localhost:8088/api/v1/dates", {
+                    property:property,
+                    startDate: startDate?.toISOString(),
+                    endDate: endDate?.toISOString(),
+                    roomCount: property3,
+                    bedType: bedTypes,
+                    roomType:roomType,
+                    priceLessThan:priceLessThan,
+                    sort:sort
+    
+                });
+                console.log("DATA IS HERE -------------")
+                console.log(startDate?.toISOString()); // Log the response data
+            } catch (error) {
+                console.error("Error:", error); // Log any errors
+            }
+
+            
+            const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+    
+            if (
+                roomType.length !== 0 &&
+                bedTypes.length !== 0 &&
+                priceLessThan !== 1000000
+            ) {
+                navigate(
+                    `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+                );
+            } else if (roomType.length !== 0 && bedTypes.length !== 0) {
+                navigate(`${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}`);
+            } else if (roomType.length !== 0 && priceLessThan !== 1000000) {
+                navigate(
+                    `${resultUrl}&roomType=${roomType}&priceLessThan=${priceLessThan}`
+                );
+            } else if (bedTypes.length !== 0 && priceLessThan !== 1000000) {
+                navigate(
+                    `${resultUrl}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+                );
+            } else if (roomType.length !== 0) {
+                navigate(`${resultUrl}&roomType=${roomType}`);
+            } else if (bedTypes.length !== 0) {
+                navigate(`${resultUrl}&bedTypes=${bedTypes}`);
+            } else if (priceLessThan !== 1000000) {
+                navigate(`${resultUrl}&priceLessThan=${priceLessThan}`);
+            } else {
+                navigate(resultUrl);
+            }
+    
+            
+        };
+    
+        fetchData(); // Call the asynchronous function
+    
     }, [
-        property,
-        property3,
-        startDate,
-        endDate,
-        guestsAdult,
-        guestsTeens,
-        guestsChildren,
+        // property,
+        // property3,
+        // startDate,
+        // endDate,
+        // guestsAdult,
+        // guestsTeens,
+        // guestsChildren,
         roomType,
         bedTypes,
         priceLessThan,
         navigate,
     ]);
+    
 
     const totalSteps = () => {
         return steps.length;

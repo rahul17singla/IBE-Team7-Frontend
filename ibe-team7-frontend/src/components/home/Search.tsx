@@ -24,6 +24,7 @@ import {
     setShowTeen,
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
+import { setBedType } from "../../redux/resultSlice";
 
 export function Search() {
     const { t } = useTranslation();
@@ -86,6 +87,23 @@ export function Search() {
         (state: RootState) => state.filterStates.maxGuests
     );
 
+    const sort = useSelector(
+        (state: RootState) => state.results.sort
+    );
+
+    const bedType = useSelector(
+        (state: RootState) => state.results.bedType
+    );
+
+    const roomType = useSelector(
+        (state: RootState) => state.results.roomType
+    );
+
+    const priceLessThan = useSelector(
+        (state: RootState) => state.results.priceLessThan
+    );
+
+
     // const roomMap: { [date: string]: number } = {};
     // const roomMap = new Map();
 
@@ -96,8 +114,8 @@ export function Search() {
         const configLoad = async () => {
             try {
                 const response = await axios.get(
-                    // "http://localhost:8088/config"
-                    "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
+                    "http://localhost:8088/config"
+                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
                 );
                 dispatch(
@@ -186,7 +204,7 @@ export function Search() {
         dispatch(setGuestsChildren(guestsChildren - 1));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const errorMsg = document.getElementById("error-msg");
         if (!property || !startDate || !endDate) {
             // display message in div
@@ -207,8 +225,32 @@ export function Search() {
             guestsTeens,
             checkboxChecked,
         });
+
+        //  CALL TO BACKEND HERE 
+
+        try {
+            const response = await axios.post("http://localhost:8088/api/v1/dates", {
+                property:property,
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString(),
+                roomCount: property3,
+                bedType: bedType,
+                roomType:roomType,
+                priceLessThan:priceLessThan,
+                sort:sort
+
+            });
+            console.log("DATA IS HERE -------------")
+            console.log(startDate.toISOString()); // Log the response data
+            // navigate("/room-result"); // Redirect to room result page
+        } catch (error) {
+            console.error("Error:", error); // Log any errors
+        }
+
+        
+        
         navigate(
-            `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString()}&endDate=${endDate.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}`
+            `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString()}&endDate=${endDate.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`
         );
     };
 

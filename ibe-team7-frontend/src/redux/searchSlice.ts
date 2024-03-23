@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { FilterStates } from "../types/FilterStates";
 
 const initialState: FilterStates = {
-    property: "",
+    property: "7",
     property3: "1",
     beds: "1",
     checkboxChecked: false,
@@ -13,7 +13,7 @@ const initialState: FilterStates = {
     guestsChildren: 0,
     showGuests: false,
     showGuestFeature: true,
-    showChair: false,
+    showChair: true,
     showAdult: true,
     showTeen: true,
     showKid: true,
@@ -21,7 +21,7 @@ const initialState: FilterStates = {
     maxRooms: 5,
     data: [],
     rooms: [],
-    roomsShow: false,
+    roomsShow: true,
 };
 
 const filterSlice = createSlice({
