@@ -13,7 +13,7 @@ export const RoomResult = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
 
     const [activeStep, setActiveStep] = useState(0);
-    const [completed, setCompleted] = useState<{ [k: number]: boolean }>({});
+    const [completed] = useState<{ [k: number]: boolean }>({});
 
     const roomType = useSelector((state: RootState) => state.results.roomType);
     const bedTypes = useSelector((state: RootState) => state.results.bedType);
