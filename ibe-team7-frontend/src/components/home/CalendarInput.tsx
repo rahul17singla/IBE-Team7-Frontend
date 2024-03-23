@@ -177,8 +177,8 @@ export const CalendarInput = ({
                     />
                 </svg>
             </button>
-            <div className="calendar">
-                {showCalendar && (
+            {showCalendar && (
+                <div className="calendar">
                     <div className="calendar-view">
                         <Calendar
                             onChange={(date) => handleDateChange(date as Date)}
@@ -204,8 +204,8 @@ export const CalendarInput = ({
                             </button>
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </>
     );
 };

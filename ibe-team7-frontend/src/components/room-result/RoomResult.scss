@@ -155,6 +155,7 @@
     color: $PRIMARY_WHITE;
     border-radius: 5px;
     font-weight: 700;
+    cursor: pointer;
 }
 .result-guests-dropdown {
     padding: 17px;
@@ -196,8 +197,20 @@
 
 .result-calendar {
     border-radius: 5px;
-    position: absolute;
+    position: relative;
     background: $PRIMARY_WHITE;
+    z-index: 5;
+}
+.result-calendar-view {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: $PRIMARY_WHITE;
+    z-index: 3;
+    border: #858685 1px solid;
 }
 .result-calendar-top {
     font-size: 1.8rem;
@@ -218,7 +231,7 @@
 // }
 .result-dates {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     border: 1px solid #c1c2c2;
     width: 40rem;
@@ -335,6 +348,8 @@
     text-align: center;
     border: 1px solid $PRIMARY_GRAY;
     width: 100%;
+    background-color: $PRIMARY_WHITE;
+    z-index: 7;
 }
 // .rooms-select {
 //     width: 100%;
@@ -361,8 +376,6 @@
 .filters {
     display: flex;
     flex-direction: column;
-    margin-left: 3rem;
-    margin-right: 3rem;
 }
 .filters-heading {
     display: flex;
@@ -404,4 +417,21 @@
 
 .input-check {
     margin-right: 0.5rem;
+}
+
+.result-page-container {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
+    padding: 0 8%;
+    // margin-bottom: 15%;
+}
+
+.filter-rooms-container {
+    display: flex;
+    flex-direction: row;
+    margin: 2% 0;
+    gap: 2%;
+    // justify-content: space-between;
 }

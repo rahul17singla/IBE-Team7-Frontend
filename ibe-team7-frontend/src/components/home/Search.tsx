@@ -207,8 +207,9 @@ export function Search() {
             guestsTeens,
             checkboxChecked,
         });
-        navigate("/room-result");
-        // window.location.href = `/room-result`;
+        navigate(
+            `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString()}&endDate=${endDate.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}`
+        );
     };
 
     return (

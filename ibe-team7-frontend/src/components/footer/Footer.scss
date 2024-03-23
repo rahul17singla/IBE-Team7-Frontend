@@ -3,13 +3,14 @@
     left: 0;
     right: 0;
     height: 6rem;
-    position: fixed;
+    // position: fixed;
     color: #ffffff;
     background-color: #130739;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 3;
 }
 
 .Kimg {

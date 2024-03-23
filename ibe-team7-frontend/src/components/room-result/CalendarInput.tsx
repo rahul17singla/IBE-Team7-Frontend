@@ -157,7 +157,7 @@ export const CalendarInput = ({
                         />
                     </svg>
                 </div>
-                <div className="date-text">
+                <div className="result-date-text">
                     {endDate
                         ? endDate.toDateString().substring(4)
                         : t("check-out")}
@@ -176,14 +176,14 @@ export const CalendarInput = ({
                     />
                 </svg>
             </button>
-            <div className="calendar">
+            <div className="result-calendar">
                 {showCalendar && (
-                    <div className="calendar-view">
+                    <div className="result-calendar-view">
                         <Calendar
                             onChange={(date) => handleDateChange(date as Date)}
                             value={[startDate!, endDate!]}
                             tileContent={tileContent}
-                            showDoubleView
+                            // showDoubleView
                             showNeighboringMonth={false}
                             showFixedNumberOfWeeks={false}
                             view="month"

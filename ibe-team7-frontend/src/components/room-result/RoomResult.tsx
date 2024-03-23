@@ -2,14 +2,91 @@ import "./RoomResult.scss";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Step1Page } from "./Step1Page";
+import { Footer } from "../footer/Footer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useNavigate } from "react-router-dom";
 
 export const RoomResult = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
 
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState<{ [k: number]: boolean }>({});
+
+    const roomType = useSelector((state: RootState) => state.results.roomType);
+    const bedTypes = useSelector((state: RootState) => state.results.bedType);
+    const priceLessThan = useSelector(
+        (state: RootState) => state.results.priceLessThan
+    );
+    const property3 = useSelector(
+        (state: RootState) => state.filterStates.property3
+    );
+    const property = useSelector(
+        (state: RootState) => state.filterStates.property
+    );
+    const startDate = useSelector(
+        (state: RootState) => state.filterStates.startDate
+    );
+    const endDate = useSelector(
+        (state: RootState) => state.filterStates.endDate
+    );
+    const guestsAdult = useSelector(
+        (state: RootState) => state.filterStates.guestsAdult
+    );
+    const guestsTeens = useSelector(
+        (state: RootState) => state.filterStates.guestsTeens
+    );
+    const guestsChildren = useSelector(
+        (state: RootState) => state.filterStates.guestsChildren
+    );
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}`;
+
+        if (
+            roomType.length !== 0 &&
+            bedTypes.length !== 0 &&
+            priceLessThan !== 1000000
+        ) {
+            navigate(
+                `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+            );
+        } else if (roomType.length !== 0 && bedTypes.length !== 0) {
+            navigate(`${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}`);
+        } else if (roomType.length !== 0 && priceLessThan !== 1000000) {
+            navigate(
+                `${resultUrl}&roomType=${roomType}&priceLessThan=${priceLessThan}`
+            );
+        } else if (bedTypes.length !== 0 && priceLessThan !== 1000000) {
+            navigate(
+                `${resultUrl}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+            );
+        } else if (roomType.length !== 0) {
+            navigate(`${resultUrl}&roomType=${roomType}`);
+        } else if (bedTypes.length !== 0) {
+            navigate(`${resultUrl}&bedTypes=${bedTypes}`);
+        } else if (priceLessThan !== 1000000) {
+            navigate(`${resultUrl}&priceLessThan=${priceLessThan}`);
+        } else {
+            navigate(resultUrl);
+        }
+    }, [
+        property,
+        property3,
+        startDate,
+        endDate,
+        guestsAdult,
+        guestsTeens,
+        guestsChildren,
+        roomType,
+        bedTypes,
+        priceLessThan,
+        navigate,
+    ]);
 
     const totalSteps = () => {
         return steps.length;
@@ -32,7 +109,7 @@ export const RoomResult = () => {
             isLastStep() && !allStepsCompleted()
                 ? // It's the last step, but not all steps have been completed,
                   // find the first step that has been completed
-                  steps.findIndex((step, i) => !(i in completed))
+                  steps.findIndex((_, i) => !(i in completed))
                 : activeStep + 1;
         setActiveStep(newActiveStep);
     };
@@ -45,12 +122,7 @@ export const RoomResult = () => {
         setActiveStep(step);
     };
     return (
-        <div
-            style={{
-                overflowY: "auto",
-                height: "100vh",
-            }}
-        >
+        <div>
             <div className="bagimage"></div>
             <div className="options">
                 <Stepper activeStep={activeStep} alternativeLabel>
@@ -119,6 +191,7 @@ export const RoomResult = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

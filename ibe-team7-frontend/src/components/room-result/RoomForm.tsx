@@ -3,23 +3,110 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { t } from "i18next";
 import {
+    setEndDate,
     setGuestsAdult,
     setGuestsChildren,
     setGuestsTeens,
+    setProperty,
+    setProperty3,
     setShowGuests,
+    setStartDate,
 } from "../../redux/searchSlice";
 import { CalendarInput } from "./CalendarInput";
 import { useEffect, useState } from "react";
 import { RoomInput } from "./RoomInput";
 import { BedCount } from "./BedCount";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+    setBedType,
+    setPriceLessThan,
+    setRoomType,
+} from "../../redux/resultSlice";
 
 export const RoomForm = () => {
     const [showCalendar, setShowCalendar] = useState(false);
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+    const [params] = useSearchParams();
+
+    const convertToDateObject = (dateString: string) => {
+        const [day, month, year] = dateString.split("/").map(Number);
+        // Month in JavaScript's Date object is 0-indexed, so we need to subtract 1
+        const newDateObject = new Date(year, month - 1, day);
+        return newDateObject;
+    };
+
+    useEffect(() => {
+        console.log(params);
+        if (params.has("adults")) {
+            dispatch(setGuestsAdult(parseInt(params.get("adults")!)));
+        }
+        if (params.has("kids")) {
+            dispatch(setGuestsChildren(parseInt(params.get("kids")!)));
+        }
+        if (params.has("teens")) {
+            dispatch(setGuestsTeens(parseInt(params.get("teens")!)));
+        }
+        if (params.has("room")) {
+            dispatch(setProperty3(parseInt(params.get("room")!)));
+        }
+        if (params.has("startDate")) {
+            const startDateParam = params.get("startDate")!;
+            console.log(startDateParam);
+            if (startDateParam === "undefined") {
+                dispatch(setStartDate(undefined));
+                return;
+            }
+            const startDateReqd = convertToDateObject(startDateParam);
+            console.log(startDateReqd);
+
+            dispatch(setStartDate(startDateReqd));
+        }
+        if (params.has("endDate")) {
+            const endDateParam = params.get("endDate")!;
+            if (endDateParam === "undefined") {
+                dispatch(setEndDate(undefined));
+                return;
+            }
+            const endDateReqd = convertToDateObject(endDateParam);
+            dispatch(setEndDate(endDateReqd));
+        }
+        if (params.has("property")) {
+            dispatch(setProperty(parseInt(params.get("property")!)));
+        }
+        if (params.has("roomType")) {
+            const roomTypes = params.get("roomType");
+            const roomTypesArray = roomTypes?.split(",");
+            if (roomTypesArray?.length === 1) {
+                dispatch(setRoomType(roomTypesArray[0]));
+            }
+            if (roomTypesArray?.length === 2) {
+                dispatch(setRoomType(roomTypesArray[0]));
+                dispatch(setRoomType(roomTypesArray[1]));
+            }
+        }
+        if (params.has("bedTypes")) {
+            const bedTypes = params.get("bedTypes");
+            const bedTypesArray = bedTypes?.split(",");
+
+            if (bedTypesArray?.length === 1) {
+                dispatch(setBedType(bedTypesArray[0]));
+            }
+            if (bedTypesArray?.length === 2) {
+                dispatch(setBedType(bedTypesArray[0]));
+                dispatch(setBedType(bedTypesArray[1]));
+            }
+        }
+        if (params.has("priceLessThan")) {
+            const priceLessThan = parseInt(params.get("priceLessThan")!);
+            dispatch(setPriceLessThan(priceLessThan));
+        }
+    }, []);
 
     const showGuestFeature = useSelector(
         (state: RootState) => state.filterStates.showGuestFeature
     );
-    const dispatch = useDispatch();
     const guestsAdult = useSelector(
         (state: RootState) => state.filterStates.guestsAdult
     );
@@ -47,6 +134,15 @@ export const RoomForm = () => {
 
     const property3 = useSelector(
         (state: RootState) => state.filterStates.property3
+    );
+    const property = useSelector(
+        (state: RootState) => state.filterStates.property
+    );
+    const startDate = useSelector(
+        (state: RootState) => state.filterStates.startDate
+    );
+    const endDate = useSelector(
+        (state: RootState) => state.filterStates.endDate
     );
 
     useEffect(() => {
@@ -84,7 +180,13 @@ export const RoomForm = () => {
         dispatch(setGuestsChildren(guestsChildren - 1));
     };
 
-    const handleSubmit = () => {};
+    const handleSubmit = () => {
+        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}`;
+
+        // if filters are present then add them in result url
+
+        navigate(resultUrl);
+    };
 
     return (
         <div className="filtercontainer">
