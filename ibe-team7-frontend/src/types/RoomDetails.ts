@@ -3,18 +3,11 @@
 export interface RoomDetails {
     date:         string;
     roomId:       number;
-    roomTypeName: RoomTypeName;
+    roomTypeName: string;
     maxCapacity:  number;
     area:         number;
     singleBed:    number;
     doubleBed:    number;
-}
-
-export enum RoomTypeName {
-    CoupleSuite = "COUPLE_SUITE",
-    FamilyDeluxe = "FAMILY_DELUXE",
-    GardenSuite = "GARDEN_SUITE",
-    GrandDeluxe = "GRAND_DELUXE",
-    StandardSuite = "STANDARD_SUITE",
-    SuperDeluxe = "SUPER_DELUXE",
+    avgPrice:     number;
+    count:        number;
 }

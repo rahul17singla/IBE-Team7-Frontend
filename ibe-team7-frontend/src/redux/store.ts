@@ -3,6 +3,7 @@ import currencyReducer from "./currencySlice";
 import userReducer from "./userSlice";
 import searchReducer from "./searchSlice";
 import resultReducer from "./resultSlice";
+import roomDetailsReducer from "./roomDetailsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         user: userReducer,
         filterStates: searchReducer,
         results: resultReducer,
+        roomDetails: roomDetailsReducer
     },
 });
 

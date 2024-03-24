@@ -5,12 +5,15 @@ import StepButton from "@mui/material/StepButton";
 import { useEffect, useState } from "react";
 import { Step1Page } from "./Step1Page";
 import { Footer } from "../footer/Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { setRoomDetails } from "../../redux/roomDetailsSlice";
 
 export const RoomResult = () => {
+
+    const dispatch=useDispatch();
     const steps = ["Choose Room", "Choose add on", "Checkout"];
 
     const [activeStep, setActiveStep] = useState(0);
@@ -105,7 +108,20 @@ export const RoomResult = () => {
             
         };
     
-        fetchData(); // Call the asynchronous function
+        fetchData().then(() => {
+            // Make GET request after POST request
+            axios.get("http://localhost:8088/api/v1/roomcartdetails")
+                .then(roomDetailsResponse => {
+                    const roomDetails = roomDetailsResponse.data;
+                    console.log("Room Details:", roomDetails);
+                    dispatch(setRoomDetails(roomDetails));
+                    // Further processing if needed...
+                    
+                })
+                .catch(error => {
+                    console.error("Error fetching room details:", error);
+                });
+        });
     
     }, [
         // property,

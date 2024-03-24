@@ -3,8 +3,14 @@ import Doublebed from "../../../assets/doublebed.svg";
 import location from "../../../assets/location.svg";
 import User from "../../../assets/user.svg";
 import "./RoomCard.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 export const RoomCard = () => {
+
+    const roomDetails = useSelector(
+        (state: RootState) => state.roomDetails
+      );
     return (
         <div className="room_card">
             <div>

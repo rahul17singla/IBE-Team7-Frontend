@@ -25,6 +25,7 @@ import {
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
 import { setBedType } from "../../redux/resultSlice";
+import { setRoomDetails } from "../../redux/roomDetailsSlice";
 
 export function Search() {
     const { t } = useTranslation();
@@ -246,6 +247,14 @@ export function Search() {
         } catch (error) {
             console.error("Error:", error); // Log any errors
         }
+
+
+         // Make GET request immediately after POST request
+         const roomDetailsResponse = await axios.get("http://localhost:8088/api/v1/roomcartdetails");
+         const roomDetails = roomDetailsResponse.data;
+         dispatch(setRoomDetails(roomDetails));
+         console.log("Room Details:", roomDetails);
+
 
         
         

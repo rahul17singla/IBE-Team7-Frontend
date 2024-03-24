@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { FilterStates } from "../types/FilterStates";
 
 const initialState: FilterStates = {
-    property: "7",
+    property: "Team 7 Hotel",
     property3: "1",
     beds: "1",
     checkboxChecked: false,

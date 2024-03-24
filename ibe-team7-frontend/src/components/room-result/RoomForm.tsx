@@ -23,6 +23,7 @@ import {
     setRoomType,
 } from "../../redux/resultSlice";
 import axios from "axios";
+import { setArea, setRoomDetails } from "../../redux/roomDetailsSlice";
 
 export const RoomForm = () => {
     const [showCalendar, setShowCalendar] = useState(false);
@@ -30,6 +31,8 @@ export const RoomForm = () => {
 
     const dispatch = useDispatch();
     const [params] = useSearchParams();
+
+    
 
     const roomType = useSelector((state: RootState) => state.results.roomType);
     const bedTypes = useSelector((state: RootState) => state.results.bedType);
@@ -131,9 +134,26 @@ export const RoomForm = () => {
         }
     };
 
-    fetchData(); // Call the asynchronous function
+
+
+
+    fetchData().then(() => {
+        // Make GET request after POST request
+        axios.get("http://localhost:8088/api/v1/roomcartdetails")
+            .then(roomDetailsResponse => {
+                const roomDetails = roomDetailsResponse.data;
+                console.log("Room Details:", roomDetails);
+                // Further processing if needed...
+                dispatch(setRoomDetails(roomDetails));
+            })
+            .catch(error => {
+                console.error("Error fetching room details:", error);
+            });
+    });
 
 }, []);
+
+
 
 
 
@@ -248,6 +268,15 @@ export const RoomForm = () => {
         }
 
 
+         // Make GET request immediately after POST request
+         const roomDetailsResponse = await axios.get("http://localhost:8088/api/v1/roomcartdetails");
+         const roomDetails = roomDetailsResponse.data;
+         dispatch(setRoomDetails(roomDetails));
+         console.log("Room Details:", roomDetails);
+
+
+
+
         const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
 
         // if filters are present then add them in result url
@@ -283,6 +312,7 @@ export const RoomForm = () => {
 
 
         // CALL TO BACKEND HERE
+
 
 
       
