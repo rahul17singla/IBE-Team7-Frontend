@@ -1,22 +1,123 @@
 import { RoomCard } from "./card/RoomCard";
 import down from "../../assets/Down.svg";
 import "./RoomCards.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setSort } from "../../redux/resultSlice";
-
+import axios from "axios";
+import { setRoomDetails } from "../../redux/roomDetailsSlice";
 
 export const RoomCards = () => {
     const [openSortPriceDropdown, setOpenSortPriceDropdown] = useState(false);
-  
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(3); // Number of items to display per page
 
-    const dispatch =useDispatch();
+    const roomDetails = useSelector((state: RootState) => state.roomDetails);
+
+    const dispatch = useDispatch();
+
+    const sort = useSelector((state: RootState) => state.results.sort);
+    const property = useSelector(
+        (state: RootState) => state.filterStates.property
+    );
+    const startDate = useSelector(
+        (state: RootState) => state.filterStates.startDate
+    );
+    const endDate = useSelector(
+        (state: RootState) => state.filterStates.endDate
+    );
+    const property3 = useSelector(
+        (state: RootState) => state.filterStates.property3
+    );
+    const bedTypes = useSelector((state: RootState) => state.results.bedType);
+    const roomType = useSelector((state: RootState) => state.results.roomType);
+    const priceLessThan = useSelector(
+        (state: RootState) => state.results.priceLessThan
+    );
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await axios.post(
+                    "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                    // "http://localhost:8088/api/v1/dates",
+                    {
+                        property: property,
+                        startDate: startDate?.toISOString(),
+                        endDate: endDate?.toISOString(),
+                        roomCount: property3,
+                        bedType: bedTypes,
+                        roomType: roomType,
+                        priceLessThan: priceLessThan,
+                        sort: sort,
+                    }
+                );
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData().then(() => {
+            // Make GET request after POST request
+            axios
+                .get(
+                    "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
+                    // "http://localhost:8088/api/v1/roomcartdetails"
+                )
+                .then((roomDetailsResponse) => {
+                    const roomDetails = roomDetailsResponse.data;
+                    console.log("Room Details:", roomDetails);
+                    // Further processing if needed...
+                    dispatch(setRoomDetails(roomDetails));
+                })
+                .catch((error) => {
+                    console.error("Error fetching room details:", error);
+                });
+        });
+    }, [sort]);
+
+    // Calculate index of the last item to display
+    const indexOfLastItem = currentPage * itemsPerPage;
+    // Calculate index of the first item to display
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    // Get current items to display based on pagination
+    const currentItems = roomDetails.slice(indexOfFirstItem, indexOfLastItem);
+
     return (
         <div className="listrooms">
             <div className="listrooms_menubar">
                 <p className="roomresult_txt">Room Results</p>
                 <div className="roomresults_page_div">
+                    <div className="pagination">
+                        <button
+                            onClick={() =>
+                                setCurrentPage((prevPage) =>
+                                    Math.max(prevPage - 1, 1)
+                                )
+                            }
+                            disabled={currentPage === 1}
+                        >
+                            &lt;
+                        </button>
+                        <button
+                            onClick={() =>
+                                setCurrentPage((prevPage) =>
+                                    Math.min(
+                                        prevPage + 1,
+                                        Math.ceil(
+                                            roomDetails.length / itemsPerPage
+                                        )
+                                    )
+                                )
+                            }
+                            disabled={
+                                currentPage ===
+                                Math.ceil(roomDetails.length / itemsPerPage)
+                            }
+                        >
+                            &gt;
+                        </button>
+                    </div>
                     <p className="roomresults_result_txt">
                         {" "}
                         Showing 1-3 of 6 Results{" "}
@@ -43,10 +144,16 @@ export const RoomCards = () => {
                             // sort price dropdown
                             openSortPriceDropdown && (
                                 <div className="sort_price_dropdown">
-                                    <button className="sort_button" onClick={()=>dispatch(setSort(1))}>
+                                    <button
+                                        className="sort_button"
+                                        onClick={() => dispatch(setSort(1))}
+                                    >
                                         Low to High
                                     </button>
-                                    <button className="sort_button" onClick={()=>dispatch(setSort(2))}>
+                                    <button
+                                        className="sort_button"
+                                        onClick={() => dispatch(setSort(2))}
+                                    >
                                         High to Low
                                     </button>
                                 </div>
@@ -56,9 +163,9 @@ export const RoomCards = () => {
                 </div>
             </div>
             <div className="listrooms_div">
-                <RoomCard />
-                <RoomCard />
-                <RoomCard />
+                {currentItems.map((room) => (
+                    <RoomCard key={room.roomId} room={room} />
+                ))}
             </div>
         </div>
     );

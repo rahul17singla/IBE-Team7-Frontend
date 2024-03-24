@@ -24,7 +24,6 @@ import {
     setShowTeen,
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
-import { setBedType } from "../../redux/resultSlice";
 import { setRoomDetails } from "../../redux/roomDetailsSlice";
 
 export function Search() {
@@ -88,22 +87,15 @@ export function Search() {
         (state: RootState) => state.filterStates.maxGuests
     );
 
-    const sort = useSelector(
-        (state: RootState) => state.results.sort
-    );
+    const sort = useSelector((state: RootState) => state.results.sort);
 
-    const bedType = useSelector(
-        (state: RootState) => state.results.bedType
-    );
+    const bedType = useSelector((state: RootState) => state.results.bedType);
 
-    const roomType = useSelector(
-        (state: RootState) => state.results.roomType
-    );
+    const roomType = useSelector((state: RootState) => state.results.roomType);
 
     const priceLessThan = useSelector(
         (state: RootState) => state.results.priceLessThan
     );
-
 
     // const roomMap: { [date: string]: number } = {};
     // const roomMap = new Map();
@@ -115,8 +107,8 @@ export function Search() {
         const configLoad = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:8088/config"
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
+                    // "http://localhost:8088/config"
+                    "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
                 );
                 dispatch(
@@ -227,37 +219,39 @@ export function Search() {
             checkboxChecked,
         });
 
-        //  CALL TO BACKEND HERE 
+        //  CALL TO BACKEND HERE
 
         try {
-            const response = await axios.post("http://localhost:8088/api/v1/dates", {
-                property:property,
-                startDate: startDate.toISOString(),
-                endDate: endDate.toISOString(),
-                roomCount: property3,
-                bedType: bedType,
-                roomType:roomType,
-                priceLessThan:priceLessThan,
-                sort:sort
-
-            });
-            console.log("DATA IS HERE -------------")
+            await axios.post(
+                "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                // "http://localhost:8088/api/v1/dates",
+                {
+                    property: property,
+                    startDate: startDate.toISOString(),
+                    endDate: endDate.toISOString(),
+                    roomCount: property3,
+                    bedType: bedType,
+                    roomType: roomType,
+                    priceLessThan: priceLessThan,
+                    sort: sort,
+                }
+            );
+            console.log("DATA IS HERE -------------");
             console.log(startDate.toISOString()); // Log the response data
             // navigate("/room-result"); // Redirect to room result page
         } catch (error) {
             console.error("Error:", error); // Log any errors
         }
 
+        // Make GET request immediately after POST request
+        const roomDetailsResponse = await axios.get(
+            "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
+            // "http://localhost:8088/api/v1/roomcartdetails"
+        );
+        const roomDetails = roomDetailsResponse.data;
+        dispatch(setRoomDetails(roomDetails));
+        console.log("Room Details:", roomDetails);
 
-         // Make GET request immediately after POST request
-         const roomDetailsResponse = await axios.get("http://localhost:8088/api/v1/roomcartdetails");
-         const roomDetails = roomDetailsResponse.data;
-         dispatch(setRoomDetails(roomDetails));
-         console.log("Room Details:", roomDetails);
-
-
-        
-        
         navigate(
             `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString()}&endDate=${endDate.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`
         );

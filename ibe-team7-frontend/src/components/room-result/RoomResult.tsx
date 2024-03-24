@@ -12,8 +12,7 @@ import axios from "axios";
 import { setRoomDetails } from "../../redux/roomDetailsSlice";
 
 export const RoomResult = () => {
-
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
     const steps = ["Choose Room", "Choose add on", "Checkout"];
 
     const [activeStep, setActiveStep] = useState(0);
@@ -46,97 +45,97 @@ export const RoomResult = () => {
         (state: RootState) => state.filterStates.guestsChildren
     );
 
-
-    const sort = useSelector(
-        (state: RootState) => state.results.sort
-    );
+    const sort = useSelector((state: RootState) => state.results.sort);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-
+            console.log(property);
             try {
-                const response = await axios.post("http://localhost:8088/api/v1/dates", {
-                    property:property,
-                    startDate: startDate?.toISOString(),
-                    endDate: endDate?.toISOString(),
-                    roomCount: property3,
-                    bedType: bedTypes,
-                    roomType:roomType,
-                    priceLessThan:priceLessThan,
-                    sort:sort
-    
-                });
-                console.log("DATA IS HERE -------------")
+                await axios.post(
+                    "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                    {
+                        property: property,
+                        startDate: startDate?.toISOString(),
+                        endDate: endDate?.toISOString(),
+                        roomCount: property3,
+                        bedType: bedTypes,
+                        roomType: roomType,
+                        priceLessThan: priceLessThan,
+                        sort: sort,
+                    }
+                );
+                console.log("DATA IS HERE -------------");
                 console.log(startDate?.toISOString()); // Log the response data
             } catch (error) {
                 console.error("Error:", error); // Log any errors
             }
-
-            
-            const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
-    
-            if (
-                roomType.length !== 0 &&
-                bedTypes.length !== 0 &&
-                priceLessThan !== 1000000
-            ) {
-                navigate(
-                    `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
-                );
-            } else if (roomType.length !== 0 && bedTypes.length !== 0) {
-                navigate(`${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}`);
-            } else if (roomType.length !== 0 && priceLessThan !== 1000000) {
-                navigate(
-                    `${resultUrl}&roomType=${roomType}&priceLessThan=${priceLessThan}`
-                );
-            } else if (bedTypes.length !== 0 && priceLessThan !== 1000000) {
-                navigate(
-                    `${resultUrl}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
-                );
-            } else if (roomType.length !== 0) {
-                navigate(`${resultUrl}&roomType=${roomType}`);
-            } else if (bedTypes.length !== 0) {
-                navigate(`${resultUrl}&bedTypes=${bedTypes}`);
-            } else if (priceLessThan !== 1000000) {
-                navigate(`${resultUrl}&priceLessThan=${priceLessThan}`);
-            } else {
-                navigate(resultUrl);
-            }
-    
-            
         };
-    
-        fetchData().then(() => {
-            // Make GET request after POST request
-            axios.get("http://localhost:8088/api/v1/roomcartdetails")
-                .then(roomDetailsResponse => {
-                    const roomDetails = roomDetailsResponse.data;
-                    console.log("Room Details:", roomDetails);
-                    dispatch(setRoomDetails(roomDetails));
-                    // Further processing if needed...
-                    
-                })
-                .catch(error => {
-                    console.error("Error fetching room details:", error);
-                });
-        });
-    
+
+        fetchData()
+            .then(() => {
+                // Make GET request after POST request
+                axios
+                    .get(
+                        "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
+                    )
+                    .then((roomDetailsResponse) => {
+                        const roomDetails = roomDetailsResponse.data;
+                        console.log("Room Details:", roomDetails);
+                        dispatch(setRoomDetails(roomDetails));
+                        // Further processing if needed...
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching room details:", error);
+                    });
+            })
+            .then(() => {
+                const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+
+                if (
+                    roomType.length !== 0 &&
+                    bedTypes.length !== 0 &&
+                    priceLessThan !== 1000000
+                ) {
+                    navigate(
+                        `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+                    );
+                } else if (roomType.length !== 0 && bedTypes.length !== 0) {
+                    navigate(
+                        `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}`
+                    );
+                } else if (roomType.length !== 0 && priceLessThan !== 1000000) {
+                    navigate(
+                        `${resultUrl}&roomType=${roomType}&priceLessThan=${priceLessThan}`
+                    );
+                } else if (bedTypes.length !== 0 && priceLessThan !== 1000000) {
+                    navigate(
+                        `${resultUrl}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+                    );
+                } else if (roomType.length !== 0) {
+                    navigate(`${resultUrl}&roomType=${roomType}`);
+                } else if (bedTypes.length !== 0) {
+                    navigate(`${resultUrl}&bedTypes=${bedTypes}`);
+                } else if (priceLessThan !== 1000000) {
+                    navigate(`${resultUrl}&priceLessThan=${priceLessThan}`);
+                } else {
+                    navigate(resultUrl);
+                }
+            });
     }, [
-        // property,
-        // property3,
-        // startDate,
-        // endDate,
-        // guestsAdult,
-        // guestsTeens,
-        // guestsChildren,
+        property,
+        property3,
+        startDate,
+        endDate,
+        guestsAdult,
+        guestsTeens,
+        guestsChildren,
         roomType,
         bedTypes,
         priceLessThan,
         navigate,
     ]);
-    
 
     const totalSteps = () => {
         return steps.length;

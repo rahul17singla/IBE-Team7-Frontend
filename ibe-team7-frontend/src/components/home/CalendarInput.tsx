@@ -44,8 +44,8 @@ export const CalendarInput = ({
         const fetchRoomData = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:8088/api/v1/rooms"
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/rooms"
+                    // "http://localhost:8088/api/v1/rooms"
+                    "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/rooms"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/rooms"
                 );
                 setRooms(response.data);

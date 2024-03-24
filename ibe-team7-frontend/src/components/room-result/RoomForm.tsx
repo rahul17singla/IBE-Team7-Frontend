@@ -23,7 +23,7 @@ import {
     setRoomType,
 } from "../../redux/resultSlice";
 import axios from "axios";
-import { setArea, setRoomDetails } from "../../redux/roomDetailsSlice";
+import { setRoomDetails } from "../../redux/roomDetailsSlice";
 
 export const RoomForm = () => {
     const [showCalendar, setShowCalendar] = useState(false);
@@ -32,137 +32,11 @@ export const RoomForm = () => {
     const dispatch = useDispatch();
     const [params] = useSearchParams();
 
-    
-
     const roomType = useSelector((state: RootState) => state.results.roomType);
     const bedTypes = useSelector((state: RootState) => state.results.bedType);
     const priceLessThan = useSelector(
         (state: RootState) => state.results.priceLessThan
     );
-
-    const convertToDateObject = (dateString: string) => {
-        const [day, month, year] = dateString.split("/").map(Number);
-        // Month in JavaScript's Date object is 0-indexed, so we need to subtract 1
-        const newDateObject = new Date(year, month - 1, day);
-        return newDateObject;
-    };
-
-    useEffect(() => {
-
-        const fetchData = async () => {
-        console.log(params);
-        if (params.has("adults")) {
-            dispatch(setGuestsAdult(parseInt(params.get("adults")!)));
-        }
-        if (params.has("kids")) {
-            dispatch(setGuestsChildren(parseInt(params.get("kids")!)));
-        }
-        if (params.has("teens")) {
-            dispatch(setGuestsTeens(parseInt(params.get("teens")!)));
-        }
-        if (params.has("room")) {
-            dispatch(setProperty3(parseInt(params.get("room")!)));
-        }
-        if (params.has("startDate")) {
-            const startDateParam = params.get("startDate")!;
-            console.log(startDateParam);
-            if (startDateParam === "undefined") {
-                dispatch(setStartDate(undefined));
-                return;
-            }
-            const startDateReqd = convertToDateObject(startDateParam);
-            console.log(startDateReqd);
-
-            dispatch(setStartDate(startDateReqd));
-        }
-        if (params.has("endDate")) {
-            const endDateParam = params.get("endDate")!;
-            if (endDateParam === "undefined") {
-                dispatch(setEndDate(undefined));
-                return;
-            }
-            const endDateReqd = convertToDateObject(endDateParam);
-            dispatch(setEndDate(endDateReqd));
-        }
-        if (params.has("property")) {
-            dispatch(setProperty(params.get("property")!));
-        }
-        if (params.has("roomType")) {
-            const roomTypes = params.get("roomType");
-            const roomTypesArray = roomTypes?.split(",");
-            if (roomTypesArray?.length === 1) {
-                dispatch(setRoomType(roomTypesArray[0]));
-            }
-            if (roomTypesArray?.length === 2) {
-                dispatch(setRoomType(roomTypesArray[0]));
-                dispatch(setRoomType(roomTypesArray[1]));
-            }
-        }
-        if (params.has("bedTypes")) {
-            const bedTypes = params.get("bedTypes");
-            const bedTypesArray = bedTypes?.split(",");
-
-            if (bedTypesArray?.length === 1) {
-                dispatch(setBedType(bedTypesArray[0]));
-            }
-            if (bedTypesArray?.length === 2) {
-                dispatch(setBedType(bedTypesArray[0]));
-                dispatch(setBedType(bedTypesArray[1]));
-            }
-        }
-        if (params.has("priceLessThan")) {
-            const priceLessThan = parseInt(params.get("priceLessThan")!);
-            dispatch(setPriceLessThan(priceLessThan));
-        }
-
-
-        try {
-            const response = await axios.post("http://localhost:8088/api/v1/dates", {
-                property: property,
-                startDate: startDate?.toISOString(),
-                endDate: endDate?.toISOString(),
-                roomCount: property3,
-                bedType: bedTypes,
-                roomType: roomType,
-                priceLessThan: priceLessThan,
-                sort: sort
-            });
-            console.log("DATA IS HERE -------------")
-            console.log(startDate?.toISOString()); // Log the response data
-        } catch (error) {
-            console.error("Error:", error); // Log any errors
-        }
-    };
-
-
-
-
-    fetchData().then(() => {
-        // Make GET request after POST request
-        axios.get("http://localhost:8088/api/v1/roomcartdetails")
-            .then(roomDetailsResponse => {
-                const roomDetails = roomDetailsResponse.data;
-                console.log("Room Details:", roomDetails);
-                // Further processing if needed...
-                dispatch(setRoomDetails(roomDetails));
-            })
-            .catch(error => {
-                console.error("Error fetching room details:", error);
-            });
-    });
-
-}, []);
-
-
-
-
-
-
-
-
-
-
-
     const showGuestFeature = useSelector(
         (state: RootState) => state.filterStates.showGuestFeature
     );
@@ -204,6 +78,157 @@ export const RoomForm = () => {
         (state: RootState) => state.filterStates.endDate
     );
 
+    const convertToDateObject = (dateString: string) => {
+        const [day, month, year] = dateString.split("/").map(Number);
+        // Month in JavaScript's Date object is 0-indexed, so we need to subtract 1
+        const newDateObject = new Date(year, month - 1, day);
+        return newDateObject;
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log(params);
+            if (params.has("adults")) {
+                dispatch(setGuestsAdult(parseInt(params.get("adults")!)));
+            }
+            if (params.has("kids")) {
+                dispatch(setGuestsChildren(parseInt(params.get("kids")!)));
+            }
+            if (params.has("teens")) {
+                dispatch(setGuestsTeens(parseInt(params.get("teens")!)));
+            }
+            if (params.has("room")) {
+                dispatch(setProperty3(parseInt(params.get("room")!)));
+            }
+            if (params.has("startDate")) {
+                const startDateParam = params.get("startDate")!;
+                console.log(startDateParam);
+                if (startDateParam === "undefined") {
+                    dispatch(setStartDate(undefined));
+                    return;
+                }
+                const startDateReqd = convertToDateObject(startDateParam);
+                console.log(startDateReqd);
+
+                dispatch(setStartDate(startDateReqd));
+            }
+            if (params.has("endDate")) {
+                const endDateParam = params.get("endDate")!;
+                if (endDateParam === "undefined") {
+                    dispatch(setEndDate(undefined));
+                    return;
+                }
+                const endDateReqd = convertToDateObject(endDateParam);
+                dispatch(setEndDate(endDateReqd));
+            }
+            if (params.has("property")) {
+                dispatch(setProperty(params.get("property")!));
+            }
+            if (params.has("roomType")) {
+                const roomTypes = params.get("roomType");
+                const roomTypesArray = roomTypes?.split(",");
+                if (roomTypesArray?.length === 1) {
+                    dispatch(setRoomType(roomTypesArray[0]));
+                }
+                if (roomTypesArray?.length === 2) {
+                    dispatch(setRoomType(roomTypesArray[0]));
+                    dispatch(setRoomType(roomTypesArray[1]));
+                }
+            }
+            if (params.has("bedTypes")) {
+                const bedTypes = params.get("bedTypes");
+                const bedTypesArray = bedTypes?.split(",");
+
+                if (bedTypesArray?.length === 1) {
+                    dispatch(setBedType(bedTypesArray[0]));
+                }
+                if (bedTypesArray?.length === 2) {
+                    dispatch(setBedType(bedTypesArray[0]));
+                    dispatch(setBedType(bedTypesArray[1]));
+                }
+            }
+            if (params.has("priceLessThan")) {
+                const priceLessThan = parseInt(params.get("priceLessThan")!);
+                dispatch(setPriceLessThan(priceLessThan));
+            }
+
+            try {
+                await axios.post(
+                    "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                    {
+                        property: property,
+                        startDate: startDate?.toISOString(),
+                        endDate: endDate?.toISOString(),
+                        roomCount: property3,
+                        bedType: bedTypes,
+                        roomType: roomType,
+                        priceLessThan: priceLessThan,
+                        sort: sort,
+                    }
+                );
+                console.log("DATA IS HERE -------------");
+                console.log(startDate?.toISOString()); // Log the response data
+            } catch (error) {
+                console.error("Error:", error); // Log any errors
+            }
+        };
+
+        fetchData()
+            .then(() => {
+                // Make GET request after POST request
+                axios
+                    .get(
+                        "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
+                    )
+                    .then((roomDetailsResponse) => {
+                        const roomDetails = roomDetailsResponse.data;
+                        console.log("Room Details:", roomDetails);
+                        // Further processing if needed...
+                        dispatch(setRoomDetails(roomDetails));
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching room details:", error);
+                    });
+            })
+            .then(() => {
+                const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+
+                if (
+                    roomType.length !== 0 &&
+                    bedTypes.length !== 0 &&
+                    priceLessThan !== 1000000
+                ) {
+                    navigate(
+                        `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+                    );
+                } else if (roomType.length !== 0 && bedTypes.length !== 0) {
+                    navigate(
+                        `${resultUrl}&roomType=${roomType}&bedTypes=${bedTypes}`
+                    );
+                } else if (roomType.length !== 0 && priceLessThan !== 1000000) {
+                    navigate(
+                        `${resultUrl}&roomType=${roomType}&priceLessThan=${priceLessThan}`
+                    );
+                } else if (bedTypes.length !== 0 && priceLessThan !== 1000000) {
+                    navigate(
+                        `${resultUrl}&bedTypes=${bedTypes}&priceLessThan=${priceLessThan}`
+                    );
+                } else if (roomType.length !== 0) {
+                    navigate(`${resultUrl}&roomType=${roomType}`);
+                } else if (bedTypes.length !== 0) {
+                    navigate(`${resultUrl}&bedTypes=${bedTypes}`);
+                } else if (priceLessThan !== 1000000) {
+                    navigate(`${resultUrl}&priceLessThan=${priceLessThan}`);
+                } else {
+                    navigate(resultUrl);
+                }
+            });
+
+        // if (!params) {
+        //     return <div>Loading...</div>;
+        // }
+    }, []);
+
     useEffect(() => {
         if (parseInt(property3) > guestsAdult) {
             dispatch(setGuestsAdult(parseInt(property3)));
@@ -239,43 +264,38 @@ export const RoomForm = () => {
         dispatch(setGuestsChildren(guestsChildren - 1));
     };
 
-    const sort = useSelector(
-        (state: RootState) => state.results.sort
-    );
+    const sort = useSelector((state: RootState) => state.results.sort);
 
-
-    const handleSubmit = async() => {
-
-
-
-
+    const handleSubmit = async () => {
         try {
-            const response = await axios.post("http://localhost:8088/api/v1/dates", {
-                property:property,
-                startDate: startDate?.toISOString(),
-                endDate: endDate?.toISOString(),
-                roomCount: property3,
-                bedType: bedTypes,
-                roomType:roomType,
-                priceLessThan:priceLessThan,
-                sort:sort
-
-            });
-            console.log("DATA IS HERE -------------")
+            // await axios.post("http://localhost:8088/api/v1/dates", {
+            await axios.post(
+                "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                {
+                    property: property,
+                    startDate: startDate?.toISOString(),
+                    endDate: endDate?.toISOString(),
+                    roomCount: property3,
+                    bedType: bedTypes,
+                    roomType: roomType,
+                    priceLessThan: priceLessThan,
+                    sort: sort,
+                }
+            );
+            console.log("DATA IS HERE -------------");
             console.log(startDate?.toISOString()); // Log the response data
         } catch (error) {
             console.error("Error:", error); // Log any errors
         }
 
-
-         // Make GET request immediately after POST request
-         const roomDetailsResponse = await axios.get("http://localhost:8088/api/v1/roomcartdetails");
-         const roomDetails = roomDetailsResponse.data;
-         dispatch(setRoomDetails(roomDetails));
-         console.log("Room Details:", roomDetails);
-
-
-
+        // Make GET request immediately after POST request
+        const roomDetailsResponse = await axios.get(
+            // "http://localhost:8088/api/v1/roomcartdetails"
+            "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
+        );
+        const roomDetails = roomDetailsResponse.data;
+        dispatch(setRoomDetails(roomDetails));
+        console.log("Room Details:", roomDetails);
 
         const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
 
@@ -310,14 +330,7 @@ export const RoomForm = () => {
 
         // navigate(resultUrl);
 
-
         // CALL TO BACKEND HERE
-
-
-
-      
-
-        
     };
 
     return (
