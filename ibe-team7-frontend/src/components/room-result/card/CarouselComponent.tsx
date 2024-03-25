@@ -1,12 +1,36 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 
-export const CarouselComponent = () => {
+export const CarouselComponent = ({ name }: any) => {
+    const [images, setImages] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchImages = async () => {
+            const response = await axios.get(
+                // "http://localhost:8088/config"
+                "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/config"
+                // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
+                // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
+            );
+
+            setImages(response.data.propertyConfig.first[name]);
+        };
+        fetchImages();
+    }, []);
+
     return (
         <div className="carousel-container">
             <Carousel animation="slide" className="carousel">
-                <img src="https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60" />
-                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250" />
-                <img src="https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60" />
+                {images.map((image, index) => (
+                    <img
+                        key={index}
+                        src={image}
+                        alt="room"
+                        className="carousel-image"
+                        width={"320px"}
+                    />
+                ))}
             </Carousel>
         </div>
     );

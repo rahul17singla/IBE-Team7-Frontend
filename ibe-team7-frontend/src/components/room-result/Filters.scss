@@ -8,25 +8,25 @@
         width: 14rem;
         min-width: 14rem;
     }
-    @media screen and (max-width: 942px) {
-        display: flex;
-        justify-content: space-between;
-        background-color: white;
-        height: 40px;
-        width: 100%;
-        padding: 0rem;
-        border-bottom: 1px solid gray;
-        margin-bottom: 3rem;
-        padding-left: 1.5rem;
-        padding-right: 0.3rem;
-        .allfilters_div {
-            display: flex;
-            justify-content: space-between;
-            width: 40%;
-            gap: 1.5rem;
-            margin-right: 2.3rem;
-        }
-    }
+    // @media screen and (max-width: 942px) {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     background-color: white;
+    //     height: 40px;
+    //     width: 100%;
+    //     padding: 0rem;
+    //     border-bottom: 1px solid gray;
+    //     margin-bottom: 3rem;
+    //     padding-left: 1.5rem;
+    //     padding-right: 0.3rem;
+    //     .allfilters_div {
+    //         display: flex;
+    //         justify-content: space-between;
+    //         width: 40%;
+    //         gap: 1.5rem;
+    //         margin-right: 2.3rem;
+    //     }
+    // }
     @media screen and (max-width: 637px) {
         .allfilters_div {
             width: 100%;
@@ -101,4 +101,57 @@
 .filter_dropdown_btn {
     border: none;
     outline: none;
+}
+@media screen and (max-width: 768px) {
+    .allfilters_div {
+        // display: none;display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 1.5rem;
+        margin-right: 2.3rem;
+    }
+    .filter-rooms-container {
+        align-items: center;
+    }
+    .filter_div {
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        border-bottom: none;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .filters {
+        z-index: 8;
+    }
+    //     padding: 0;
+    // }
+    .title_div {
+        display: none;
+    }
+    // .filter_div {
+    //     padding-bottom: 0px;
+    //     margin-bottom: 0px;
+    //     border-bottom: none;
+    // }
+    .filter_data_div {
+        flex-direction: column;
+    }
+    .filter_title {
+        margin-bottom: 0.5rem;
+    }
+    // .alldropdown_div {
+    //     padding: 0;
+    // }
+    .filter_dropdown_btn {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .checkbox_txt {
+        margin-left: 0;
+    }
+    .filters .allfilters_div {
+        height: 100%;
+    }
 }

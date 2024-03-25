@@ -40,7 +40,9 @@ export const RoomCards = () => {
         const fetchData = async () => {
             try {
                 await axios.post(
-                    "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/dates",
+                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
+                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
                     // "http://localhost:8088/api/v1/dates",
                     {
                         property: property,
@@ -61,7 +63,9 @@ export const RoomCards = () => {
             // Make GET request after POST request
             axios
                 .get(
-                    "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
+                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/roomcartdetails"
+                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
+                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
                     // "http://localhost:8088/api/v1/roomcartdetails"
                 )
                 .then((roomDetailsResponse) => {

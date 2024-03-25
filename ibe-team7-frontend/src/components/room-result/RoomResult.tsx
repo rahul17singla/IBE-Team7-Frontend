@@ -54,7 +54,9 @@ export const RoomResult = () => {
             console.log(property);
             try {
                 await axios.post(
-                    "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
+                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/dates",
+                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
                     {
                         property: property,
                         startDate: startDate?.toISOString(),
@@ -78,7 +80,9 @@ export const RoomResult = () => {
                 // Make GET request after POST request
                 axios
                     .get(
-                        "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
+                        "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/roomcartdetails"
+                        // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
+                        // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
                     )
                     .then((roomDetailsResponse) => {
                         const roomDetails = roomDetailsResponse.data;
@@ -137,35 +141,35 @@ export const RoomResult = () => {
         navigate,
     ]);
 
-    const totalSteps = () => {
-        return steps.length;
-    };
+    // const totalSteps = () => {
+    //     return steps.length;
+    // };
 
-    const completedSteps = () => {
-        return Object.keys(completed).length;
-    };
+    // const completedSteps = () => {
+    //     return Object.keys(completed).length;
+    // };
 
-    const isLastStep = () => {
-        return activeStep === totalSteps() - 1;
-    };
+    // const isLastStep = () => {
+    //     return activeStep === totalSteps() - 1;
+    // };
 
-    const allStepsCompleted = () => {
-        return completedSteps() === totalSteps();
-    };
+    // const allStepsCompleted = () => {
+    //     return completedSteps() === totalSteps();
+    // };
 
-    const handleNext = () => {
-        const newActiveStep =
-            isLastStep() && !allStepsCompleted()
-                ? // It's the last step, but not all steps have been completed,
-                  // find the first step that has been completed
-                  steps.findIndex((_, i) => !(i in completed))
-                : activeStep + 1;
-        setActiveStep(newActiveStep);
-    };
+    // const handleNext = () => {
+    //     const newActiveStep =
+    //         isLastStep() && !allStepsCompleted()
+    //             ? // It's the last step, but not all steps have been completed,
+    //               // find the first step that has been completed
+    //               steps.findIndex((_, i) => !(i in completed))
+    //             : activeStep + 1;
+    //     setActiveStep(newActiveStep);
+    // };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    // const handleBack = () => {
+    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // };
 
     const handleStep = (step: number) => () => {
         setActiveStep(step);
@@ -194,7 +198,7 @@ export const RoomResult = () => {
                             <Step1Page />
                         </div>
                     )}
-                    {activeStep === 1 && (
+                    {/* {activeStep === 1 && (
                         <div>
                             <h1>Choose add on</h1>
                             <div className="addon">
@@ -237,7 +241,7 @@ export const RoomResult = () => {
                         <button onClick={handleNext}>
                             {isLastStep() ? "Finish" : "Next"}
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <Footer />

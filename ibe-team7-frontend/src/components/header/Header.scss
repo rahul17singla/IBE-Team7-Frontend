@@ -97,3 +97,27 @@
         margin-right: 2.5rem;
     }
 }
+
+@media screen and (max-width: 425px) {
+    .header {
+        height: 5rem;
+    }
+
+    .header-left {
+        margin-left: 1.5rem;
+    }
+
+    .header-right {
+        margin-right: 1rem;
+        gap: 1rem;
+    }
+    .login-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 1rem;
+    }
+    .language,
+    .currency {
+        font-size: 1.2rem;
+        gap: 0;
+    }
+}

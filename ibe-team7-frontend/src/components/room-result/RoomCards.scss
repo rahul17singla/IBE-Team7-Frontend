@@ -90,3 +90,10 @@
     color: $PRIMARY_GRAY;
     margin-right: 0.5rem;
 }
+@media screen and (max-width: 768px) {
+    .filter-rooms-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+}

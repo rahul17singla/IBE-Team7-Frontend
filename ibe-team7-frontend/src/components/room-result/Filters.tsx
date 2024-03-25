@@ -131,41 +131,50 @@ export function Filters() {
                             <div className="dropdown_div">
                                 <input
                                     type="checkbox"
-                                    onChange={() => {
-                                        priceLessThan === 150
-                                            ? dispatch(
-                                                  setPriceLessThan(1000000)
-                                              )
-                                            : dispatch(setPriceLessThan(150));
-                                    }}
+                                    checked={priceLessThan === 50}
+                                    onChange={() =>
+                                        dispatch(
+                                            setPriceLessThan(
+                                                priceLessThan === 50
+                                                    ? 1000000
+                                                    : 50
+                                            )
+                                        )
+                                    }
+                                />
+                                <p className="checkbox_txt">less than $50</p>
+                            </div>
+                            <div className="dropdown_div">
+                                <input
+                                    type="checkbox"
+                                    checked={priceLessThan === 100}
+                                    onChange={() =>
+                                        dispatch(
+                                            setPriceLessThan(
+                                                priceLessThan === 100
+                                                    ? 1000000
+                                                    : 100
+                                            )
+                                        )
+                                    }
+                                />
+                                <p className="checkbox_txt">less than $100</p>
+                            </div>
+                            <div className="dropdown_div">
+                                <input
+                                    type="checkbox"
+                                    checked={priceLessThan === 150}
+                                    onChange={() =>
+                                        dispatch(
+                                            setPriceLessThan(
+                                                priceLessThan === 150
+                                                    ? 1000000
+                                                    : 150
+                                            )
+                                        )
+                                    }
                                 />
                                 <p className="checkbox_txt">less than $150</p>
-                            </div>
-                            <div className="dropdown_div">
-                                <input
-                                    type="checkbox"
-                                    onChange={() => {
-                                        priceLessThan === 200
-                                            ? dispatch(
-                                                  setPriceLessThan(1000000)
-                                              )
-                                            : dispatch(setPriceLessThan(200));
-                                    }}
-                                />
-                                <p className="checkbox_txt">less than $200</p>
-                            </div>
-                            <div className="dropdown_div">
-                                <input
-                                    type="checkbox"
-                                    onChange={() => {
-                                        priceLessThan === 300
-                                            ? dispatch(
-                                                  setPriceLessThan(1000000)
-                                              )
-                                            : dispatch(setPriceLessThan(300));
-                                    }}
-                                />
-                                <p className="checkbox_txt">less than $300</p>
                             </div>
                         </div>
                     )}
