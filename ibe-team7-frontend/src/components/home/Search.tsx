@@ -109,7 +109,12 @@ export function Search() {
             try {
                 const response = await axios.get(
                     // "http://localhost:8088/config"
-                    BACKEND_URL + "/config"
+                    BACKEND_URL + "/config",
+                    {
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                        },
+                    }
                     // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
                 );

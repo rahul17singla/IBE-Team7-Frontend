@@ -87,9 +87,10 @@ export const RoomForm = () => {
     };
 
     useEffect(() => {
-        const url = window.location.href;
+        const url = window.location.search;
         if (!url.includes("?")) {
             navigate("/");
+            return;
         }
         const fetchData = async () => {
             console.log(params);

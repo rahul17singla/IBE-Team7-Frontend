@@ -51,6 +51,12 @@ export const RoomResult = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const url = window.location.search;
+        if (!url.includes("?")) {
+            navigate("/");
+            return;
+        }
+
         const fetchData = async () => {
             console.log(property);
             try {
