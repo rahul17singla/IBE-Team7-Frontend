@@ -25,6 +25,7 @@ import {
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
 import { setRoomDetails } from "../../redux/roomDetailsSlice";
+import { BACKEND_URL } from "../../constants/Constants";
 
 export function Search() {
     const { t } = useTranslation();
@@ -108,7 +109,7 @@ export function Search() {
             try {
                 const response = await axios.get(
                     // "http://localhost:8088/config"
-                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/config"
+                    BACKEND_URL + "/config"
                     // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
                 );
@@ -224,7 +225,7 @@ export function Search() {
 
         try {
             await axios.post(
-                "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/dates",
+                BACKEND_URL + "/api/v1/dates",
                 // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
                 // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
                 // "http://localhost:8088/api/v1/dates",
@@ -248,7 +249,7 @@ export function Search() {
 
         // Make GET request immediately after POST request
         const roomDetailsResponse = await axios.get(
-            "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/roomcartdetails"
+            BACKEND_URL + "/api/v1/roomcartdetails"
             // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
             // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
             // "http://localhost:8088/api/v1/roomcartdetails"

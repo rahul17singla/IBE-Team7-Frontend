@@ -154,7 +154,7 @@ export const RoomForm = () => {
 
             try {
                 await axios.post(
-                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/dates",
+                    BACKEND_URL + "/api/v1/dates",
                     // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
                     {
@@ -180,7 +180,7 @@ export const RoomForm = () => {
                 // Make GET request after POST request
                 axios
                     .get(
-                        "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/roomcartdetails"
+                        BACKEND_URL + "/api/v1/roomcartdetails"
                         // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
                         // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
                     )
@@ -274,7 +274,7 @@ export const RoomForm = () => {
         try {
             // await axios.post("http://localhost:8088/api/v1/dates", {
             await axios.post(
-                "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/dates",
+                BACKEND_URL + "/api/v1/dates",
                 // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
                 // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
                 {
@@ -297,7 +297,7 @@ export const RoomForm = () => {
         // Make GET request immediately after POST request
         const roomDetailsResponse = await axios.get(
             // "http://localhost:8088/api/v1/roomcartdetails"
-            "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/roomcartdetails"
+            BACKEND_URL + "/api/v1/roomcartdetails"
             // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
             // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
         );

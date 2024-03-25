@@ -5,6 +5,7 @@ import { t } from "i18next";
 import { setData, setProperty } from "../../redux/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { BACKEND_URL } from "../../constants/Constants";
 
 export const PropertyInput = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export const PropertyInput = () => {
             try {
                 const response = await axios.get(
                     // "http://localhost:8088/api/v1/property"
-                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/property"
+                    BACKEND_URL + "/api/v1/property"
                     // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/property"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/property"
                 );

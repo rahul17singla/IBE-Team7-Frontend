@@ -55,7 +55,7 @@ export const RoomResult = () => {
             try {
                 await axios.post(
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
-                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/dates",
+                    BACKEND_URL + "/api/v1/dates",
                     // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
                     {
                         property: property,
@@ -80,7 +80,7 @@ export const RoomResult = () => {
                 // Make GET request after POST request
                 axios
                     .get(
-                        "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/roomcartdetails"
+                        BACKEND_URL + "/api/v1/roomcartdetails"
                         // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
                         // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
                     )

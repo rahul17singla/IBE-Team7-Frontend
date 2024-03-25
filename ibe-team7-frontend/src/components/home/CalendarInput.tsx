@@ -8,6 +8,7 @@ import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
 import "./Search.scss";
 import { setEndDate, setStartDate } from "../../redux/searchSlice";
+import { BACKEND_URL } from "../../constants/Constants";
 
 interface CalendarInputProps {
     showCalendar: boolean;
@@ -45,7 +46,7 @@ export const CalendarInput = ({
             try {
                 const response = await axios.get(
                     // "http://localhost:8088/api/v1/rooms"
-                    "https://d0rh6hot93.execute-api.ap-northeast-1.amazonaws.com/api/v1/rooms"
+                    BACKEND_URL + "/api/v1/rooms"
                     // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/rooms"
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/rooms"
                 );
