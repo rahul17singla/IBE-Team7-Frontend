@@ -10,6 +10,7 @@ import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { setRoomDetails } from "../../redux/roomDetailsSlice";
+import { BACKEND_URL } from "../../constants/Constants";
 
 export const RoomResult = () => {
     const dispatch = useDispatch();
@@ -80,7 +81,7 @@ export const RoomResult = () => {
                 // Make GET request after POST request
                 axios
                     .get(
-                        BACKEND_URL + "/api/v1/roomcartdetails"
+                        `${BACKEND_URL}/api/v1/roomcartdetails`
                         // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
                         // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
                     )

@@ -24,6 +24,7 @@ import {
 } from "../../redux/resultSlice";
 import axios from "axios";
 import { setRoomDetails } from "../../redux/roomDetailsSlice";
+import { BACKEND_URL } from "../../constants/Constants";
 
 export const RoomForm = () => {
     const [showCalendar, setShowCalendar] = useState(false);
@@ -154,7 +155,7 @@ export const RoomForm = () => {
 
             try {
                 await axios.post(
-                    BACKEND_URL + "/api/v1/dates",
+                    `${BACKEND_URL}/api/v1/dates`,
                     // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
                     // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
                     {
@@ -180,7 +181,7 @@ export const RoomForm = () => {
                 // Make GET request after POST request
                 axios
                     .get(
-                        BACKEND_URL + "/api/v1/roomcartdetails"
+                        `${BACKEND_URL}/api/v1/roomcartdetails`
                         // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
                         // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
                     )
@@ -274,7 +275,7 @@ export const RoomForm = () => {
         try {
             // await axios.post("http://localhost:8088/api/v1/dates", {
             await axios.post(
-                BACKEND_URL + "/api/v1/dates",
+                `${BACKEND_URL}/api/v1/dates`,
                 // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
                 // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
                 {
@@ -297,7 +298,7 @@ export const RoomForm = () => {
         // Make GET request immediately after POST request
         const roomDetailsResponse = await axios.get(
             // "http://localhost:8088/api/v1/roomcartdetails"
-            BACKEND_URL + "/api/v1/roomcartdetails"
+            `${BACKEND_URL}/api/v1/roomcartdetails`
             // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
             // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
         );

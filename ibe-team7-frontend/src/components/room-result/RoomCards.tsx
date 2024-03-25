@@ -7,6 +7,7 @@ import { RootState } from "../../redux/store";
 import { setSort } from "../../redux/resultSlice";
 import axios from "axios";
 import { setRoomDetails } from "../../redux/roomDetailsSlice";
+import { BACKEND_URL } from "../../constants/Constants";
 
 export const RoomCards = () => {
     const [openSortPriceDropdown, setOpenSortPriceDropdown] = useState(false);
