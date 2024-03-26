@@ -5,10 +5,13 @@
     width: 20.3rem;
     border: 1px solid gray;
     border-radius: 5px;
-    border: none;
     box-shadow: 0 6px 10px 0 rgba(219, 219, 219, 0.9);
     @media (max-width: 689px) {
         width: 100%;
+    }
+    &:hover {
+        scale: 1.01;
+        box-shadow: 0 6px 10px 0 black;
     }
 }
 .room_content {

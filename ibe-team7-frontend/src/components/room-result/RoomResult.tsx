@@ -102,7 +102,11 @@ export const RoomResult = () => {
                     });
             })
             .then(() => {
-                const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+                const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
+                    "en-GB"
+                )}&endDate=${endDate?.toLocaleDateString(
+                    "en-GB"
+                )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
 
                 if (
                     roomType.length !== 0 &&

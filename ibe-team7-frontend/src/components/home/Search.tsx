@@ -264,8 +264,15 @@ export function Search() {
         dispatch(setRoomDetails(roomDetails));
         console.log("Room Details:", roomDetails);
 
+        console.log(startDate.toLocaleDateString());
+        console.log(startDate.toDateString());
+
         navigate(
-            `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString()}&endDate=${endDate.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`
+            `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString(
+                "en-GB"
+            )}&endDate=${endDate.toLocaleDateString(
+                "en-GB"
+            )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`
         );
     };
 

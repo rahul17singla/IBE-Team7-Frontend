@@ -5,6 +5,9 @@ import User from "../../../assets/user.svg";
 import "./RoomCard.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { Modal } from "@mui/material";
+import { useState } from "react";
+import { RoomModal } from "../../room-modal/RoomModal";
 
 export const RoomCard = ({ room }: any) => {
     const currencyValue = useSelector(
@@ -14,6 +17,19 @@ export const RoomCard = ({ room }: any) => {
     const currencyType = useSelector(
         (state: RootState) => state.currency.currency
     );
+
+    // const dispatch = useDispatch();
+    // const open = useSelector((state: RootState) => state.modal.open);
+    const [open, setOpen] = useState(false);
+
+    const openModal = () => {
+        setOpen(true);
+        // dispatch(setRoom(room));
+        // dispatch(setModal(true));
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div className="room_card">
@@ -72,8 +88,20 @@ export const RoomCard = ({ room }: any) => {
                     </p>
                     <p className="room_price_txt">per night</p>
                 </div>
-                <button className="room_select_button"> SELECT ROOM</button>
+                <button className="room_select_button" onClick={openModal}>
+                    SELECT ROOM
+                </button>
             </div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div>
+                    <RoomModal room={room} />
+                </div>
+            </Modal>
         </div>
     );
 };

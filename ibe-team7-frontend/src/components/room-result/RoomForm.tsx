@@ -201,7 +201,11 @@ export const RoomForm = () => {
                     });
             })
             .then(() => {
-                const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+                const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
+                    "en-GB"
+                )}&endDate=${endDate?.toLocaleDateString(
+                    "en-GB"
+                )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
 
                 if (
                     roomType.length !== 0 &&
@@ -311,7 +315,11 @@ export const RoomForm = () => {
         dispatch(setRoomDetails(roomDetails));
         console.log("Room Details:", roomDetails);
 
-        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString()}&endDate=${endDate?.toLocaleDateString()}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
+            "en-GB"
+        )}&endDate=${endDate?.toLocaleDateString(
+            "en-GB"
+        )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
 
         // if filters are present then add them in result url
         if (

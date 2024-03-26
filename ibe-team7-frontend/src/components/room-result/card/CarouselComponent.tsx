@@ -21,18 +21,21 @@ export const CarouselComponent = ({ name }: any) => {
     }, []);
 
     return (
-        <div className="carousel-container">
-            <Carousel animation="slide" className="carousel">
-                {images.map((image, index) => (
-                    <img
-                        key={index}
-                        src={image}
-                        alt="room"
-                        className="carousel-image"
-                        width={"320px"}
-                    />
-                ))}
-            </Carousel>
+        <div className="carousel-container" style={{ minHeight: "235px" }}>
+            {
+                <Carousel animation="slide" className="carousel">
+                    {images.map((image, index) => (
+                        <img
+                            key={index}
+                            src={image}
+                            alt="room"
+                            className="carousel-image"
+                            width={"320px"}
+                            height={"200px"}
+                        />
+                    ))}
+                </Carousel>
+            }
         </div>
     );
 };

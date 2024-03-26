@@ -8,6 +8,7 @@ import { setSort } from "../../redux/resultSlice";
 import axios from "axios";
 import { setRoomDetails } from "../../redux/roomDetailsSlice";
 import { BACKEND_URL } from "../../constants/Constants";
+import { Loader } from "../loader/Loader";
 
 export const RoomCards = () => {
     const [openSortPriceDropdown, setOpenSortPriceDropdown] = useState(false);
@@ -80,13 +81,23 @@ export const RoomCards = () => {
                 });
         });
     }, [sort]);
-
     // Calculate index of the last item to display
     const indexOfLastItem = currentPage * itemsPerPage;
     // Calculate index of the first item to display
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     // Get current items to display based on pagination
     const currentItems = roomDetails.slice(indexOfFirstItem, indexOfLastItem);
+
+    const [loading, setLoading] = useState<boolean>(true);
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+    }, [currentPage, sort]);
+    if (loading) {
+        return <Loader />;
+    }
 
     return (
         <div className="listrooms">
