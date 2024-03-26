@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import { Footer } from "../footer/Footer";
 import "./Home.scss";
 import { Search } from "./Search";
-import { RootState } from "../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLoading } from "../../redux/loadingSlice";
 
 export function Home() {
