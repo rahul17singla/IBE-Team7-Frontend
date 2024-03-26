@@ -6,6 +6,16 @@ import { Signup } from "../signup/Signup";
 import { RoomResult } from "../room-result/RoomResult";
 
 export const Router = () => {
+    // const [loading, setLoading] = useState<boolean>(true);
+
+    // setTimeout(() => {
+    //     setLoading(false);
+    // }, 1000);
+
+    // if (loading) {
+    //     return <Loader />;
+    // }
+
     return (
         <div>
             <BrowserRouter>

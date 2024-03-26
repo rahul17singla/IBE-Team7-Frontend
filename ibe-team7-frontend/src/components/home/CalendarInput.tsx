@@ -80,6 +80,12 @@ export const CalendarInput = ({
                 dispatch(setEndDate(null));
             }
             dispatch(setEndDate(date));
+
+            if (date.toDateString() === startDate.toDateString()) {
+                dispatch(setStartDate(date));
+                dispatch(setEndDate(null));
+            }
+
             //remove disabled class from apply-dates button
             const applyDatesButton = document.getElementById("apply-dates");
             if (applyDatesButton) {
@@ -197,12 +203,52 @@ export const CalendarInput = ({
                             calendarType="gregory"
                         />
                         <div className="apply-dates">
+                            <p>
+                                {startDate &&
+                                    endDate &&
+                                    // average of the prices from start to end date
+                                    `from ${
+                                        currencyType === "USD" ? "$" : "₹"
+                                    }${
+                                        (currencyValue *
+                                            Array.from(roomMap.values())
+                                                .slice(
+                                                    Array.from(
+                                                        roomMap.keys()
+                                                    ).indexOf(
+                                                        startDate
+                                                            .toISOString()
+                                                            .split("T")[0]
+                                                    ),
+                                                    Array.from(
+                                                        roomMap.keys()
+                                                    ).indexOf(
+                                                        endDate
+                                                            .toISOString()
+                                                            .split("T")[0]
+                                                    ) + 1
+                                                )
+                                                .reduce((a, b) => a + b, 0)) /
+                                        Array.from(roomMap.values()).slice(
+                                            Array.from(roomMap.keys()).indexOf(
+                                                startDate
+                                                    .toISOString()
+                                                    .split("T")[0]
+                                            ),
+                                            Array.from(roomMap.keys()).indexOf(
+                                                endDate
+                                                    .toISOString()
+                                                    .split("T")[0]
+                                            ) + 1
+                                        ).length
+                                    }/night`}
+                            </p>
                             <button
                                 className="apply-dates__button disabled"
                                 id="apply-dates"
                                 onClick={applyDatesHandler}
                             >
-                                Apply Dates
+                                {t("Apply-Dates")}
                             </button>
                         </div>
                     </div>

@@ -163,7 +163,7 @@
     position: absolute;
     background: $PRIMARY_WHITE;
     width: 100%;
-    max-width: 200px;
+    max-width: 290px;
 }
 .guest-counter {
     display: flex;
@@ -252,6 +252,8 @@
     width: 100%;
     padding: 1rem;
     display: flex;
+    align-items: center;
+    gap: 1rem;
     justify-content: flex-end;
 }
 .disabled {

@@ -179,6 +179,7 @@ export function Search() {
         if (guestsAdult + guestsTeens + guestsChildren < maxGuests) {
             dispatch(setGuestsAdult(guestsAdult + 1));
         }
+        setShowGuests;
     };
 
     const handleAdultDecrement = () => {

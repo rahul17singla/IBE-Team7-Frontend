@@ -121,3 +121,13 @@
         gap: 0;
     }
 }
+.my-bookings {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 1.2rem;
+}

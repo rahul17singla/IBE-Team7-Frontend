@@ -4,6 +4,7 @@ import userReducer from "./userSlice";
 import searchReducer from "./searchSlice";
 import resultReducer from "./resultSlice";
 import roomDetailsReducer from "./roomDetailsSlice";
+import loadingReducer from "./loadingSlice";
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         user: userReducer,
         filterStates: searchReducer,
         results: resultReducer,
-        roomDetails: roomDetailsReducer
+        roomDetails: roomDetailsReducer,
+        loading: loadingReducer,
     },
 });
 

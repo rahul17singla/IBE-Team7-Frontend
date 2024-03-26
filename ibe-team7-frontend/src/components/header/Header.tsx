@@ -64,11 +64,7 @@ export function Header() {
                 </Link>
             </div>
             <div className="header-right">
-                <Link to="/login">
-                    <button className="login-btn" onClick={loginUser}>
-                        Login
-                    </button>
-                </Link>
+                <button className="my-bookings">MY BOOKINGS</button>
                 <button className="language">
                     <img src={language} alt="EN" />
                     <select
@@ -93,6 +89,11 @@ export function Header() {
                         <option value="INR">INR</option>
                     </select>
                 </button>
+                <Link to="/login">
+                    <button className="login-btn" onClick={loginUser}>
+                        Login
+                    </button>
+                </Link>
             </div>
         </div>
     );

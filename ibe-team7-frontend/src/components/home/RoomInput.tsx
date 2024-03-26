@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setProperty3 } from "../../redux/searchSlice";
+import { setProperty3, setShowGuests } from "../../redux/searchSlice";
 import { t } from "i18next";
 import { RootState } from "../../redux/store";
 
@@ -22,6 +22,9 @@ export const RoomInput = () => {
                 id="room"
                 className="dropdown-room"
                 value={property3}
+                onFocus={() => {
+                    dispatch(setShowGuests(false));
+                }}
                 onChange={(e) => {
                     dispatch(setProperty3(e.target.value));
                 }}
