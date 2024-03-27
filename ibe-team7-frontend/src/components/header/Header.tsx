@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrency } from "../../redux/currencySlice";
+import { Currency } from "../../enums/Enums";
 
 export function Header() {
     const { i18n } = useTranslation();
@@ -44,6 +45,8 @@ export function Header() {
         }
     };
 
+    const loginUser = () => {};
+
     return (
         <div className="header">
             <div className="header-left">
@@ -62,6 +65,7 @@ export function Header() {
                 </Link>
             </div>
             <div className="header-right">
+                <button className="my-bookings">MY BOOKINGS</button>
                 <button className="language">
                     <img src={language} alt="EN" />
                     <select
@@ -75,17 +79,22 @@ export function Header() {
                     </select>
                 </button>
                 <button className="currency">
-                    <img src={currencyImg} alt="USD" />
+                    <img src={currencyImg} alt={Currency.USD} />
                     <select
                         className="currency"
                         name="currency"
                         id="currency"
                         onChange={handleCurrencyChange}
                     >
-                        <option value="USD">USD</option>
-                        <option value="INR">INR</option>
+                        <option value={Currency.USD}>{Currency.USD}</option>
+                        <option value={Currency.INR}>{Currency.INR}</option>
                     </select>
                 </button>
+                <Link to="/login">
+                    <button className="login-btn" onClick={loginUser}>
+                        Login
+                    </button>
+                </Link>
             </div>
         </div>
     );

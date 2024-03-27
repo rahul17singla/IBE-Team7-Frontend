@@ -1,0 +1,107 @@
+@import "../../scss-variables/variables.scss";
+
+.room_card {
+    height: fit-content;
+    width: 20.3rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 0 6px 10px 0 rgba(219, 219, 219, 0.9);
+    @media (max-width: 689px) {
+        width: 100%;
+    }
+    &:hover {
+        scale: 1.01;
+        box-shadow: 0 6px 10px 0 black;
+    }
+}
+.room_content {
+    padding-left: 1rem;
+}
+
+.room_content_heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.room_name_div {
+    width: 40%;
+}
+.room_rating_div {
+    padding-right: 1rem;
+    margin-top: 4px;
+}
+.room_name_txt {
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.5rem;
+}
+.room_address_div {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 11px;
+}
+.room_address_txt {
+    font-size: 0.875rem;
+    color: $PRIMARY_GRAY;
+    margin-left: 3px;
+}
+.room_inclusive_div {
+    display: flex;
+    margin-bottom: 8px;
+}
+.room_inclusive_txt {
+    font-size: 1rem;
+    font-style: italic;
+    color: $PRIMARY_GRAY;
+}
+.room_area_txt {
+    font-size: 1rem;
+    color: $PRIMARY_GRAY;
+    margin-left: 1rem;
+}
+.room_occupancy_div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.room_user_txt {
+    font-size: 0.875rem;
+    color: $PRIMARY_GRAY;
+    display: flex;
+    align-items: end;
+    margin-left: 3px;
+}
+.room_bed_div {
+    display: flex;
+    margin-bottom: 11px;
+}
+.room_bed_txt {
+    font-size: 0.875rem;
+    color: $PRIMARY_GRAY;
+    margin-left: 5px;
+}
+.room_deal_div {
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+}
+.room_price {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+.room_price_txt {
+    font-size: 0.875rem;
+    color: $PRIMARY_GRAY;
+    margin-bottom: 8px;
+}
+.room_select_button {
+    background-color: $PRIMARY_BLUE;
+    color: white;
+    padding: 12px 14.5px;
+    border-radius: 4px;
+}
+.room_rating_txt {
+    border-radius: 2px;
+    background-color: rgb(228, 179, 228);
+    padding: 2px;
+}

@@ -1,0 +1,37 @@
+@import "../scss-variables/variables.scss";
+
+.signup-div {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+.signup-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.signup-input {
+    width: 20%;
+    padding: 1rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+    outline: none;
+}
+
+.signuppage-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: $PRIMARY_BLUE;
+    color: $PRIMARY_WHITE;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
