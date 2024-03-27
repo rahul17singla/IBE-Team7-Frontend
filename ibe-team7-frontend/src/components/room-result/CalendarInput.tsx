@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
 import { setEndDate, setStartDate } from "../../redux/searchSlice";
-import { BACKEND_URL } from "../../constants/Constants";
+import { BACKEND_URL, LARGE_DATE } from "../../constants/Constants";
+import { Currency, Days } from "../../enums/Enums";
 
 interface CalendarInputProps {
     showCalendar: boolean;
@@ -104,7 +105,7 @@ export const CalendarInput = ({
 
         return (
             <div className="tile-price">
-                {currencyType === "USD"
+                {currencyType === Currency.USD
                     ? `$${convertedPrice}`
                     : `₹${convertedPrice}`}
             </div>
@@ -113,7 +114,7 @@ export const CalendarInput = ({
 
     const calculateMaxDate = (startDate: Date | undefined): Date => {
         if (!startDate) {
-            return new Date("2050-12-31"); // Return large date if start date is not set
+            return new Date(LARGE_DATE); // Return large date if start date is not set
         } else if (endDate && startDate) {
             const maxDate = new Date(startDate);
             maxDate.setDate(maxDate.getDate() + 90); // Adding 90 days
@@ -126,8 +127,7 @@ export const CalendarInput = ({
     };
 
     const displayDays = (date: Date) => {
-        const days = ["Su", "M", "T", "W", "Th", "F", "S"];
-        return days[date.getDay()];
+        return Days[date.getDay()];
     };
 
     const applyDatesHandler = () => {

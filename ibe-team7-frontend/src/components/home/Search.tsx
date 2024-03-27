@@ -5,27 +5,20 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { PropertyInput } from "./PropertyInput";
 import { CalendarInput } from "./CalendarInput";
-import { RootState } from "../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/store";
+import { useSelector } from "react-redux";
 import { AccessibleChair } from "./AccessibleChair";
 import { RoomInput } from "./RoomInput";
 import {
     setGuestsAdult,
     setGuestsChildren,
     setGuestsTeens,
-    setMaxGuests,
-    setMaxRooms,
-    setRoomsShow,
-    setShowAdult,
-    setShowChair,
-    setShowGuestFeature,
     setShowGuests,
-    setShowKid,
-    setShowTeen,
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
-import { setRoomDetails } from "../../redux/roomDetailsSlice";
 import { BACKEND_URL } from "../../constants/Constants";
+import fetchConfig from "../../redux/thunks/configThunk";
+import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 
 export function Search() {
     const { t } = useTranslation();
@@ -98,75 +91,11 @@ export function Search() {
         (state: RootState) => state.results.priceLessThan
     );
 
-    // const roomMap: { [date: string]: number } = {};
-    // const roomMap = new Map();
-
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const configLoad = async () => {
-            try {
-                const response = await axios.get(
-                    // "http://localhost:8088/config"
-                    BACKEND_URL + "/config",
-                    {
-                        headers: {
-                            "Access-Control-Allow-Origin": "*",
-                        },
-                    }
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
-                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
-                );
-                dispatch(
-                    setRoomsShow(response.data.propertyConfig.first.rooms.show)
-                );
-                dispatch(
-                    setShowGuestFeature(
-                        response.data.propertyConfig.first.guests.show
-                    )
-                );
-                dispatch(
-                    setShowChair(
-                        response.data.propertyConfig.first.wheelchair.show
-                    )
-                );
-                dispatch(
-                    setShowAdult(
-                        response.data.propertyConfig.first.guests.guestsType
-                            .adults
-                    )
-                );
-                dispatch(
-                    setShowTeen(
-                        response.data.propertyConfig.first.guests.guestsType
-                            .teens
-                    )
-                );
-                dispatch(
-                    setShowKid(
-                        response.data.propertyConfig.first.guests.guestsType
-                            .kids
-                    )
-                );
-                dispatch(
-                    setMaxGuests(
-                        response.data.propertyConfig.first.guests
-                            .maxNumberOfGuests
-                    )
-                );
-                dispatch(
-                    setMaxRooms(
-                        response.data.propertyConfig.first.rooms
-                            .maxNumberOfRooms
-                    )
-                );
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        configLoad();
+        dispatch(fetchConfig());
     }, []);
 
     useEffect(() => {
@@ -212,7 +141,6 @@ export function Search() {
             if (errorMsg) {
                 errorMsg.style.display = "block";
             }
-
             return;
         }
 
@@ -228,44 +156,21 @@ export function Search() {
         });
 
         //  CALL TO BACKEND HERE
-
         try {
-            await axios.post(
-                BACKEND_URL + "/api/v1/dates",
-                // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
-                // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
-                // "http://localhost:8088/api/v1/dates",
-                {
-                    property: property,
-                    startDate: startDate.toISOString(),
-                    endDate: endDate.toISOString(),
-                    roomCount: property3,
-                    bedType: bedType,
-                    roomType: roomType,
-                    priceLessThan: priceLessThan,
-                    sort: sort,
-                }
-            );
-            console.log("DATA IS HERE -------------");
-            console.log(startDate.toISOString()); // Log the response data
-            // navigate("/room-result"); // Redirect to room result page
+            await axios.post(BACKEND_URL + "/api/v1/dates", {
+                property: property,
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString(),
+                roomCount: property3,
+                bedType: bedType,
+                roomType: roomType,
+                priceLessThan: priceLessThan,
+                sort: sort,
+            });
         } catch (error) {
             console.error("Error:", error); // Log any errors
         }
-
-        // Make GET request immediately after POST request
-        const roomDetailsResponse = await axios.get(
-            BACKEND_URL + "/api/v1/roomcartdetails"
-            // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
-            // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
-            // "http://localhost:8088/api/v1/roomcartdetails"
-        );
-        const roomDetails = roomDetailsResponse.data;
-        dispatch(setRoomDetails(roomDetails));
-        console.log("Room Details:", roomDetails);
-
-        console.log(startDate.toLocaleDateString());
-        console.log(startDate.toDateString());
+        dispatch(fetchRoomDetails());
 
         navigate(
             `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString(

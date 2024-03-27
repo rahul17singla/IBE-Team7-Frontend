@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { FilterStates } from "../types/FilterStates";
+import fetchConfig from "./thunks/configThunk";
+import fetchData from "./thunks/propertyThunk";
 
 const initialState: FilterStates = {
     property: "Team 7 Hotel",
@@ -22,6 +24,9 @@ const initialState: FilterStates = {
     data: [],
     rooms: [],
     roomsShow: true,
+    loading: "pending",
+    propertyLoading: "pending",
+    error: undefined,
 };
 
 const filterSlice = createSlice({
@@ -104,6 +109,37 @@ const filterSlice = createSlice({
         setRoomsShow: (state, action) => {
             state.roomsShow = action.payload;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchConfig.pending, (state) => {
+            state.loading = "pending";
+        });
+        builder.addCase(fetchConfig.fulfilled, (state, action) => {
+            state.loading = "succeeded";
+            state.roomsShow = action.payload.rooms.show;
+            state.showGuestFeature = action.payload.guests.show;
+            state.showChair = action.payload.wheelchair.show;
+            state.showAdult = action.payload.guests.guestsType.adults;
+            state.showTeen = action.payload.guests.guestsType.teens;
+            state.showKid = action.payload.guests.guestsType.kids;
+            state.maxGuests = action.payload.guests.maxNumberOfGuests;
+            state.maxRooms = action.payload.rooms.maxNumberOfRooms;
+        });
+        builder.addCase(fetchConfig.rejected, (state, action) => {
+            state.loading = "failed";
+            state.error = action.error.message;
+        });
+        builder.addCase(fetchData.pending, (state) => {
+            state.propertyLoading = "pending";
+        });
+        builder.addCase(fetchData.fulfilled, (state, action) => {
+            state.propertyLoading = "succeeded";
+            state.data = action.payload;
+        });
+        builder.addCase(fetchData.rejected, (state, action) => {
+            state.propertyLoading = "failed";
+            state.error = action.error.message;
+        });
     },
 });
 

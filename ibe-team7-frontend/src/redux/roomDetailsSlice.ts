@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RoomDetails } from "../types/RoomDetails";
+import fetchRoomDetails from "./thunks/roomDetailsThunk";
 
 const initialState: RoomDetails[] = [];
 
@@ -41,6 +42,21 @@ const RoomDetailsSlice = createSlice({
                 room.avgPrice = action.payload;
             });
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchRoomDetails.pending, (state) => {
+            state.forEach((room) => {
+                room.loading = "pending";
+            });
+        });
+        builder.addCase(fetchRoomDetails.fulfilled, (_, action) => {
+            return action.payload;
+        });
+        builder.addCase(fetchRoomDetails.rejected, (state) => {
+            state.forEach((room) => {
+                room.loading = "failed";
+            });
+        });
     },
 });
 

@@ -22,4 +22,7 @@ export interface FilterStates {
     data: ListProperty[];
     rooms: RoomRate[];
     roomsShow: boolean;
+    loading: "pending" | "succeeded" | "failed";
+    propertyLoading: "pending" | "succeeded" | "failed";
+    error?: string;
 }

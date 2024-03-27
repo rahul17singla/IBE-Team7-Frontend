@@ -8,6 +8,7 @@ import { RootState } from "../../../redux/store";
 import { Modal } from "@mui/material";
 import { useState } from "react";
 import { RoomModal } from "../../room-modal/RoomModal";
+import { Currency } from "../../../enums/Enums";
 
 export const RoomCard = ({ room }: any) => {
     const currencyValue = useSelector(
@@ -18,14 +19,10 @@ export const RoomCard = ({ room }: any) => {
         (state: RootState) => state.currency.currency
     );
 
-    // const dispatch = useDispatch();
-    // const open = useSelector((state: RootState) => state.modal.open);
     const [open, setOpen] = useState(false);
 
     const openModal = () => {
         setOpen(true);
-        // dispatch(setRoom(room));
-        // dispatch(setModal(true));
     };
     const handleClose = () => {
         setOpen(false);
@@ -82,7 +79,7 @@ export const RoomCard = ({ room }: any) => {
             <div className="room_deal_div">
                 <div className="room_price_div">
                     <p className="room_price">
-                        {currencyType === "USD"
+                        {currencyType === Currency.USD
                             ? `$${(room.avgPrice * currencyValue).toFixed(2)}`
                             : `₹${(room.avgPrice * currencyValue).toFixed(2)}`}
                     </p>

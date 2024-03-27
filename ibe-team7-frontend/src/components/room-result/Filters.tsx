@@ -21,6 +21,28 @@ export function Filters() {
         (state: RootState) => state.results.priceLessThan
     );
 
+    const changeBedType = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        bedType: string
+    ) => {
+        !e.target.checked
+            ? dispatch(removeBedType(bedType))
+            : dispatch(setBedType(bedType));
+    };
+
+    const changeRoomType = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        roomType: string
+    ) => {
+        !e.target.checked
+            ? dispatch(removeRoomType(roomType))
+            : dispatch(setRoomType(roomType));
+    };
+
+    const handlePriceLessThanFilter = (price: number) => {
+        dispatch(setPriceLessThan(priceLessThan === price ? 1000000 : price));
+    };
+
     const dispatch = useDispatch();
 
     return (
@@ -49,9 +71,7 @@ export function Filters() {
                                     checked={roomType.includes("suite")}
                                     id="suite"
                                     onChange={(e) => {
-                                        !e.target.checked
-                                            ? dispatch(removeRoomType("suite"))
-                                            : dispatch(setRoomType("suite"));
+                                        changeRoomType(e, "suite");
                                     }}
                                 />
                                 <p className="checkbox_txt">Suite</p>
@@ -62,9 +82,7 @@ export function Filters() {
                                     checked={roomType.includes("deluxe")}
                                     id="deluxe"
                                     onChange={(e) => {
-                                        !e.target.checked
-                                            ? dispatch(removeRoomType("deluxe"))
-                                            : dispatch(setRoomType("deluxe"));
+                                        changeRoomType(e, "deluxe");
                                     }}
                                 />
                                 <p className="checkbox_txt">Deluxe</p>
@@ -92,9 +110,7 @@ export function Filters() {
                                     type="checkbox"
                                     checked={bedType.includes("queen")}
                                     onChange={(e) => {
-                                        !e.target.checked
-                                            ? dispatch(removeBedType("queen"))
-                                            : dispatch(setBedType("queen"));
+                                        changeBedType(e, "queen");
                                     }}
                                 />
                                 <p className="checkbox_txt">Queen bed</p>
@@ -104,9 +120,7 @@ export function Filters() {
                                     type="checkbox"
                                     checked={bedType.includes("king")}
                                     onChange={(e) => {
-                                        !e.target.checked
-                                            ? dispatch(removeBedType("king"))
-                                            : dispatch(setBedType("king"));
+                                        changeBedType(e, "king");
                                     }}
                                 />
                                 <p className="checkbox_txt">King bed</p>
@@ -133,13 +147,7 @@ export function Filters() {
                                     type="checkbox"
                                     checked={priceLessThan === 50}
                                     onChange={() =>
-                                        dispatch(
-                                            setPriceLessThan(
-                                                priceLessThan === 50
-                                                    ? 1000000
-                                                    : 50
-                                            )
-                                        )
+                                        handlePriceLessThanFilter(50)
                                     }
                                 />
                                 <p className="checkbox_txt">less than $50</p>
@@ -149,13 +157,7 @@ export function Filters() {
                                     type="checkbox"
                                     checked={priceLessThan === 100}
                                     onChange={() =>
-                                        dispatch(
-                                            setPriceLessThan(
-                                                priceLessThan === 100
-                                                    ? 1000000
-                                                    : 100
-                                            )
-                                        )
+                                        handlePriceLessThanFilter(100)
                                     }
                                 />
                                 <p className="checkbox_txt">less than $100</p>
@@ -165,13 +167,7 @@ export function Filters() {
                                     type="checkbox"
                                     checked={priceLessThan === 150}
                                     onChange={() =>
-                                        dispatch(
-                                            setPriceLessThan(
-                                                priceLessThan === 150
-                                                    ? 1000000
-                                                    : 150
-                                            )
-                                        )
+                                        handlePriceLessThanFilter(150)
                                     }
                                 />
                                 <p className="checkbox_txt">less than $150</p>

@@ -8,12 +8,7 @@ export const CarouselComponent = ({ name }: any) => {
 
     useEffect(() => {
         const fetchImages = async () => {
-            const response = await axios.get(
-                // "http://localhost:8088/config"
-                BACKEND_URL + "/config"
-                // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
-                // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
-            );
+            const response = await axios.get(BACKEND_URL + "/config");
 
             setImages(response.data.propertyConfig.first[name]);
         };

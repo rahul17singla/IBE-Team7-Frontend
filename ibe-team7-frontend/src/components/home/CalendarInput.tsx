@@ -8,7 +8,8 @@ import { RoomRate } from "../../types/RoomRate";
 import axios from "axios";
 import "./Search.scss";
 import { setEndDate, setStartDate } from "../../redux/searchSlice";
-import { BACKEND_URL } from "../../constants/Constants";
+import { BACKEND_URL, LARGE_DATE } from "../../constants/Constants";
+import { Currency, Days } from "../../enums/Enums";
 
 interface CalendarInputProps {
     showCalendar: boolean;
@@ -44,12 +45,7 @@ export const CalendarInput = ({
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
-                const response = await axios.get(
-                    // "http://localhost:8088/api/v1/rooms"
-                    BACKEND_URL + "/api/v1/rooms"
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/rooms"
-                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/rooms"
-                );
+                const response = await axios.get(BACKEND_URL + "/api/v1/rooms");
                 setRooms(response.data);
             } catch (error) {
                 console.error(error);
@@ -111,7 +107,7 @@ export const CalendarInput = ({
 
         return (
             <div className="tile-price">
-                {currencyType === "USD"
+                {currencyType === Currency.USD
                     ? `$${convertedPrice}`
                     : `₹${convertedPrice}`}
             </div>
@@ -120,7 +116,7 @@ export const CalendarInput = ({
 
     const calculateMaxDate = (startDate: Date | undefined): Date => {
         if (!startDate) {
-            return new Date("2050-12-31"); // Return large date if start date is not set
+            return new Date(LARGE_DATE); // Return large date if start date is not set
         } else if (endDate && startDate) {
             const maxDate = new Date(startDate);
             maxDate.setDate(maxDate.getDate() + 90); // Adding 90 days
@@ -133,12 +129,35 @@ export const CalendarInput = ({
     };
 
     const displayDays = (date: Date) => {
-        const days = ["Su", "M", "T", "W", "Th", "F", "S"];
-        return days[date.getDay()];
+        return Days[date.getDay()];
     };
 
     const applyDatesHandler = () => {
         setShowCalendar(false);
+    };
+
+    const getAveragePrice = (startDate: Date, endDate: Date) => {
+        return (
+            (currencyValue *
+                Array.from(roomMap.values())
+                    .slice(
+                        Array.from(roomMap.keys()).indexOf(
+                            startDate.toISOString().split("T")[0]
+                        ),
+                        Array.from(roomMap.keys()).indexOf(
+                            endDate.toISOString().split("T")[0]
+                        ) + 1
+                    )
+                    .reduce((a, b) => a + b, 0)) /
+            Array.from(roomMap.values()).slice(
+                Array.from(roomMap.keys()).indexOf(
+                    startDate.toISOString().split("T")[0]
+                ),
+                Array.from(roomMap.keys()).indexOf(
+                    endDate.toISOString().split("T")[0]
+                ) + 1
+            ).length
+        );
     };
 
     return (
@@ -208,40 +227,13 @@ export const CalendarInput = ({
                                     endDate &&
                                     // average of the prices from start to end date
                                     `from ${
-                                        currencyType === "USD" ? "$" : "₹"
-                                    }${
-                                        (currencyValue *
-                                            Array.from(roomMap.values())
-                                                .slice(
-                                                    Array.from(
-                                                        roomMap.keys()
-                                                    ).indexOf(
-                                                        startDate
-                                                            .toISOString()
-                                                            .split("T")[0]
-                                                    ),
-                                                    Array.from(
-                                                        roomMap.keys()
-                                                    ).indexOf(
-                                                        endDate
-                                                            .toISOString()
-                                                            .split("T")[0]
-                                                    ) + 1
-                                                )
-                                                .reduce((a, b) => a + b, 0)) /
-                                        Array.from(roomMap.values()).slice(
-                                            Array.from(roomMap.keys()).indexOf(
-                                                startDate
-                                                    .toISOString()
-                                                    .split("T")[0]
-                                            ),
-                                            Array.from(roomMap.keys()).indexOf(
-                                                endDate
-                                                    .toISOString()
-                                                    .split("T")[0]
-                                            ) + 1
-                                        ).length
-                                    }/night`}
+                                        currencyType === Currency.USD
+                                            ? "$"
+                                            : "₹"
+                                    }${getAveragePrice(
+                                        startDate,
+                                        endDate
+                                    )}/night`}
                             </p>
                             <button
                                 className="apply-dates__button disabled"

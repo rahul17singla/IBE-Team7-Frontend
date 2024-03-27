@@ -1,6 +1,6 @@
 import "./RoomForm.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { t } from "i18next";
 import {
     setEndDate,
@@ -23,14 +23,14 @@ import {
     setRoomType,
 } from "../../redux/resultSlice";
 import axios from "axios";
-import { setRoomDetails } from "../../redux/roomDetailsSlice";
 import { BACKEND_URL } from "../../constants/Constants";
+import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 
 export const RoomForm = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const navigate = useNavigate();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [params] = useSearchParams();
 
     const roomType = useSelector((state: RootState) => state.results.roomType);
@@ -159,23 +159,16 @@ export const RoomForm = () => {
             }
 
             try {
-                await axios.post(
-                    `${BACKEND_URL}/api/v1/dates`,
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
-                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
-                    {
-                        property: property,
-                        startDate: startDate?.toISOString(),
-                        endDate: endDate?.toISOString(),
-                        roomCount: property3,
-                        bedType: bedTypes,
-                        roomType: roomType,
-                        priceLessThan: priceLessThan,
-                        sort: sort,
-                    }
-                );
-                console.log("DATA IS HERE -------------");
-                console.log(startDate?.toISOString()); // Log the response data
+                await axios.post(`${BACKEND_URL}/api/v1/dates`, {
+                    property: property,
+                    startDate: startDate?.toISOString(),
+                    endDate: endDate?.toISOString(),
+                    roomCount: property3,
+                    bedType: bedTypes,
+                    roomType: roomType,
+                    priceLessThan: priceLessThan,
+                    sort: sort,
+                });
             } catch (error) {
                 console.error("Error:", error); // Log any errors
             }
@@ -183,22 +176,7 @@ export const RoomForm = () => {
 
         fetchData()
             .then(() => {
-                // Make GET request after POST request
-                axios
-                    .get(
-                        `${BACKEND_URL}/api/v1/roomcartdetails`
-                        // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
-                        // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
-                    )
-                    .then((roomDetailsResponse) => {
-                        const roomDetails = roomDetailsResponse.data;
-                        console.log("Room Details:", roomDetails);
-                        // Further processing if needed...
-                        dispatch(setRoomDetails(roomDetails));
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching room details:", error);
-                    });
+                dispatch(fetchRoomDetails());
             })
             .then(() => {
                 const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
@@ -305,15 +283,7 @@ export const RoomForm = () => {
         }
 
         // Make GET request immediately after POST request
-        const roomDetailsResponse = await axios.get(
-            // "http://localhost:8088/api/v1/roomcartdetails"
-            `${BACKEND_URL}/api/v1/roomcartdetails`
-            // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
-            // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
-        );
-        const roomDetails = roomDetailsResponse.data;
-        dispatch(setRoomDetails(roomDetails));
-        console.log("Room Details:", roomDetails);
+        dispatch(fetchRoomDetails());
 
         const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"

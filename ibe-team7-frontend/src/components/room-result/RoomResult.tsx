@@ -5,15 +5,15 @@ import StepButton from "@mui/material/StepButton";
 import { useEffect, useState } from "react";
 import { Step1Page } from "./Step1Page";
 import { Footer } from "../footer/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { setRoomDetails } from "../../redux/roomDetailsSlice";
 import { BACKEND_URL } from "../../constants/Constants";
+import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 
 export const RoomResult = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const steps = ["Choose Room", "Choose add on", "Checkout"];
 
     const [activeStep, setActiveStep] = useState(0);
@@ -84,22 +84,7 @@ export const RoomResult = () => {
 
         fetchData()
             .then(() => {
-                // Make GET request after POST request
-                axios
-                    .get(
-                        `${BACKEND_URL}/api/v1/roomcartdetails`
-                        // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
-                        // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
-                    )
-                    .then((roomDetailsResponse) => {
-                        const roomDetails = roomDetailsResponse.data;
-                        console.log("Room Details:", roomDetails);
-                        dispatch(setRoomDetails(roomDetails));
-                        // Further processing if needed...
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching room details:", error);
-                    });
+                dispatch(fetchRoomDetails());
             })
             .then(() => {
                 const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
@@ -152,36 +137,6 @@ export const RoomResult = () => {
         navigate,
     ]);
 
-    // const totalSteps = () => {
-    //     return steps.length;
-    // };
-
-    // const completedSteps = () => {
-    //     return Object.keys(completed).length;
-    // };
-
-    // const isLastStep = () => {
-    //     return activeStep === totalSteps() - 1;
-    // };
-
-    // const allStepsCompleted = () => {
-    //     return completedSteps() === totalSteps();
-    // };
-
-    // const handleNext = () => {
-    //     const newActiveStep =
-    //         isLastStep() && !allStepsCompleted()
-    //             ? // It's the last step, but not all steps have been completed,
-    //               // find the first step that has been completed
-    //               steps.findIndex((_, i) => !(i in completed))
-    //             : activeStep + 1;
-    //     setActiveStep(newActiveStep);
-    // };
-
-    // const handleBack = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // };
-
     const handleStep = (step: number) => () => {
         setActiveStep(step);
     };
@@ -209,50 +164,6 @@ export const RoomResult = () => {
                             <Step1Page />
                         </div>
                     )}
-                    {/* {activeStep === 1 && (
-                        <div>
-                            <h1>Choose add on</h1>
-                            <div className="addon">
-                                <div className="addon1">
-                                    <h3>Addon 1</h3>
-                                    <p>Price: 1000</p>
-                                    <button>Choose</button>
-                                </div>
-                                <div className="addon2">
-                                    <h3>Addon 2</h3>
-                                    <p>Price: 2000</p>
-                                    <button>Choose</button>
-                                </div>
-                                <div className="addon3">
-                                    <h3>Addon 3</h3>
-                                    <p>Price: 3000</p>
-                                    <button>Choose</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    {activeStep === 2 && (
-                        <div>
-                            <h1>Checkout</h1>
-                            <div className="checkout">
-                                <p>Total Price: 1000</p>
-                                <button>Checkout</button>
-                            </div>
-                        </div>
-                    )}
-                </div>
-                <div>
-                    <div>
-                        <button
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                        >
-                            Back
-                        </button>
-                        <button onClick={handleNext}>
-                            {isLastStep() ? "Finish" : "Next"}
-                        </button>
-                    </div> */}
                 </div>
             </div>
             <Footer />

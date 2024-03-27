@@ -1,60 +1,64 @@
 import { useEffect } from "react";
 import { ListProperty } from "../../types/Property";
-import axios from "axios";
 import { t } from "i18next";
-import { setData, setProperty } from "../../redux/searchSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { BACKEND_URL } from "../../constants/Constants";
+import { setProperty } from "../../redux/searchSlice";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/store";
+import fetchData from "../../redux/thunks/propertyThunk";
+import { Loader } from "../loader/Loader";
 
 export const PropertyInput = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const propertyStatus = useSelector(
+        (state: RootState) => state.filterStates.loading
+    );
     const property = useSelector(
         (state: RootState) => state.filterStates.property
     );
     const data = useSelector((state: RootState) => state.filterStates.data);
+    const loading = useSelector(
+        (state: RootState) => state.filterStates.propertyLoading
+    );
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    // "http://localhost:8088/api/v1/property"
-                    BACKEND_URL + "/api/v1/property"
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/property"
-                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/property"
-                );
-                dispatch(setData(response.data.data.listProperties));
-            } catch (error) {
-                console.error(error);
-            }
+        const fetchDataFunction = async () => {
+            dispatch(fetchData());
         };
-        fetchData();
-    }, []);
+        fetchDataFunction();
+    }, [dispatch, propertyStatus]);
+
+    if (loading === "pending") {
+        return <Loader />;
+    }
 
     return (
         <>
-            <label htmlFor="property" className="dropdown-heading">
-                <p>{t("property-name")}*</p>
-            </label>
-            <select
-                id="property"
-                className="dropdown"
-                value={property}
-                onChange={(e) => dispatch(setProperty(e.target.value))}
-            >
-                <option value="" disabled>
-                    {t("search-properties")}
-                </option>
-                {data.map((property: ListProperty) => (
-                    <option
-                        key={property.property_id}
-                        value={property.property_name}
-                        className="dropdown-item"
+            {propertyStatus === "succeeded" && (
+                <>
+                    <label htmlFor="property" className="dropdown-heading">
+                        <p>{t("property-name")}*</p>
+                    </label>
+                    <select
+                        id="property"
+                        className="dropdown"
+                        value={property}
+                        onChange={(e) => dispatch(setProperty(e.target.value))}
                     >
-                        {property.property_name}
-                    </option>
-                ))}
-            </select>
+                        <option value="" disabled>
+                            {t("search-properties")}
+                        </option>
+                        {data.map((property: ListProperty) => (
+                            <option
+                                key={property.property_id}
+                                value={property.property_name}
+                                className="dropdown-item"
+                            >
+                                {property.property_name}
+                            </option>
+                        ))}
+                    </select>
+                </>
+            )}
         </>
     );
 };

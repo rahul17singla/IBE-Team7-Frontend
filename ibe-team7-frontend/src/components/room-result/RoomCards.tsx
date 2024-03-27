@@ -2,13 +2,13 @@ import { RoomCard } from "./card/RoomCard";
 import down from "../../assets/Down.svg";
 import "./RoomCards.scss";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { setSort } from "../../redux/resultSlice";
 import axios from "axios";
-import { setRoomDetails } from "../../redux/roomDetailsSlice";
 import { BACKEND_URL } from "../../constants/Constants";
 import { Loader } from "../loader/Loader";
+import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 
 export const RoomCards = () => {
     const [openSortPriceDropdown, setOpenSortPriceDropdown] = useState(false);
@@ -17,7 +17,7 @@ export const RoomCards = () => {
 
     const roomDetails = useSelector((state: RootState) => state.roomDetails);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const sort = useSelector((state: RootState) => state.results.sort);
     const property = useSelector(
@@ -41,46 +41,25 @@ export const RoomCards = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.post(
-                    BACKEND_URL + "/api/v1/dates",
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
-                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
-                    // "http://localhost:8088/api/v1/dates",
-                    {
-                        property: property,
-                        startDate: startDate?.toISOString(),
-                        endDate: endDate?.toISOString(),
-                        roomCount: property3,
-                        bedType: bedTypes,
-                        roomType: roomType,
-                        priceLessThan: priceLessThan,
-                        sort: sort,
-                    }
-                );
+                await axios.post(BACKEND_URL + "/api/v1/dates", {
+                    property: property,
+                    startDate: startDate?.toISOString(),
+                    endDate: endDate?.toISOString(),
+                    roomCount: property3,
+                    bedType: bedTypes,
+                    roomType: roomType,
+                    priceLessThan: priceLessThan,
+                    sort: sort,
+                });
             } catch (error) {
                 console.error(error);
             }
         };
         fetchData().then(() => {
-            // Make GET request after POST request
-            axios
-                .get(
-                    BACKEND_URL + "/api/v1/roomcartdetails"
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/roomcartdetails"
-                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/roomcartdetails"
-                    // "http://localhost:8088/api/v1/roomcartdetails"
-                )
-                .then((roomDetailsResponse) => {
-                    const roomDetails = roomDetailsResponse.data;
-                    console.log("Room Details:", roomDetails);
-                    // Further processing if needed...
-                    dispatch(setRoomDetails(roomDetails));
-                })
-                .catch((error) => {
-                    console.error("Error fetching room details:", error);
-                });
+            dispatch(fetchRoomDetails());
         });
     }, [sort]);
+
     // Calculate index of the last item to display
     const indexOfLastItem = currentPage * itemsPerPage;
     // Calculate index of the first item to display
