@@ -185,7 +185,7 @@ export const CalendarInput = ({
                             onChange={(date) => handleDateChange(date as Date)}
                             value={[startDate!, endDate!]}
                             tileContent={tileContent}
-                            // showDoubleView
+                            showDoubleView
                             showNeighboringMonth={false}
                             showFixedNumberOfWeeks={false}
                             view="month"

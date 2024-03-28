@@ -200,7 +200,7 @@
     border-radius: 5px;
     position: relative;
     background: $PRIMARY_WHITE;
-    z-index: 5;
+    z-index: 11;
 }
 .result-calendar-view {
     position: absolute;
@@ -208,9 +208,10 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 180%;
+    right: 0;
     background-color: $PRIMARY_WHITE;
-    z-index: 3;
+    z-index: 11;
     border: #858685 1px solid;
 }
 .result-calendar-top {
