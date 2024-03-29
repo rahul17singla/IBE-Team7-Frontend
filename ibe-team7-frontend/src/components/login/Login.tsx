@@ -1,42 +1,26 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AccountContext } from "../account/Account";
 import "./Login.scss";
 import { Link } from "react-router-dom";
-import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
-import UserPool from "../../aws/UserPool";
 
 export const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const { authenticate } = useContext(AccountContext);
+
     const handleLogin = () => {
         console.log("Login Clicked");
         console.log("Email: " + email);
 
-        const user = new CognitoUser({
-            Username: email,
-            Pool: UserPool,
-        });
-
-        const authDetails = new AuthenticationDetails({
-            Username: email,
-            Password: password,
-        });
-
-        user.authenticateUser(authDetails, {
-            onSuccess: (data) => {
-                console.log("onSuccess:", data);
-                alert("Login Success");
-                // window.location.href = "/";
-            },
-            onFailure: (err) => {
-                console.error("onFailure:", err);
-                alert(err.message);
-            },
-            newPasswordRequired: (data) => {
-                console.log("newPasswordRequired:", data);
-                alert("New Password Required");
-            },
-        });
+        authenticate(email, password)
+            .then((data: any) => {
+                console.log("Logged In: ", data);
+                window.location.href = "/";
+            })
+            .catch((err: Error) => {
+                console.error("Login Error: ", err);
+            });
     };
 
     return (

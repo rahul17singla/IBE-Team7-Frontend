@@ -16,6 +16,7 @@ import {
     setTotal,
 } from "../../redux/checkoutSlice";
 import { findnextDate } from "../../utils/FindNextDateFunc";
+import { CustomPromo } from "../../types/CustomPromo";
 
 export interface RoomModalProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -54,7 +55,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
         (state: RootState) => state.checkout.checkout.roomTotal
     );
     const sort = useSelector((state: RootState) => state.results.sort);
-    const [isValid, setIsValid] = useState(false);
+
+    const [customPromotions, setCustomPromotions] = useState<CustomPromo[]>([]);
 
     useEffect(() => {
         const fetchImages = async () => {
@@ -85,7 +87,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
 
     const validatePromoCode = async () => {
         try {
-            const response = await axios.get<boolean>(
+            const response = await axios.get(
                 `${BACKEND_URL}/api/v1/validatepromo`,
                 {
                     params: {
@@ -96,15 +98,33 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                     },
                 }
             );
-            setIsValid(response.data);
-            console.log(response.data);
-            if (isValid) {
-                const checkoutUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
-                    "en-GB"
-                )}&endDate=${endDate?.toLocaleDateString(
-                    "en-GB"
-                )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
-                navigate(checkoutUrl);
+            console.log(response);
+            if (response.data !== "") {
+                const invalidPromoPara =
+                    document.getElementById("invalidPromoPara");
+                if (invalidPromoPara) {
+                    invalidPromoPara.style.display = "none";
+                }
+
+                // Check if the promotion already exists in the state
+                if (
+                    !customPromotions.some(
+                        (promotion) =>
+                            promotion.promoCodeTitle ===
+                            response.data.promoCodeTitle
+                    )
+                ) {
+                    setCustomPromotions([...customPromotions, response.data]);
+                }
+
+                // setCustomPromotions([...customPromotions, response.data]);
+
+                // const checkoutUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
+                //     "en-GB"
+                // )}&endDate=${endDate?.toLocaleDateString(
+                //     "en-GB"
+                // )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+                // navigate(checkoutUrl);
             } else {
                 const invalidPromoPara =
                     document.getElementById("invalidPromoPara");
@@ -138,7 +158,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                 ))}
                             </Carousel>
                             <p className="para-carousel">
-                                {room.roomTypeName} ROOM
+                                f.refreshToken {room.roomTypeName} ROOM
                             </p>
                         </>
                     }
@@ -271,6 +291,89 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                                 onClick={() =>
                                                     handleSelectPackage(
                                                         promotion.promotionTitle,
+                                                        promotion.priceFactor
+                                                    )
+                                                }
+                                            >
+                                                SELECT PACKAGE
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            {/* {customPromotions. > 0 &&
+                                customPromotions.map((promotion) => {
+                                    return (
+                                        <div
+                                            key={promotion.promoCodeTitle}
+                                            className="rate-card"
+                                        >
+                                            <div className="rate-description">
+                                                <div className="description-title">
+                                                    {promotion.promoCodeTitle}
+                                                </div>
+                                                <div className="description-data">
+                                                    {
+                                                        promotion.promoCodeDescription
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className="rate">
+                                                <div className="nightly-rate">
+                                                    <div className="value">
+                                                        $
+                                                        {room.avgPrice *
+                                                            promotion.priceFactor}
+                                                    </div>
+                                                    <p className="per-night">
+                                                        per night
+                                                    </p>
+                                                </div>
+                                                <button
+                                                    className="select-btn"
+                                                    onClick={() =>
+                                                        handleSelectPackage(
+                                                            promotion.promoCodeTitle,
+                                                            promotion.priceFactor
+                                                        )
+                                                    }
+                                                >
+                                                    SELECT PACKAGE
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })} */}
+                            {customPromotions.map((promotion) => {
+                                return (
+                                    <div
+                                        key={promotion.promoCodeTitle}
+                                        className="rate-card"
+                                    >
+                                        <div className="rate-description">
+                                            <div className="description-title">
+                                                {promotion.promoCodeTitle}
+                                            </div>
+                                            <div className="description-data">
+                                                {promotion.promoCodeDescription}
+                                            </div>
+                                        </div>
+                                        <div className="rate">
+                                            <div className="nightly-rate">
+                                                <div className="value">
+                                                    $
+                                                    {room.avgPrice *
+                                                        promotion.priceFactor}
+                                                </div>
+                                                <p className="per-night">
+                                                    per night
+                                                </p>
+                                            </div>
+                                            <button
+                                                className="select-btn"
+                                                onClick={() =>
+                                                    handleSelectPackage(
+                                                        promotion.promoCodeTitle,
                                                         promotion.priceFactor
                                                     )
                                                 }
