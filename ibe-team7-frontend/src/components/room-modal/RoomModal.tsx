@@ -8,8 +8,10 @@ import Carousel from "react-material-ui-carousel";
 import User from "../../assets/user.svg";
 import Doublebed from "../../assets/doublebed.svg";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../redux/store";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
+import { setTotal } from "../../redux/checkoutSlice";
+import { findnextDate } from "../../utils/FindNextDateFunc";
 
 export interface RoomModalProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +31,10 @@ const amenitiesList = [
 export function RoomModal({ setOpen, room }: RoomModalProps) {
     const navigate = useNavigate();
 
+    const dispatch = useAppDispatch();
     const [images, setImages] = useState<string[]>([]);
+
+    const [promoCode, setPromoCode] = useState("");
 
     const {
         property,
@@ -42,34 +47,50 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
     } = useSelector((state: RootState) => state.filterStates);
 
     const sort = useSelector((state: RootState) => state.results.sort);
+    const [isValid, setIsValid] = useState(false);
 
     useEffect(() => {
         const fetchImages = async () => {
-            const response = await axios.get(
-                // "http://localhost:8088/config"
-                BACKEND_URL + "/config"
-                // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/config"
-                // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/config"
-            );
-            // console.log(response.data.propertyConfig.first);
+            const response = await axios.get(BACKEND_URL + "/config");
             setImages(response.data[0].propertyConfig.first[room.roomTypeName]);
         };
         fetchImages();
     }, []);
 
     const handleClose = () => {
-        // onClose();
         setOpen(false);
     };
 
     const handleSelectPackage = (promoName: string) => {
         console.log(promoName);
+
+        dispatch(setTotal(room.avgPrice));
+
         const checkoutUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"
         )}&endDate=${endDate?.toLocaleDateString(
             "en-GB"
         )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
         navigate(checkoutUrl);
+    };
+
+    const validatePromoCode = async () => {
+        try {
+            const response = await axios.get<boolean>(
+                `http://localhost:8080/validatepromo`,
+                {
+                    params: {
+                        promoCode: promoCode,
+                        roomCount: property3,
+                        startDate: findnextDate(startDate),
+                        endDate: findnextDate(endDate),
+                    },
+                }
+            );
+            setIsValid(response.data);
+        } catch (error) {
+            console.error("Error validating promo code:", error);
+        }
     };
 
     return (
@@ -181,7 +202,14 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                         </div>
                                         <p className="per-night">per night</p>
                                     </div>
-                                    <button className="select-btn">
+                                    <button
+                                        className="select-btn"
+                                        onClick={() =>
+                                            handleSelectPackage(
+                                                "STANDARD RATES"
+                                            )
+                                        }
+                                    >
                                         SELECT PACKAGE
                                     </button>
                                 </div>
@@ -236,8 +264,17 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                     <input
                                         className="promocode-input"
                                         type="text"
+                                        placeholder="Enter promocode"
+                                        onChange={(e) =>
+                                            setPromoCode(e.target.value)
+                                        }
                                     />
-                                    <button className="apply-btn">APPLY</button>
+                                    <button
+                                        className="apply-btn"
+                                        onClick={validatePromoCode}
+                                    >
+                                        APPLY
+                                    </button>
                                 </div>
                             </div>
                         </div>

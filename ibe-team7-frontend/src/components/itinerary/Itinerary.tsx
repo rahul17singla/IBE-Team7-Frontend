@@ -26,6 +26,10 @@ export const Itinerary = () => {
 
     const sort = useSelector((state: RootState) => state.results.sort);
 
+    const totalPrice = useSelector(
+        (state: RootState) => state.checkout.checkout.total
+    );
+
     const continueShopping = () => {
         const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"
@@ -48,6 +52,7 @@ export const Itinerary = () => {
                   endDate.getFullYear()
             : "";
     };
+
     return (
         <div className="itinerary">
             <div className="itinerary_heading">
@@ -71,27 +76,31 @@ export const Itinerary = () => {
             <div className="itinerary-pricing">
                 <div className="price-name">
                     <div className="itinerary-text">Subtotal</div>
-                    <div className="price">$396</div>
+                    <div className="price">{totalPrice.toFixed(2)}</div>
                 </div>
                 <div className="price-name">
                     <div className="itinerary-text">
                         Taxes, Surcharges, Fees
                     </div>
-                    <div className="price">$396</div>
+                    <div className="price">
+                        {(totalPrice * 0.18).toFixed(2)}
+                    </div>
                 </div>
                 <div className="price-name">
                     <div className="itinerary-text">VAT</div>
-                    <div className="price">$396</div>
+                    <div className="price">
+                        {(totalPrice * 0.025).toFixed(2)}
+                    </div>
                 </div>
             </div>
             <div className="itinerary-due">
                 <div className="price-name">
                     <div className="itinerary-text">Due Now</div>
-                    <div className="price">$396</div>
+                    <div className="price">{(totalPrice * 0.5).toFixed(2)}</div>
                 </div>
                 <div className="price-name">
                     <div className="itinerary-text">Due at Resort</div>
-                    <div className="price">$396</div>
+                    <div className="price">{(totalPrice * 0.5).toFixed(2)}</div>
                 </div>
             </div>
             <div className="continueBtn-div">

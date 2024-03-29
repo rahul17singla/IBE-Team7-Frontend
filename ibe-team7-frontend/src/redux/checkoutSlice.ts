@@ -1,14 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface RoomCheckout {
+    room: string;
+    price: number;
+    quantity: number;
+}
+
+interface CheckoutState {
+    checkout: {
+        cart: RoomCheckout[];
+        total: number;
+    };
+}
+
+const initialState: CheckoutState = {
+    checkout: {
+        cart: [],
+        total: 0,
+    },
+};
+
 const checkoutSlice = createSlice({
     name: "checkout",
-    initialState: {
-        checkout: {
-            cart: [],
-            total: 0,
-        },
-    },
+    initialState,
     reducers: {
+        addToCart: (state, action) => {
+            state.checkout.cart.push(action.payload);
+        },
         setCart: (state, action) => {
             state.checkout.cart = action.payload;
         },
@@ -18,6 +36,6 @@ const checkoutSlice = createSlice({
     },
 });
 
-export const { setCart, setTotal } = checkoutSlice.actions;
+export const { addToCart, setCart, setTotal } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
