@@ -4,7 +4,8 @@ import axios from "axios";
 
 const fetchConfig = createAsyncThunk("fetchConfig", async () => {
     const response = await axios.get(BACKEND_URL + "/config");
-    return response.data.propertyConfig.first;
+    console.log(response);
+    return response.data[0].propertyConfig.first;
 });
 
 export default fetchConfig;

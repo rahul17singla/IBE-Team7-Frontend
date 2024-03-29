@@ -1,0 +1,104 @@
+import { useNavigate } from "react-router-dom";
+import "./Itinerary.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useEffect } from "react";
+import { Months } from "../../enums/Enums";
+
+export const Itinerary = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!property || !property3 || !startDate || !endDate) {
+            navigate("/");
+        }
+    }, []);
+
+    const {
+        property,
+        property3,
+        startDate,
+        endDate,
+        guestsAdult,
+        guestsTeens,
+        guestsChildren,
+    } = useSelector((state: RootState) => state.filterStates);
+
+    const sort = useSelector((state: RootState) => state.results.sort);
+
+    const continueShopping = () => {
+        const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
+            "en-GB"
+        )}&endDate=${endDate?.toLocaleDateString(
+            "en-GB"
+        )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+        navigate(resultUrl);
+    };
+
+    const showDates = () => {
+        return startDate && endDate
+            ? startDate.getDate() +
+                  " " +
+                  Months[startDate.getMonth()] +
+                  " - " +
+                  endDate.getDate() +
+                  " " +
+                  Months[endDate.getMonth()] +
+                  " " +
+                  endDate.getFullYear()
+            : "";
+    };
+    return (
+        <div className="itinerary">
+            <div className="itinerary_heading">
+                <div>Your Trip Itinerary</div>
+                <button className="itinerary-remove">Remove</button>
+            </div>
+            <div className="itinerary-top">
+                <div className="room-type-name">Long Beautiful Resort Name</div>
+                <div className="itinerary-text">
+                    {showDates()} | {guestsAdult} adults{" "}
+                    {guestsTeens > 0 ? guestsTeens + ", teens," : ""}{" "}
+                    {guestsChildren > 0 ? guestsChildren + ", kids" : ""}
+                </div>
+                <div className="itinerary-text">Executive Room</div>
+                <div className="itinerary-text">$132/night</div>
+                <div className="itinerary-text">{property3} rooms</div>
+                <div className="itinerary-text">
+                    Special Promoname, 132$/night
+                </div>
+            </div>
+            <div className="itinerary-pricing">
+                <div className="price-name">
+                    <div className="itinerary-text">Subtotal</div>
+                    <div className="price">$396</div>
+                </div>
+                <div className="price-name">
+                    <div className="itinerary-text">
+                        Taxes, Surcharges, Fees
+                    </div>
+                    <div className="price">$396</div>
+                </div>
+                <div className="price-name">
+                    <div className="itinerary-text">VAT</div>
+                    <div className="price">$396</div>
+                </div>
+            </div>
+            <div className="itinerary-due">
+                <div className="price-name">
+                    <div className="itinerary-text">Due Now</div>
+                    <div className="price">$396</div>
+                </div>
+                <div className="price-name">
+                    <div className="itinerary-text">Due at Resort</div>
+                    <div className="price">$396</div>
+                </div>
+            </div>
+            <div className="continueBtn-div">
+                <button className="continueBtn" onClick={continueShopping}>
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+    );
+};

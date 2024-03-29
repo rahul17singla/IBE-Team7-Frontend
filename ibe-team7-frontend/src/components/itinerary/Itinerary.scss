@@ -1,0 +1,72 @@
+@import "../scss-variables/variables.scss";
+
+.itinerary {
+    width: 25%;
+    padding: 1.5%;
+    background-color: #EFF0F1;
+}
+
+.itinerary_heading {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between
+}
+
+.itinerary-top {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.room-type-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.itinerary-text {
+    color: #5d5d5d;
+    margin: 0.5rem 0;
+}
+
+.itinerary-remove {
+    color: #006EFF;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.price-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.price {
+    font-size: 18px;
+}
+
+.itinerary-pricing {
+    padding: 1rem 0;
+    border-bottom: 1px solid black;
+}
+
+.continueBtn-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+
+}
+
+.continueBtn {
+    background-color: transparent;
+    border: 2px solid $PRIMARY_BLUE;
+    font-weight: 700;
+    font-size: 16px;
+    width: 50%;
+    color: $PRIMARY_BLUE;
+    padding: 4%;
+    cursor: pointer;
+}

@@ -25,6 +25,7 @@ import {
 import axios from "axios";
 import { BACKEND_URL } from "../../constants/Constants";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
+import { findnextDate } from "../../utils/FindNextDateFunc";
 
 export const RoomForm = () => {
     const [showCalendar, setShowCalendar] = useState(false);
@@ -161,8 +162,8 @@ export const RoomForm = () => {
             try {
                 await axios.post(`${BACKEND_URL}/api/v1/dates`, {
                     property: property,
-                    startDate: startDate?.toISOString(),
-                    endDate: endDate?.toISOString(),
+                    startDate: findnextDate(startDate),
+                    endDate: findnextDate(endDate),
                     roomCount: property3,
                     bedType: bedTypes,
                     roomType: roomType,
@@ -260,22 +261,16 @@ export const RoomForm = () => {
 
     const handleSubmit = async () => {
         try {
-            // await axios.post("http://localhost:8088/api/v1/dates", {
-            await axios.post(
-                `${BACKEND_URL}/api/v1/dates`,
-                // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
-                // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
-                {
-                    property: property,
-                    startDate: startDate?.toISOString(),
-                    endDate: endDate?.toISOString(),
-                    roomCount: property3,
-                    bedType: bedTypes,
-                    roomType: roomType,
-                    priceLessThan: priceLessThan,
-                    sort: sort,
-                }
-            );
+            await axios.post(`${BACKEND_URL}/api/v1/dates`, {
+                property: property,
+                startDate: findnextDate(startDate),
+                endDate: findnextDate(endDate),
+                roomCount: property3,
+                bedType: bedTypes,
+                roomType: roomType,
+                priceLessThan: priceLessThan,
+                sort: sort,
+            });
             console.log("DATA IS HERE -------------");
             console.log(startDate?.toISOString()); // Log the response data
         } catch (error) {

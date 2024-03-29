@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "../../constants/Constants";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
+import { findnextDate } from "../../utils/FindNextDateFunc";
 
 export const RoomResult = () => {
     const dispatch = useAppDispatch();
@@ -60,21 +61,16 @@ export const RoomResult = () => {
         const fetchData = async () => {
             console.log(property);
             try {
-                await axios.post(
-                    // "http://team7ibe.ap-northeast-1.elasticbeanstalk.com/api/v1/dates",
-                    BACKEND_URL + "/api/v1/dates",
-                    // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7/api/v1/dates",
-                    {
-                        property: property,
-                        startDate: startDate?.toISOString(),
-                        endDate: endDate?.toISOString(),
-                        roomCount: property3,
-                        bedType: bedTypes,
-                        roomType: roomType,
-                        priceLessThan: priceLessThan,
-                        sort: sort,
-                    }
-                );
+                await axios.post(BACKEND_URL + "/api/v1/dates", {
+                    property: property,
+                    startDate: findnextDate(startDate),
+                    endDate: findnextDate(endDate),
+                    roomCount: property3,
+                    bedType: bedTypes,
+                    roomType: roomType,
+                    priceLessThan: priceLessThan,
+                    sort: sort,
+                });
                 console.log("DATA IS HERE -------------");
                 console.log(startDate?.toISOString()); // Log the response data
             } catch (error) {
