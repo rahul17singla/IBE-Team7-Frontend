@@ -26,8 +26,8 @@ export const Itinerary = () => {
 
     const sort = useSelector((state: RootState) => state.results.sort);
 
-    const totalPrice = useSelector(
-        (state: RootState) => state.checkout.checkout.total
+    const roomTotalPrice = useSelector(
+        (state: RootState) => state.checkout.checkout.roomTotal
     );
 
     const continueShopping = () => {
@@ -70,37 +70,41 @@ export const Itinerary = () => {
                 <div className="itinerary-text">$132/night</div>
                 <div className="itinerary-text">{property3} rooms</div>
                 <div className="itinerary-text">
-                    Special Promoname, 132$/night
+                    Special Promoname, ${roomTotalPrice.toFixed(2)}/night
                 </div>
             </div>
             <div className="itinerary-pricing">
                 <div className="price-name">
                     <div className="itinerary-text">Subtotal</div>
-                    <div className="price">{totalPrice.toFixed(2)}</div>
+                    <div className="price">${roomTotalPrice.toFixed(2)}</div>
                 </div>
                 <div className="price-name">
                     <div className="itinerary-text">
                         Taxes, Surcharges, Fees
                     </div>
                     <div className="price">
-                        {(totalPrice * 0.18).toFixed(2)}
+                        ${(roomTotalPrice * 0.18).toFixed(2)}
                     </div>
                 </div>
                 <div className="price-name">
                     <div className="itinerary-text">VAT</div>
                     <div className="price">
-                        {(totalPrice * 0.025).toFixed(2)}
+                        ${(roomTotalPrice * 0.025).toFixed(2)}
                     </div>
                 </div>
             </div>
             <div className="itinerary-due">
                 <div className="price-name">
                     <div className="itinerary-text">Due Now</div>
-                    <div className="price">{(totalPrice * 0.5).toFixed(2)}</div>
+                    <div className="price">
+                        ${(roomTotalPrice * 1.205 * 0.5).toFixed(2)}
+                    </div>
                 </div>
                 <div className="price-name">
                     <div className="itinerary-text">Due at Resort</div>
-                    <div className="price">{(totalPrice * 0.5).toFixed(2)}</div>
+                    <div className="price">
+                        ${(roomTotalPrice * 1.205 * 0.5).toFixed(2)}
+                    </div>
                 </div>
             </div>
             <div className="continueBtn-div">

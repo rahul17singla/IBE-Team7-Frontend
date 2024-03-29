@@ -10,7 +10,11 @@ import Doublebed from "../../assets/doublebed.svg";
 import { useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
-import { setTotal } from "../../redux/checkoutSlice";
+import {
+    setRoomTotal,
+    setShowItinerary,
+    setTotal,
+} from "../../redux/checkoutSlice";
 import { findnextDate } from "../../utils/FindNextDateFunc";
 
 export interface RoomModalProps {
@@ -46,6 +50,9 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
         guestsChildren,
     } = useSelector((state: RootState) => state.filterStates);
 
+    const roomTotalPrice = useSelector(
+        (state: RootState) => state.checkout.checkout.roomTotal
+    );
     const sort = useSelector((state: RootState) => state.results.sort);
     const [isValid, setIsValid] = useState(false);
 
@@ -61,10 +68,12 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
         setOpen(false);
     };
 
-    const handleSelectPackage = (promoName: string) => {
+    const handleSelectPackage = (promoName: string, priceFactor: number) => {
         console.log(promoName);
 
-        dispatch(setTotal(room.avgPrice));
+        dispatch(setShowItinerary(true));
+        dispatch(setRoomTotal(room.avgPrice * priceFactor));
+        dispatch(setTotal(roomTotalPrice * 1.205));
 
         const checkoutUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"
@@ -77,7 +86,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
     const validatePromoCode = async () => {
         try {
             const response = await axios.get<boolean>(
-                `http://localhost:8080/validatepromo`,
+                `${BACKEND_URL}/api/v1/validatepromo`,
                 {
                     params: {
                         promoCode: promoCode,
@@ -88,11 +97,25 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                 }
             );
             setIsValid(response.data);
+            console.log(response.data);
+            if (isValid) {
+                const checkoutUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
+                    "en-GB"
+                )}&endDate=${endDate?.toLocaleDateString(
+                    "en-GB"
+                )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+                navigate(checkoutUrl);
+            } else {
+                const invalidPromoPara =
+                    document.getElementById("invalidPromoPara");
+                if (invalidPromoPara) {
+                    invalidPromoPara.style.display = "block";
+                }
+            }
         } catch (error) {
             console.error("Error validating promo code:", error);
         }
     };
-
     return (
         <Box className="room-modal">
             <div className="image-carousel">
@@ -206,7 +229,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                         className="select-btn"
                                         onClick={() =>
                                             handleSelectPackage(
-                                                "STANDARD RATES"
+                                                "STANDARD RATES",
+                                                1
                                             )
                                         }
                                     >
@@ -246,7 +270,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                                 className="select-btn"
                                                 onClick={() =>
                                                     handleSelectPackage(
-                                                        promotion.promotionTitle
+                                                        promotion.promotionTitle,
+                                                        promotion.priceFactor
                                                     )
                                                 }
                                             >
@@ -276,6 +301,12 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                         APPLY
                                     </button>
                                 </div>
+                                <p
+                                    id="invalidPromoPara"
+                                    style={{ display: "none" }}
+                                >
+                                    Promo Invalid
+                                </p>
                             </div>
                         </div>
                     </div>
