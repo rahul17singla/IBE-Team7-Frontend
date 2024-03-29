@@ -75,7 +75,6 @@ export const {
     setRoomTypeName,
     setSingleBed,
     setPromotions,
-    addCustomPromotion,
 } = RoomDetailsSlice.actions;
 
 export default RoomDetailsSlice.reducer;
