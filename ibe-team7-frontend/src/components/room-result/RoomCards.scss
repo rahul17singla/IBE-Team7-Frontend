@@ -1,38 +1,52 @@
 @import "../scss-variables/variables.scss";
+
 .listrooms {
     margin-left: 1.35rem;
+
+    @media screen and (max-width: 1440px) {
+        width: 50%;
+    }
 }
+
 .listrooms_div {
     display: flex;
     justify-content: start;
     width: 100%;
     flex-wrap: wrap;
     gap: 1.25rem;
+
     @media screen and (max-width: 1713px) {
         gap: 1.15rem;
     }
+
 }
+
 .listrooms_menubar {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.95rem;
 }
+
 .roomresult_txt {
     font-size: 1.25rem;
     font-weight: bold;
 }
+
 .roomresults_page_div {
     display: flex;
     align-items: center;
 }
+
 .roomresults_result_txt {
     font-size: 1rem;
     font-weight: bold;
     margin-right: 19.5px;
 }
+
 .space {
     color: $PRIMARY_GRAY;
 }
+
 .roomresults_price_dropdown {
     display: flex;
     justify-content: center;
@@ -44,6 +58,7 @@
     border: none;
     outline: none;
 }
+
 .roomresults_dropdown_img {
     height: 0.37rem;
     width: 0.688rem;
@@ -54,6 +69,7 @@
     align-items: center;
     margin-left: 22px;
 }
+
 .sort_price_dropdown {
     display: flex;
     flex-direction: column;
@@ -67,6 +83,7 @@
     margin-left: 0.5rem;
     border: 1px solid $PRIMARY_GRAY;
 }
+
 .sort_button {
     display: flex;
     justify-content: center;
@@ -90,10 +107,17 @@
     color: $PRIMARY_GRAY;
     margin-right: 0.5rem;
 }
+
 @media screen and (max-width: 768px) {
     .filter-rooms-container {
         display: flex;
         flex-direction: column;
         gap: 1.25rem;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .listrooms {
+        width: 80%;
     }
 }

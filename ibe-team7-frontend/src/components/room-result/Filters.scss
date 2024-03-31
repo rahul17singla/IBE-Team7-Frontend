@@ -4,54 +4,41 @@
     width: 16.3rem;
     min-width: 16.3rem;
     padding: 2%;
+
     @media screen and (max-width: 1086px) {
         width: 14rem;
         min-width: 14rem;
     }
-    // @media screen and (max-width: 942px) {
-    //     display: flex;
-    //     justify-content: space-between;
-    //     background-color: white;
-    //     height: 40px;
-    //     width: 100%;
-    //     padding: 0rem;
-    //     border-bottom: 1px solid gray;
-    //     margin-bottom: 3rem;
-    //     padding-left: 1.5rem;
-    //     padding-right: 0.3rem;
-    //     .allfilters_div {
-    //         display: flex;
-    //         justify-content: space-between;
-    //         width: 40%;
-    //         gap: 1.5rem;
-    //         margin-right: 2.3rem;
-    //     }
-    // }
+
     @media screen and (max-width: 637px) {
         .allfilters_div {
             width: 100%;
             margin-right: 1rem;
         }
     }
+
     @media screen and (max-width: 478px) {
         padding-right: 0.8rem;
         margin-right: 0rem;
-        width: 100%;
     }
 }
 
 .title_div {
     margin-bottom: 25px;
+
     @media screen and (max-width: 942px) {
         margin-bottom: 0px;
     }
+
     @media screen and (max-width: 637px) {
         display: none;
     }
 }
+
 .title_heading_txt {
     font-size: 1.25rem;
     font-weight: bold;
+
     @media screen and (max-width: 942px) {
         font-size: 1rem;
         font-weight: normal;
@@ -62,6 +49,7 @@
     border-bottom: 1px solid gray;
     padding-bottom: 20px;
     margin-bottom: 20px;
+
     @media screen and (max-width: 942px) {
         margin-bottom: 0px;
         border-bottom: none;
@@ -76,14 +64,17 @@
 .filter_data_div {
     display: flex;
     justify-content: space-between;
+
     @media screen and (max-width: 942px) {
         gap: 0.2rem;
     }
 }
+
 .dropdown_div {
     display: flex;
     margin-top: 20px;
 }
+
 .checkbox_txt {
     margin-left: 0.4rem;
 }
@@ -98,10 +89,12 @@
         position: relative;
     }
 }
+
 .filter_dropdown_btn {
     border: none;
     outline: none;
 }
+
 @media screen and (max-width: 768px) {
     .allfilters_div {
         // display: none;display: flex;
@@ -110,9 +103,11 @@
         gap: 1.5rem;
         margin-right: 2.3rem;
     }
+
     .filter-rooms-container {
         align-items: center;
     }
+
     .filter_div {
         padding-bottom: 0px;
         margin-bottom: 0px;
@@ -123,12 +118,17 @@
 @media screen and (max-width: 425px) {
     .filters {
         z-index: 8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+
     //     padding: 0;
     // }
     .title_div {
         display: none;
     }
+
     // .filter_div {
     //     padding-bottom: 0px;
     //     margin-bottom: 0px;
@@ -137,9 +137,12 @@
     .filter_data_div {
         flex-direction: column;
     }
+
     .filter_title {
         margin-bottom: 0.5rem;
+        text-align: center;
     }
+
     // .alldropdown_div {
     //     padding: 0;
     // }
@@ -147,10 +150,19 @@
         width: 100%;
         padding: 0.5rem;
         margin-bottom: 0.5rem;
+        justify-content: center;
+        align-items: center;
     }
+
+    .dropdown_div {
+        display: flex;
+        justify-content: center;
+    }
+
     .checkbox_txt {
         margin-left: 0;
     }
+
     .filters .allfilters_div {
         height: 100%;
     }

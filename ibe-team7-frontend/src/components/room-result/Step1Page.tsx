@@ -15,8 +15,10 @@ export const Step1Page = () => {
             <RoomForm />
             <div className="filter-rooms-container">
                 <Filters />
-                <RoomCards />
-                {showItinerary && <Itinerary />}
+                <div className="cards-itinerary">
+                    <RoomCards />
+                    {showItinerary && <Itinerary />}
+                </div>
             </div>
         </div>
     );

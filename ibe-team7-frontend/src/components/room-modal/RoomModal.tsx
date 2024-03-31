@@ -11,12 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
 import {
+    addToCart,
     setRoomTotal,
     setShowItinerary,
     setTotal,
 } from "../../redux/checkoutSlice";
 import { findnextDate } from "../../utils/FindNextDateFunc";
 import { CustomPromo } from "../../types/CustomPromo";
+import checkmarkIcon from "../../assets/checkmark.png";
+import { Currency } from "../../enums/Enums";
 
 export interface RoomModalProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,6 +61,14 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
 
     const [customPromotions, setCustomPromotions] = useState<CustomPromo[]>([]);
 
+    const currencyValue = useSelector(
+        (state: RootState) => state.currency.value
+    );
+
+    const currencyType = useSelector(
+        (state: RootState) => state.currency.currency
+    );
+
     useEffect(() => {
         const fetchImages = async () => {
             const response = await axios.get(BACKEND_URL + "/config");
@@ -76,6 +87,13 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
         dispatch(setShowItinerary(true));
         dispatch(setRoomTotal(room.avgPrice * priceFactor));
         dispatch(setTotal(roomTotalPrice * 1.205));
+        dispatch(
+            addToCart({
+                room: room.roomTypeName,
+                price: room.avgPrice,
+                quantity: 1,
+            })
+        );
 
         const checkoutUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"
@@ -158,7 +176,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                 ))}
                             </Carousel>
                             <p className="para-carousel">
-                                f.refreshToken {room.roomTypeName} ROOM
+                                {room.roomTypeName} ROOM
                             </p>
                         </>
                     }
@@ -213,7 +231,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                     {amenitiesList.map((amenity) => (
                                         <div key={amenity} className="amenity">
                                             <img
-                                                src="/src/assets/checkmark.png"
+                                                src={checkmarkIcon}
                                                 style={{
                                                     height: "16px",
                                                     width: "16px",
@@ -241,7 +259,15 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                 <div className="rate">
                                     <div className="nightly-rate">
                                         <div className="value">
-                                            ${room.avgPrice}
+                                            {currencyType === Currency.USD
+                                                ? `$${(
+                                                      room.avgPrice *
+                                                      currencyValue
+                                                  ).toFixed(2)}`
+                                                : `₹${(
+                                                      room.avgPrice *
+                                                      currencyValue
+                                                  ).toFixed(2)}`}
                                         </div>
                                         <p className="per-night">per night</p>
                                     </div>
@@ -278,9 +304,18 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                         <div className="rate">
                                             <div className="nightly-rate">
                                                 <div className="value">
-                                                    $
-                                                    {room.avgPrice *
-                                                        promotion.priceFactor}
+                                                    {currencyType ===
+                                                    Currency.USD
+                                                        ? `$${(
+                                                              room.avgPrice *
+                                                              promotion.priceFactor *
+                                                              currencyValue
+                                                          ).toFixed(2)}`
+                                                        : `₹${(
+                                                              room.avgPrice *
+                                                              promotion.priceFactor *
+                                                              currencyValue
+                                                          ).toFixed(2)}`}
                                                 </div>
                                                 <p className="per-night">
                                                     per night
