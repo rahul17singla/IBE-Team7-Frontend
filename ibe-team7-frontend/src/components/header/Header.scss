@@ -80,6 +80,11 @@
 
     .header-left {
         margin-left: 4rem;
+        margin-right: 1rem;
+    }
+
+    .header-left__text {
+        display: none;
     }
 
     .header-right {

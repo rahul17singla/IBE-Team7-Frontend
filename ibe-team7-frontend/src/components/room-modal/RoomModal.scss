@@ -17,6 +17,7 @@
     box-shadow: 24px;
     padding: 0;
     margin: 0;
+
     .image-carousel {
         position: relative;
 
@@ -28,6 +29,7 @@
             font-weight: 700;
             font-size: 2rem;
         }
+
         .close-modal-btn {
             position: absolute;
             top: 0;
@@ -45,44 +47,54 @@
             justify-content: center;
             align-items: center;
         }
+
         .close-modal-btn:hover {
             background-color: red;
             cursor: pointer;
         }
     }
+
     .modal-content {
         padding: 2.25rem 4rem 2.25rem 6rem;
         gap: 20px;
+
         @media (max-width: 680px) {
             padding: 2rem 3rem 2rem 3rem;
         }
+
         .room-info {
             .room-description-container {
                 display: flex;
                 flex-direction: column;
                 gap: 1.5rem;
+
                 .room-amenities {
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
+
                     // gap: 3rem;
                     @media (max-width: 1080px) {
                         flex-direction: column;
                         width: 100%;
                         gap: 1.5rem;
                     }
+
                     .room-information {
                         width: 45%;
                         gap: 1.5rem;
                         height: max-content;
                         display: flex;
                         flex-direction: column;
+
                         @media (max-width: 1380px) {
                             width: 43%;
                         }
+
                         @media (max-width: 1080px) {
                             width: 100%;
                         }
+
                         .room-capacity {
                             display: flex;
                             gap: 2rem;
@@ -92,39 +104,48 @@
                                 align-items: center;
                                 font-size: 14px;
                                 color: #5d5d5d;
+
                                 img {
                                     margin-top: 1px;
                                 }
                             }
                         }
                     }
+
                     .amenities-container {
                         width: 45%;
                         display: flex;
                         flex-direction: column;
                         gap: 1.5rem;
+
                         @media (max-width: 1380px) {
                             width: 57%;
                         }
+
                         @media (max-width: 1080px) {
                             width: 100%;
                         }
+
                         .amenities {
                             display: flex;
                             flex-wrap: wrap;
                             gap: 10px 20px;
+
                             @media (max-width: 680px) {
                                 flex-wrap: nowrap;
                                 flex-direction: column;
                                 gap: 5px;
                             }
+
                             .amenity {
                                 display: flex;
                                 align-items: center;
                                 width: 47%;
+
                                 img {
                                     margin-top: 2px;
                                 }
+
                                 @media (max-width: 680px) {
                                     width: fit-content;
                                 }
@@ -137,24 +158,30 @@
                     display: flex;
                     flex-direction: column;
                     gap: 20px;
+
                     .rate-title {
                         font-size: 20px;
                         font-weight: 700;
                     }
+
                     .rate-card {
                         display: flex;
                         min-height: 13vh;
                         width: 34vw;
                         box-shadow: 0px 10px 20px 0px #88919d4d;
+
                         @media (max-width: 1080px) {
                             width: 80%;
                         }
+
                         @media (max-width: 780px) {
                             width: 90%;
                         }
+
                         @media (max-width: 580px) {
                             width: 100%;
                         }
+
                         .rate-description {
                             display: flex;
                             flex-direction: column;
@@ -162,38 +189,46 @@
                             padding: 1.25rem;
                             padding-top: 1.5rem;
                             gap: 10px;
+
                             @media (max-width: 580px) {
                                 width: 60%;
                             }
+
                             .description-title {
                                 display: flex;
                                 font-weight: 700;
                             }
+
                             .description-data {
                                 display: flex;
                                 font-size: 14px;
                                 color: #858685;
                             }
                         }
+
                         .rate {
                             width: 30%;
                             display: flex;
                             flex-direction: column;
                             padding: 1rem;
                             background-color: #eff0f1;
+
                             @media (max-width: 580px) {
                                 width: 40%;
                             }
+
                             .nightly-rate {
                                 display: flex;
                                 flex-direction: column;
                                 height: 70%;
+
                                 .value {
                                     display: flex;
                                     flex-direction: row-reverse;
                                     font-size: 24px;
                                     font-weight: 600;
                                 }
+
                                 .per-night {
                                     display: flex;
                                     flex-direction: row-reverse;
@@ -201,6 +236,7 @@
                                     font-size: 14px;
                                 }
                             }
+
                             .select-btn {
                                 font-size: 0.75rem;
                                 background-color: #26266d;
@@ -214,28 +250,34 @@
                         }
                     }
                 }
+
                 .promocode-apply {
                     width: 20%;
                     display: flex;
                     justify-content: space-between;
+
                     .promocode-name {
                         display: flex;
                         flex-direction: column;
                         gap: 10px;
+
                         .promo-title {
                             font-size: 14px;
                             color: #2f2f2f;
                         }
+
                         .promocode-button {
                             display: flex;
                             gap: 10px;
                             justify-content: space-between;
+
                             .promocode-input {
                                 height: 100%;
                                 border: 1px solid #c1c2c2;
                                 border-radius: 2px;
                                 padding: 5px;
                             }
+
                             .apply-btn {
                                 background-color: #26266d;
                                 color: white;
@@ -251,6 +293,7 @@
         }
     }
 }
+
 .room-modal::-webkit-scrollbar {
     display: none;
 }
@@ -266,4 +309,11 @@
     font-weight: bolder;
     color: #fff;
     background-color: #88919d4d;
+
+    @media screen and (max-width: 425px) {
+        top: 75%;
+        margin-left: 2rem;
+        font-size: 1.5rem;
+
+    }
 }
