@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setCurrency } from "../../redux/currencySlice";
 import { Currency } from "../../enums/Enums";
 import { AccountContext } from "../account/Account";
+import { setUser } from "../../redux/userSlice";
 
 export function Header() {
     const { i18n } = useTranslation();
@@ -53,8 +54,15 @@ export function Header() {
     useEffect(() => {
         getSession()
             .then((session: any) => {
-                console.log("Session: ", session);
                 setStatus(true);
+                dispatch(
+                    setUser({
+                        email: session.getIdToken().payload.email,
+                        accessToken: session.getAccessToken().getJwtToken(),
+                        idToken: session.getIdToken().getJwtToken(),
+                        refreshToken: session.getRefreshToken().getToken(),
+                    })
+                );
             })
             .catch(() => {
                 setStatus(false);

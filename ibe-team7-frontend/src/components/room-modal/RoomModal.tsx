@@ -20,23 +20,22 @@ import { findnextDate } from "../../utils/FindNextDateFunc";
 import { CustomPromo } from "../../types/CustomPromo";
 import checkmarkIcon from "../../assets/checkmark.png";
 import { Currency } from "../../enums/Enums";
+import { t } from "i18next";
 
 export interface RoomModalProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     room: RoomDetails;
 }
 
-const amenitiesList = [
-    "Wireless Internet Access",
-    "In Room Safe",
-    "Cable & Pay TV Channels",
-    "Iron and Ironing Board",
-    "Alarm Clock",
-    "Writing Desk and Chair",
-    "Hair Dryer",
-];
-
 export function RoomModal({ setOpen, room }: RoomModalProps) {
+    const amenitiesList = [
+        t("amenities1"),
+        t("amenities2"),
+        t("amenities3"),
+        t("amenities4"),
+        t("amenities5"),
+        t("amenities6"),
+    ];
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
@@ -199,34 +198,19 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                     </div>
                                     <div className="room-info-div">
                                         <img src={Doublebed} alt="bed" />
-                                        {/* <span>
-                                            &nbsp; {room.doubleBed > 0 && room.doubleBed}{" "}
-                                            {room.doubleBed > 0 && (
-                                            <FormattedMessage id="king" defaultMessage="King" />
-                                            )}
-                                            {room.doubleBed > 0 && room.singleBed > 0 && " & "}
-                                            {room.singleBed > 0 && room.singleBed}{" "}
-                                            {room.singleBed > 0 && (
-                                            <FormattedMessage id="queen" defaultMessage="Queen" />
-                                            )}
-                                        </span> */}
                                     </div>
                                     <div className="room-info-div">
                                         &nbsp; &nbsp;{room.area} ft²
                                     </div>
                                 </div>
                                 <div className="description">
-                                    {`Smoke free and decorated in contemporary
-                                    jewel and earth tones, the 15-story Casino
-                                    Tower rooms are located directly above the
-                                    casino. The ${room.area} sq.ft. Casino Tower rooms
-                                    are appointed with classic furnishings and
-                                    include pillow-top mattresses, 40 inch flat
-                                    panel plasma TV and Wi-Fi internet access.`}
+                                    {`${t("roomnotes1")} ${t("The")} ${
+                                        room.area
+                                    } sq.ft. ${t("roomnotes2")}`}
                                 </div>
                             </div>
                             <div className="amenities-container">
-                                <span className="title">Amenities</span>
+                                <span className="title">{t("amenities")}</span>
                                 <div className="amenities">
                                     {amenitiesList.map((amenity) => (
                                         <div key={amenity} className="amenity">
@@ -245,7 +229,9 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                             </div>
                         </div>
                         <div className="standard-rates">
-                            <div className="rate-title">Standard Rates</div>
+                            <div className="rate-title">
+                                {t("standardrates")}
+                            </div>
                             <div className="rate-card">
                                 <div className="rate-description">
                                     <div className="description-title">
@@ -280,13 +266,15 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                             )
                                         }
                                     >
-                                        SELECT PACKAGE
+                                        {t("selectpackage")}
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div className="standard-rates">
-                            <div className="rate-title">Deals & Packages</div>
+                            <div className="rate-title">
+                                {t("dealspackages")}
+                            </div>
                             {room.promotionsDtoList.map((promotion) => {
                                 return (
                                     <div
@@ -318,7 +306,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                                           ).toFixed(2)}`}
                                                 </div>
                                                 <p className="per-night">
-                                                    per night
+                                                    {t("pernight")}
                                                 </p>
                                             </div>
                                             <button
@@ -330,7 +318,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                                     )
                                                 }
                                             >
-                                                SELECT PACKAGE
+                                                {t("selectpackage")}
                                             </button>
                                         </div>
                                     </div>
@@ -413,7 +401,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                                     )
                                                 }
                                             >
-                                                SELECT PACKAGE
+                                                {t("selectpackage")}
                                             </button>
                                         </div>
                                     </div>
@@ -422,9 +410,10 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                         </div>
                         <div className="promocode-apply">
                             <div className="promocode-name">
-                                <p className="promo-title">Enter a promocode</p>
+                                <p className="promo-title">{t("enterpromo")}</p>
                                 <div className="promocode-button">
                                     <input
+                                        id="promocode-input"
                                         className="promocode-input"
                                         type="text"
                                         placeholder="Enter promocode"
@@ -436,7 +425,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                         className="apply-btn"
                                         onClick={validatePromoCode}
                                     >
-                                        APPLY
+                                        {t("Apply")}
                                     </button>
                                 </div>
                                 <p
