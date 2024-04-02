@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../constants/Constants";
 import fetchConfig from "../../redux/thunks/configThunk";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
+import { findnextDate } from "../../utils/FindNextDateFunc";
 
 export function Search() {
     const { t } = useTranslation();
@@ -159,8 +160,8 @@ export function Search() {
         try {
             await axios.post(BACKEND_URL + "/api/v1/dates", {
                 property: property,
-                startDate: startDate.toISOString(),
-                endDate: endDate.toISOString(),
+                startDate: findnextDate(startDate),
+                endDate: findnextDate(endDate),
                 roomCount: property3,
                 bedType: bedType,
                 roomType: roomType,

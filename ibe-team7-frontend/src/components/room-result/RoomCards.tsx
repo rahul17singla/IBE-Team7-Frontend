@@ -9,6 +9,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../../constants/Constants";
 import { Loader } from "../loader/Loader";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
+import { findnextDate } from "../../utils/FindNextDateFunc";
 
 export const RoomCards = () => {
     const [openSortPriceDropdown, setOpenSortPriceDropdown] = useState(false);
@@ -43,8 +44,8 @@ export const RoomCards = () => {
             try {
                 await axios.post(BACKEND_URL + "/api/v1/dates", {
                     property: property,
-                    startDate: startDate?.toISOString(),
-                    endDate: endDate?.toISOString(),
+                    startDate: findnextDate(startDate),
+                    endDate: findnextDate(endDate),
                     roomCount: property3,
                     bedType: bedTypes,
                     roomType: roomType,

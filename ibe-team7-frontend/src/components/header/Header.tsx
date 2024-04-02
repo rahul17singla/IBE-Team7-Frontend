@@ -3,10 +3,12 @@ import language from "../../assets/enicon.png";
 import currencyImg from "../../assets/USDIcon.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrency } from "../../redux/currencySlice";
 import { Currency } from "../../enums/Enums";
+import { AccountContext } from "../account/Account";
+import { setUser } from "../../redux/userSlice";
 
 export function Header() {
     const { i18n } = useTranslation();
@@ -45,7 +47,33 @@ export function Header() {
         }
     };
 
-    const loginUser = () => {};
+    const [status, setStatus] = useState<boolean>(false);
+
+    const { getSession, logout } = useContext(AccountContext);
+
+    useEffect(() => {
+        getSession()
+            .then((session: any) => {
+                setStatus(true);
+                dispatch(
+                    setUser({
+                        email: session.getIdToken().payload.email,
+                        accessToken: session.getAccessToken().getJwtToken(),
+                        idToken: session.getIdToken().getJwtToken(),
+                        refreshToken: session.getRefreshToken().getToken(),
+                    })
+                );
+            })
+            .catch(() => {
+                setStatus(false);
+            });
+    }, []);
+
+    const handleLogout = () => {
+        logout();
+        window.location.href = "/";
+        setStatus(false);
+    };
 
     return (
         <div className="header">
@@ -90,11 +118,15 @@ export function Header() {
                         <option value={Currency.INR}>{Currency.INR}</option>
                     </select>
                 </button>
-                <Link to="/login">
-                    <button className="login-btn" onClick={loginUser}>
-                        Login
+                {status ? (
+                    <button className="login-btn" onClick={handleLogout}>
+                        Logout
                     </button>
-                </Link>
+                ) : (
+                    <Link to="/login">
+                        <button className="login-btn">Login</button>
+                    </Link>
+                )}
             </div>
         </div>
     );

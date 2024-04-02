@@ -19,10 +19,14 @@ export const RoomCard = ({ room }: any) => {
         (state: RootState) => state.currency.currency
     );
 
+    // const dispatch = useDispatch();
+    // const open = useSelector((state: RootState) => state.modal.open);
     const [open, setOpen] = useState(false);
 
     const openModal = () => {
         setOpen(true);
+        // dispatch(setRoom(room));
+        // dispatch(setModal(true));
     };
     const handleClose = () => {
         setOpen(false);
@@ -89,16 +93,26 @@ export const RoomCard = ({ room }: any) => {
                     SELECT ROOM
                 </button>
             </div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <div>
-                    <RoomModal room={room} />
-                </div>
-            </Modal>
+
+            <div>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    style={{
+                        maxHeight: "78%",
+                        overflowY: "auto",
+                        marginTop: "12rem",
+                    }} // Adjust maxHeight as needed
+                >
+                    <div className="Hello">
+                        <RoomModal room={room} setOpen={setOpen} />
+                    </div>
+                </Modal>
+
+                {/* <RoomModal room={room} setOpen={setOpen} /> */}
+            </div>
         </div>
     );
 };

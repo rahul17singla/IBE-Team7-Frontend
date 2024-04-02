@@ -10,7 +10,7 @@ export const CarouselComponent = ({ name }: any) => {
         const fetchImages = async () => {
             const response = await axios.get(BACKEND_URL + "/config");
 
-            setImages(response.data.propertyConfig.first[name]);
+            setImages(response.data[0].propertyConfig.first[name]);
         };
         fetchImages();
     }, []);
