@@ -1,12 +1,20 @@
 @import "../scss-variables/variables.scss";
 
-.itinerary {
+
+.itinerary-container {
     width: 25%;
-    padding: 1.5%;
+    margin-bottom: 2rem;
+}
+
+.itinerary {
+    width: 100%;
+    padding: 5%;
     background-color: #EFF0F1;
     height: fit-content;
+}
 
-
+.contact {
+    margin-top: 3rem;
 }
 
 .itinerary_heading {
@@ -75,14 +83,14 @@
 }
 
 @media screen and (max-width: 1440px) {
-    .itinerary {
+    .itinerary-container {
         width: 30%;
     }
 
 }
 
 @media screen and (max-width: 768px) {
-    .itinerary {
+    .itinerary-container {
         width: 40%;
         padding: 2%;
     }
@@ -122,10 +130,15 @@
 }
 
 @media screen and (max-width: 425px) {
-    .itinerary {
+    .itinerary-container {
         width: 100%;
         padding: 5%;
         margin-bottom: 1rem;
+    }
+
+    .itinerary {
+        width: 100%;
+        padding: 5%;
     }
 
 }

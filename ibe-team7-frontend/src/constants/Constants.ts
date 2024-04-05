@@ -1,4 +1,7 @@
 export const BACKEND_URL =
+    // "http://localhost:8088";
     "https://tcxv7qiee1.execute-api.ap-northeast-1.amazonaws.com/test7";
 
 export const LARGE_DATE = "2050-12-31";
+export const GEO_API_KEY =
+    "ZU5xWllnV2hTU0syY0FqVjIyUFNlamt3djBXOTBWZFVLYjlCNnp5eQ==";

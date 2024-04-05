@@ -78,78 +78,96 @@ export const Itinerary = () => {
     };
 
     return (
-        <div className="itinerary">
-            <div className="itinerary_heading">
-                <div>Your Trip Itinerary</div>
-                <button className="itinerary-remove" onClick={removeItinerary}>
-                    Remove
-                </button>
-            </div>
-            <div className="itinerary-top">
-                <div className="room-type-name">{roomCart[0].room}</div>
-                <div className="itinerary-text">
-                    {showDates()} | {guestsAdult} adults{" "}
-                    {guestsTeens > 0 ? guestsTeens + ", teens," : ""}{" "}
-                    {guestsChildren > 0 ? guestsChildren + ", kids" : ""}
+        <div className="itinerary-container">
+            <div className="itinerary">
+                <div className="itinerary_heading">
+                    <div>Your Trip Itinerary</div>
+                    <button
+                        className="itinerary-remove"
+                        onClick={removeItinerary}
+                    >
+                        Remove
+                    </button>
                 </div>
-                <div className="itinerary-text">Executive Room</div>
-                <div className="itinerary-text">$132/night</div>
-                <div className="itinerary-text">{property3} rooms</div>
-                <div className="itinerary-text">
-                    Special Promoname,{" "}
-                    {currencyType === Currency.USD ? "$" : "₹"}
-                    {(roomTotalPrice * currencyValue).toFixed(2)}/night
-                </div>
-            </div>
-            <div className="itinerary-pricing">
-                <div className="price-name">
-                    <div className="itinerary-text">Subtotal</div>
-                    <div className="price">
-                        {currencyType === Currency.USD ? "$" : "₹"}
-                        {(roomTotalPrice * currencyValue).toFixed(2)}
-                    </div>
-                </div>
-                <div className="price-name">
+                <div className="itinerary-top">
+                    <div className="room-type-name">{roomCart[0].room}</div>
                     <div className="itinerary-text">
-                        Taxes, Surcharges, Fees
+                        {showDates()} | {guestsAdult} adults{" "}
+                        {guestsTeens > 0 ? guestsTeens + ", teens," : ""}{" "}
+                        {guestsChildren > 0 ? guestsChildren + ", kids" : ""}
                     </div>
-                    <div className="price">
+                    <div className="itinerary-text">Executive Room</div>
+                    <div className="itinerary-text">$132/night</div>
+                    <div className="itinerary-text">{property3} rooms</div>
+                    <div className="itinerary-text">
+                        Special Promoname,{" "}
                         {currencyType === Currency.USD ? "$" : "₹"}
-                        {(roomTotalPrice * currencyValue * 0.18).toFixed(2)}
+                        {(roomTotalPrice * currencyValue).toFixed(2)}/night
                     </div>
                 </div>
-                <div className="price-name">
-                    <div className="itinerary-text">VAT</div>
-                    <div className="price">
-                        {currencyType === Currency.USD ? "$" : "₹"}
-                        {(roomTotalPrice * currencyValue * 0.025).toFixed(2)}
+                <div className="itinerary-pricing">
+                    <div className="price-name">
+                        <div className="itinerary-text">Subtotal</div>
+                        <div className="price">
+                            {currencyType === Currency.USD ? "$" : "₹"}
+                            {(roomTotalPrice * currencyValue).toFixed(2)}
+                        </div>
                     </div>
+                    <div className="price-name">
+                        <div className="itinerary-text">
+                            Taxes, Surcharges, Fees
+                        </div>
+                        <div className="price">
+                            {currencyType === Currency.USD ? "$" : "₹"}
+                            {(roomTotalPrice * currencyValue * 0.18).toFixed(2)}
+                        </div>
+                    </div>
+                    <div className="price-name">
+                        <div className="itinerary-text">VAT</div>
+                        <div className="price">
+                            {currencyType === Currency.USD ? "$" : "₹"}
+                            {(roomTotalPrice * currencyValue * 0.025).toFixed(
+                                2
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className="itinerary-due">
+                    <div className="price-name">
+                        <div className="itinerary-text">Due Now</div>
+                        <div className="price">
+                            {currencyType === Currency.USD ? "$" : "₹"}
+                            {(
+                                roomTotalPrice *
+                                currencyValue *
+                                1.205 *
+                                0.5
+                            ).toFixed(2)}
+                        </div>
+                    </div>
+                    <div className="price-name">
+                        <div className="itinerary-text">Due at Resort</div>
+                        <div className="price">
+                            {currencyType === Currency.USD ? "$" : "₹"}
+                            {(
+                                roomTotalPrice *
+                                currencyValue *
+                                1.205 *
+                                0.5
+                            ).toFixed(2)}
+                        </div>
+                    </div>
+                </div>
+                <div className="continueBtn-div">
+                    <button className="continueBtn" onClick={continueShopping}>
+                        Continue Shopping
+                    </button>
                 </div>
             </div>
-            <div className="itinerary-due">
-                <div className="price-name">
-                    <div className="itinerary-text">Due Now</div>
-                    <div className="price">
-                        {currencyType === Currency.USD ? "$" : "₹"}
-                        {(roomTotalPrice * currencyValue * 1.205 * 0.5).toFixed(
-                            2
-                        )}
-                    </div>
-                </div>
-                <div className="price-name">
-                    <div className="itinerary-text">Due at Resort</div>
-                    <div className="price">
-                        {currencyType === Currency.USD ? "$" : "₹"}
-                        {(roomTotalPrice * currencyValue * 1.205 * 0.5).toFixed(
-                            2
-                        )}
-                    </div>
-                </div>
-            </div>
-            <div className="continueBtn-div">
-                <button className="continueBtn" onClick={continueShopping}>
-                    Continue Shopping
-                </button>
+            <div className="contact itinerary">
+                <h2>Need help?</h2>
+                <h4>Call 1-800-555-5555</h4>
+                <div>Mon-Fr 8a-5p EST</div>
             </div>
         </div>
     );
