@@ -98,15 +98,15 @@ export const Checkout = () => {
                 { abortEarly: false }
             );
 
-            const response = await axios.get(
+            const response = await axios.post(
                 `${BACKEND_URL}/api/v1/validatetravelerinfo`,
                 {
-                    params: {
+                    // body: {
                         firstName: firstNameTraveler,
                         lastName: lastNameTraveler,
                         phoneNo: phoneTraveler,
                         emailId: emailTraveler,
-                    },
+                    // },
                 }
             );
 
@@ -144,10 +144,10 @@ export const Checkout = () => {
                 { abortEarly: false }
             );
 
-            const response = await axios.get(
+            const response = await axios.post(
                 `${BACKEND_URL}/api/v1/validatebillinginfo`,
                 {
-                    params: {
+                    // params: {
                         firstName: firstNameBilling,
                         lastName: lastNameBilling,
                         mailingAddress1: address1,
@@ -158,7 +158,7 @@ export const Checkout = () => {
                         zip: zip,
                         phoneNo: phoneBilling,
                         emailId: emailBilling,
-                    },
+                    // },
                 }
             );
 
@@ -209,18 +209,18 @@ export const Checkout = () => {
             return;
         }
 
-        const response = await axios.get(
+        const response = await axios.post(
             `${BACKEND_URL}/api/v1/validatepaymentinfo`,
             {
-                params: {
+                // params: {
                     cardNo: cardNumber,
                     expiryMonth: exMonth,
                     expiryYear: exYear,
-                },
+                // },
             }
         );
 
-        if (response.data !== "Valid payment information") {
+        if (response.data !== "Valid payment info") {
             alert(response.data);
             return;
         }
