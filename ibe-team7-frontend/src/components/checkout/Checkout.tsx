@@ -9,9 +9,9 @@ import {
     paymentInfoSchema,
 } from "./YupSchema";
 import axios from "axios";
-import { useAppDispatch } from "../../redux/store";
-import { setUserInfo } from "../../redux/userInfoSlice";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Checkout = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
@@ -75,6 +75,14 @@ export const Checkout = () => {
     //     });
     // };
 
+    const roomCart = useSelector(
+        (state: RootState) => state.checkout.checkout.cart
+    );
+
+    const { selectedPromotionName, selectedPromotionDescription } = useSelector(
+        (state: RootState) => state.selectedPromo
+    );
+
     const handleTravelerInfo = async () => {
         const travellerInfoError =
             document.getElementById("travellerInfoError");
@@ -90,6 +98,22 @@ export const Checkout = () => {
                 { abortEarly: false }
             );
 
+            const response = await axios.get(
+                `${BACKEND_URL}/api/v1/validatetravelerinfo`,
+                {
+                    params: {
+                        firstName: firstNameTraveler,
+                        lastName: lastNameTraveler,
+                        phoneNo: phoneTraveler,
+                        emailId: emailTraveler,
+                    },
+                }
+            );
+
+            if (response.data !== "Valid traveler information") {
+                alert(response.data);
+                return;
+            }
             setShowTravelerInfo(false);
             setShowBillingInfo(true);
             setShowPaymentInfo(false);
@@ -120,6 +144,29 @@ export const Checkout = () => {
                 { abortEarly: false }
             );
 
+            const response = await axios.get(
+                `${BACKEND_URL}/api/v1/validatebillinginfo`,
+                {
+                    params: {
+                        firstName: firstNameBilling,
+                        lastName: lastNameBilling,
+                        mailingAddress1: address1,
+                        mailingAddress2: address2,
+                        country: countryid,
+                        state: stateid,
+                        city: cityid,
+                        zip: zip,
+                        phoneNo: phoneBilling,
+                        emailId: emailBilling,
+                    },
+                }
+            );
+
+            if (response.data !== "Valid billing information") {
+                alert(response.data);
+                return;
+            }
+
             setShowTravelerInfo(false);
             setShowBillingInfo(false);
             setShowPaymentInfo(true);
@@ -129,6 +176,10 @@ export const Checkout = () => {
             console.log(error);
         }
     };
+
+    const roomTotalPrice = useSelector(
+        (state: RootState) => state.checkout.checkout.roomTotal
+    );
 
     const handlePaymentInfo = async () => {
         if (!isTnCChecked) {
@@ -158,30 +209,46 @@ export const Checkout = () => {
             return;
         }
 
-        const resultUrl = `/confirmation/1234`;
+        const response = await axios.get(
+            `${BACKEND_URL}/api/v1/validatepaymentinfo`,
+            {
+                params: {
+                    cardNo: cardNumber,
+                    expiryMonth: exMonth,
+                    expiryYear: exYear,
+                },
+            }
+        );
 
-        // send data to backend
-        // const response = await axios.post(`${BACKEND_URL}/checkout`, {
-        //     firstNameTraveler,
-        //     lastNameTraveler,
-        //     phoneTraveler,
-        //     emailTraveler,
-        //     firstNameBilling,
-        //     lastNameBilling,
-        //     address1,
-        //     address2,
-        //     country,
-        //     city,
-        //     state,
-        //     zip,
-        //     phoneBilling,
-        //     emailBilling,
-        //     cardNumber,
-        //     exMonth,
-        //     exYear,
-        // });
+        if (response.data !== "Valid payment information") {
+            alert(response.data);
+            return;
+        }
 
-        // const resultUrl = `/confirmation?bookingId=${response.bookingId}`;
+        await axios.post(`${BACKEND_URL}/api/v1/roomsummary`, {
+            roomTotalPrice,
+            selectedPromotionName,
+            selectedPromotionDescription,
+        });
+
+        const response2 = await axios.get(
+            `${BACKEND_URL}/api/v1/createbooking`,
+            {
+                params: {
+                    roomTypeName: roomCart.room,
+                },
+            }
+        );
+
+        if (response2.data === "failed") {
+            alert("Booking failed. Please try again.");
+            navigate("/");
+            return;
+        }
+
+        // const bookingId = response2.data;
+
+        const resultUrl = `/confirmation/${response2.data}`;
 
         navigate(resultUrl);
     };

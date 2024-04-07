@@ -21,6 +21,10 @@ import { CustomPromo } from "../../types/CustomPromo";
 import checkmarkIcon from "../../assets/checkmark.png";
 import { Currency } from "../../enums/Enums";
 import { t } from "i18next";
+import {
+    setSelectedPromotionDescription,
+    setSelectedPromotionName,
+} from "../../redux/selectedPromoSlice";
 
 export interface RoomModalProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -80,7 +84,11 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
         setOpen(false);
     };
 
-    const handleSelectPackage = (promoName: string, priceFactor: number) => {
+    const handleSelectPackage = (
+        promoName: string,
+        priceFactor: number,
+        promoCodeDescription: string
+    ) => {
         console.log(promoName);
 
         dispatch(setShowItinerary(true));
@@ -93,7 +101,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                 quantity: 1,
             })
         );
-
+        dispatch(setSelectedPromotionName(promoName));
+        dispatch(setSelectedPromotionDescription(promoCodeDescription));
         const checkoutUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"
         )}&endDate=${endDate?.toLocaleDateString(
@@ -262,7 +271,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                         onClick={() =>
                                             handleSelectPackage(
                                                 "STANDARD RATES",
-                                                1
+                                                1,
+                                                "Spend $10 every night you stay and earn $150 in dining credit at the resort."
                                             )
                                         }
                                     >
@@ -314,7 +324,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                                 onClick={() =>
                                                     handleSelectPackage(
                                                         promotion.promotionTitle,
-                                                        promotion.priceFactor
+                                                        promotion.priceFactor,
+                                                        promotion.promotionDescription
                                                     )
                                                 }
                                             >
@@ -397,7 +408,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                                 onClick={() =>
                                                     handleSelectPackage(
                                                         promotion.promoCodeTitle,
-                                                        promotion.priceFactor
+                                                        promotion.priceFactor,
+                                                        promotion.promoCodeDescription
                                                     )
                                                 }
                                             >

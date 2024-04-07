@@ -1,12 +1,20 @@
 import "./OTPModal.scss";
 import React, { useState } from "react";
 import { Box, Modal, TextField } from "@mui/material";
+import axios from "axios";
+import { BACKEND_URL } from "../../constants/Constants";
 
 export interface ICancelProps {
     onClose: () => void;
+    otpFromMail: number;
+    bookingId: string;
 }
 
-export function OTPModal({ onClose }: Readonly<ICancelProps>) {
+export function OTPModal({
+    onClose,
+    otpFromMail,
+    bookingId,
+}: Readonly<ICancelProps>) {
     const [otp, setOtp] = useState("");
     const [submit, setSubmit] = useState(false);
     const [otpError, setOtpError] = useState("");
@@ -26,8 +34,16 @@ export function OTPModal({ onClose }: Readonly<ICancelProps>) {
             setSubmit(false);
             return;
         }
-        setSubmit(true);
-        setOtpError("");
+        console.log(otp);
+        console.log(otpFromMail);
+        if (parseInt(otp) !== otpFromMail) {
+            setOtpError("OTP is incorrect");
+            setSubmit(false);
+        } else {
+            setOtpError("");
+            setSubmit(true);
+            axios.get(`${BACKEND_URL}/cancelRoom?${bookingId}`);
+        }
     };
 
     const handleOtpChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -9,15 +9,14 @@ import MuiAccordionSummary, {
     AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { OTPModal } from "./OTPModal";
 import { SES } from "@aws-sdk/client-ses";
 import { Html } from "@react-email/html";
-import { FRONTEND_URL } from "../../constants/Constants";
+import { BACKEND_URL, FRONTEND_URL } from "../../constants/Constants";
 import { render } from "@react-email/render";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import axios from "axios";
 
 export const Confirmation = () => {
     const { id } = useParams();
@@ -29,6 +28,7 @@ export const Confirmation = () => {
     const [cancelBooking, setCancelBooking] = useState(false);
     // const [sendEmail, setSendEmail] = useState(false);
     const [expanded, setExpanded] = useState<string | boolean>("panel1");
+    const [otp, setOtp] = useState(0);
 
     const handleChange =
         (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
@@ -38,7 +38,51 @@ export const Confirmation = () => {
     const toggleAll = (val: string | boolean) => {
         setExpanded(val);
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(
+                `${BACKEND_URL}/confirmation/${id}`
+            );
+        };
+
+        fetchData();
+    }, []);
+
     const handleCancel = () => {
+        // generate random 6 digit otp
+        const otpVal = Math.floor(100000 + Math.random() * 900000);
+        setOtp(otpVal);
+
+        // send otp to email
+        const emailContent = render(
+            <Html lang="en">
+                Here is your OTP for cancellation of the booking.
+                {otpVal}
+            </Html>
+        );
+
+        const params = {
+            Source: "arunain.mahant@kickdrumtech.com",
+            Destination: {
+                ToAddresses: ["rahul.singla@kickdrumtech.com"],
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: emailContent,
+                    },
+                },
+                Subject: {
+                    Charset: "UTF-8",
+                    Data: "KICKDRUM - Booking Confirmation",
+                },
+            },
+        };
+
+        ses.sendEmail(params);
+
         setCancelBooking(!cancelBooking);
     };
 
@@ -76,6 +120,9 @@ export const Confirmation = () => {
     });
 
     const sendEmailFunc = () => {
+        // get email id from cognito
+        // get email id from redux store
+
         // const emailHtml = render(<Email />);
         const bookingId = "1234";
         const emailContent = render(
@@ -89,9 +136,9 @@ export const Confirmation = () => {
         );
 
         const params = {
-            Source: "rahul.singla@kickdrumtech.com",
+            Source: "arunain.mahant@kickdrumtech.com",
             Destination: {
-                ToAddresses: ["arunain.mahant@kickdrumtech.com"],
+                ToAddresses: ["rahul.singla@kickdrumtech.com"],
             },
             Message: {
                 Body: {
@@ -102,7 +149,7 @@ export const Confirmation = () => {
                 },
                 Subject: {
                     Charset: "UTF-8",
-                    Data: "hello world",
+                    Data: "KICKDRUM - Booking Confirmation",
                 },
             },
         };
@@ -152,7 +199,11 @@ export const Confirmation = () => {
                             Cancel Room
                         </button>
                         {cancelBooking && (
-                            <OTPModal onClose={() => setCancelBooking(false)} />
+                            <OTPModal
+                                onClose={() => setCancelBooking(false)}
+                                otpFromMail={otp}
+                                bookingId={"1234"}
+                            />
                         )}
                     </div>
                 </div>
