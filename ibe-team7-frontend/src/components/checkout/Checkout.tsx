@@ -2,11 +2,21 @@ import { useEffect, useState } from "react";
 import { Step, StepButton, Stepper } from "@mui/material";
 import { Itinerary } from "../itinerary/Itinerary";
 import "./Checkout.scss";
-import { GEO_API_KEY } from "../../constants/Constants";
-import { billingInfoSchema, travellerInfoSchema } from "./YupSchema";
+import { BACKEND_URL, GEO_API_KEY } from "../../constants/Constants";
+import {
+    billingInfoSchema,
+    travellerInfoSchema,
+    paymentInfoSchema,
+} from "./YupSchema";
+import axios from "axios";
+import { useAppDispatch } from "../../redux/store";
+import { setUserInfo } from "../../redux/userInfoSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Checkout = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [activeStep] = useState(2);
     const [completed] = useState<{ [k: number]: boolean }>({});
@@ -30,13 +40,21 @@ export const Checkout = () => {
     const [zip, setZip] = useState("");
     const [phoneBilling, setPhoneBilling] = useState("");
     const [emailBilling, setEmailBilling] = useState("");
+
+    const [isTnCChecked, setIsTnCChecked] = useState(false);
+
+    const [cardNumber, setCardNumber] = useState("");
+    const [cvv, setCvv] = useState("");
+    const [exMonth, setExMonth] = useState("");
+    const [exYear, setExYear] = useState("");
+
     // const [isAddress2Present, setIsAddress2Present] = useState(false);
     // const [isPhoneBillingPresent, setIsPhoneBillingPresent] = useState(false);
     // const [isEmailBillingPresent, setIsEmailBillingPresent] = useState(false);
 
-    const [_, setCountryid] = useState(0);
-    const [stateid, setStateid] = useState(0);
-    const [cityid, setCityid] = useState(0);
+    const [countryid, setCountryid] = useState("");
+    const [stateid, setStateid] = useState("");
+    const [cityid, setCityid] = useState("");
 
     const [countriesList, setCountriesList] = useState<any>([]);
     const [stateList, setStateList] = useState([]);
@@ -76,6 +94,7 @@ export const Checkout = () => {
             setShowBillingInfo(true);
             setShowPaymentInfo(false);
         } catch (error) {
+            // alert("Enter All Fields Correctly!");
             travellerInfoError?.classList.remove("hidden");
             console.log(error);
         }
@@ -105,9 +124,66 @@ export const Checkout = () => {
             setShowBillingInfo(false);
             setShowPaymentInfo(true);
         } catch (error) {
+            // alert("Enter All Fields Correctly!");
             travellerInfoError?.classList.remove("hidden");
             console.log(error);
         }
+    };
+
+    const handlePaymentInfo = async () => {
+        if (!isTnCChecked) {
+            alert("Please agree to the Terms and Conditions");
+            return;
+        }
+        const currentYear = new Date().getFullYear();
+        if (
+            parseInt(exMonth) < 1 ||
+            parseInt(exMonth) > 12 ||
+            currentYear > parseInt(exYear)
+        ) {
+            alert("Please enter correct payment details!");
+            return;
+        }
+        try {
+            await paymentInfoSchema.validate(
+                {
+                    cardNumber,
+                    cvv,
+                },
+                { abortEarly: false }
+            );
+        } catch (error) {
+            alert("Please enter correct payment details!");
+            console.log(error);
+            return;
+        }
+
+        const resultUrl = `/confirmation/1234`;
+
+        // send data to backend
+        // const response = await axios.post(`${BACKEND_URL}/checkout`, {
+        //     firstNameTraveler,
+        //     lastNameTraveler,
+        //     phoneTraveler,
+        //     emailTraveler,
+        //     firstNameBilling,
+        //     lastNameBilling,
+        //     address1,
+        //     address2,
+        //     country,
+        //     city,
+        //     state,
+        //     zip,
+        //     phoneBilling,
+        //     emailBilling,
+        //     cardNumber,
+        //     exMonth,
+        //     exYear,
+        // });
+
+        // const resultUrl = `/confirmation?bookingId=${response.bookingId}`;
+
+        navigate(resultUrl);
     };
 
     const handleBackToTravelerInfo = () => {
@@ -174,6 +250,7 @@ export const Checkout = () => {
 
         if (stateFromZip !== stateid || cityFromZip !== cityid) {
             alert("Invalid Zip Code");
+            setZip("");
         }
     };
 
@@ -182,8 +259,6 @@ export const Checkout = () => {
         setShowBillingInfo(true);
         setShowPaymentInfo(false);
     };
-
-    const handlePaymentInfo = () => {};
 
     useEffect(() => {
         const headers = new Headers();
@@ -368,6 +443,10 @@ export const Checkout = () => {
                                                     country.iso2
                                                 );
                                             }}
+                                            value={countriesList.findIndex(
+                                                (country: any) =>
+                                                    country.name === countryid
+                                            )}
                                         >
                                             <option value="select">
                                                 Select
@@ -396,7 +475,10 @@ export const Checkout = () => {
                                                 setCity(city.name);
                                                 setCityid(city.name);
                                             }}
-                                            // value={cityid}
+                                            value={cityList.findIndex(
+                                                (city: any) =>
+                                                    city.name === cityid
+                                            )}
                                         >
                                             {cityList.map(
                                                 (item: any, index) => (
@@ -487,6 +569,11 @@ export const Checkout = () => {
                                                             state.iso2
                                                         );
                                                     }}
+                                                    value={stateList.findIndex(
+                                                        (state: any) =>
+                                                            state.name ===
+                                                            stateid
+                                                    )}
                                                 >
                                                     {stateList.map(
                                                         (item: any, index) => (
@@ -563,35 +650,39 @@ export const Checkout = () => {
                                             type="text"
                                             id="cardNumber"
                                             name="cardNumber"
+                                            onChange={(e) =>
+                                                setCardNumber(e.target.value)
+                                            }
+                                            value={cardNumber}
                                         />
                                         <label htmlFor="cvv">CVV</label>
                                         <input
-                                            type="text"
+                                            type="password"
                                             id="cvv"
                                             name="cvv"
                                             style={{ width: "50%" }}
+                                            onChange={(e) =>
+                                                setCvv(e.target.value)
+                                            }
+                                            value={cvv}
                                         />
-                                        <div>
-                                            <input
-                                                type="checkbox"
-                                                name="specialOffers"
-                                                id="specialOffers"
-                                            />{" "}
-                                            <label htmlFor="specialOffers">
-                                                Send me special offers
-                                            </label>
-                                        </div>
                                         <div>
                                             <input
                                                 type="checkbox"
                                                 name="tnc"
                                                 id="tnc"
+                                                onClick={() =>
+                                                    setIsTnCChecked(
+                                                        !isTnCChecked
+                                                    )
+                                                }
+                                                checked={isTnCChecked}
                                             />{" "}
                                             <label htmlFor="tnc">
                                                 I agree to the{" "}
                                                 <button className="tnc">
                                                     Terms and Policies
-                                                </button>{" "}
+                                                </button>
                                                 of travel.
                                             </label>
                                         </div>
@@ -613,6 +704,12 @@ export const Checkout = () => {
                                                     type="text"
                                                     name="expmm"
                                                     id="expmm"
+                                                    onChange={(e) =>
+                                                        setExMonth(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    value={exMonth}
                                                 />
                                             </div>
                                             <div className="checkout-form_input">
@@ -623,6 +720,12 @@ export const Checkout = () => {
                                                     type="text"
                                                     id="expyy"
                                                     name="expyy"
+                                                    onChange={(e) =>
+                                                        setExYear(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    value={exYear}
                                                 />
                                             </div>
                                         </div>

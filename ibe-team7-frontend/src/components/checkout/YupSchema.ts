@@ -26,3 +26,15 @@ export const billingInfoSchema = Yup.object().shape({
         .email("Invalid email")
         .required("Email is required"),
 });
+
+export const paymentInfoSchema = Yup.object().shape({
+    cardNumber: Yup.string()
+        .required("Card Number is required")
+        .length(16)
+        .matches(/^[0-9]+$/, "Card number must be numeric"),
+
+    cvv: Yup.string()
+        .required("CVV is required")
+        .length(3)
+        .matches(/^[0-9]+$/, "CVV must be numeric"),
+});

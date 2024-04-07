@@ -8,7 +8,7 @@ interface RoomCheckout {
 
 interface CheckoutState {
     checkout: {
-        cart: RoomCheckout[];
+        cart: RoomCheckout;
         roomTotal: number;
         total: number;
         showItinerary: boolean;
@@ -17,7 +17,11 @@ interface CheckoutState {
 
 const initialState: CheckoutState = {
     checkout: {
-        cart: [],
+        cart: {
+            room: "",
+            price: 0,
+            quantity: 0,
+        },
         roomTotal: 0,
         total: 0,
         showItinerary: false,
@@ -29,7 +33,7 @@ const checkoutSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            state.checkout.cart.push(action.payload);
+            state.checkout.cart = action.payload;
         },
         setCart: (state, action) => {
             state.checkout.cart = action.payload;

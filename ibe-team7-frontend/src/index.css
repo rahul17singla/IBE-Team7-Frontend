@@ -10,4 +10,8 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: "Lato", sans-serif;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }

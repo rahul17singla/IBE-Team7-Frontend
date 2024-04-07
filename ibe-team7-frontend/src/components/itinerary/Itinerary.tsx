@@ -45,6 +45,18 @@ export const Itinerary = () => {
     );
 
     const continueShopping = () => {
+        // if current page is room result then navigate to checkout
+        // else navigate to room result
+        if (window.location.pathname === "/room-result") {
+            const resultUrl = `/checkout?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
+                "en-GB"
+            )}&endDate=${endDate?.toLocaleDateString(
+                "en-GB"
+            )}&adults=${guestsAdult}&teens=${guestsTeens}&kids=${guestsChildren}&sort=${sort}`;
+            navigate(resultUrl);
+            return;
+        }
+
         const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"
         )}&endDate=${endDate?.toLocaleDateString(
@@ -90,14 +102,25 @@ export const Itinerary = () => {
                     </button>
                 </div>
                 <div className="itinerary-top">
-                    <div className="room-type-name">{roomCart[0].room}</div>
+                    <div className="room-type-name">{roomCart.room}</div>
                     <div className="itinerary-text">
                         {showDates()} | {guestsAdult} adults{" "}
                         {guestsTeens > 0 ? guestsTeens + ", teens," : ""}{" "}
                         {guestsChildren > 0 ? guestsChildren + ", kids" : ""}
                     </div>
                     <div className="itinerary-text">Executive Room</div>
-                    <div className="itinerary-text">$132/night</div>
+                    <div className="itinerary-text">
+                        {currencyType === Currency.USD ? "$" : "₹"}
+                        {startDate && endDate
+                            ? (
+                                  (roomTotalPrice * currencyValue * 1.205) /
+                                  (endDate?.getDate() - startDate?.getDate())
+                              ).toFixed(2)
+                            : (roomTotalPrice * currencyValue * 1.205).toFixed(
+                                  2
+                              )}
+                        /night
+                    </div>
                     <div className="itinerary-text">{property3} rooms</div>
                     <div className="itinerary-text">
                         Special Promoname,{" "}

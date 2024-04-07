@@ -12,6 +12,12 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { OTPModal } from "./OTPModal";
+import { SES } from "@aws-sdk/client-ses";
+import { Html } from "@react-email/html";
+import { FRONTEND_URL } from "../../constants/Constants";
+import { render } from "@react-email/render";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export const Confirmation = () => {
     const { id } = useParams();
@@ -21,7 +27,7 @@ export const Confirmation = () => {
 
     const bookingBoxRef = useRef(null);
     const [cancelBooking, setCancelBooking] = useState(false);
-
+    // const [sendEmail, setSendEmail] = useState(false);
     const [expanded, setExpanded] = useState<string | boolean>("panel1");
 
     const handleChange =
@@ -30,7 +36,7 @@ export const Confirmation = () => {
         };
 
     const toggleAll = (val: string | boolean) => {
-        setExpanded((_) => val);
+        setExpanded(val);
     };
     const handleCancel = () => {
         setCancelBooking(!cancelBooking);
@@ -47,6 +53,10 @@ export const Confirmation = () => {
         onBeforeGetContent: () => {
             toggleAll(true);
         },
+        pageStyle: `@page {
+            size: 8.5in 11.5in;
+            margin: 0;
+        }`,
         content: () => bookingBoxRef.current,
         documentTitle: "Booking Confirmation",
         removeAfterPrint: true,
@@ -54,6 +64,53 @@ export const Confirmation = () => {
             toggleAll("panel1");
         },
     });
+
+    const ses = new SES({
+        credentials: {
+            accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+            secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+            sessionToken: import.meta.env.VITE_AWS_SESSION_TOKEN,
+        },
+        apiVersion: "2010-12-01",
+        region: "ap-northeast-1",
+    });
+
+    const sendEmailFunc = () => {
+        // const emailHtml = render(<Email />);
+        const bookingId = "1234";
+        const emailContent = render(
+            <Html lang="en">
+                Here is your booking confirmation link. You can download it from
+                the page itself.
+                <a href={`${FRONTEND_URL}/confirmation/${bookingId}`}>
+                    Click here to view
+                </a>
+            </Html>
+        );
+
+        const params = {
+            Source: "rahul.singla@kickdrumtech.com",
+            Destination: {
+                ToAddresses: ["arunain.mahant@kickdrumtech.com"],
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: emailContent,
+                    },
+                },
+                Subject: {
+                    Charset: "UTF-8",
+                    Data: "hello world",
+                },
+            },
+        };
+
+        ses.sendEmail(params);
+
+        alert("Email sent successfully");
+    };
 
     return (
         <div className="confirmation-container" ref={bookingBoxRef}>
@@ -68,7 +125,13 @@ export const Confirmation = () => {
                     >
                         Print
                     </button>
-                    <button className="confirm-header-btn">Email</button>
+                    <button
+                        className="confirm-header-btn"
+                        onClick={sendEmailFunc}
+                    >
+                        Email
+                    </button>
+                    {/* {sendEmail && <Email url="https://google.com" />} */}
                 </div>
             </div>
             <div className="confirm-content">

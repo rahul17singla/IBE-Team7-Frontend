@@ -6,6 +6,7 @@ import resultReducer from "./resultSlice";
 import roomDetailsReducer from "./roomDetailsSlice";
 import { useDispatch } from "react-redux";
 import checkoutReducer from "./checkoutSlice";
+import userInfoReducer from "./userInfoSlice";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
         results: resultReducer,
         roomDetails: roomDetailsReducer,
         checkout: checkoutReducer,
+        userInfo: userInfoReducer,
     },
 });
 
