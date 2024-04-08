@@ -9,13 +9,12 @@ import {
     paymentInfoSchema,
 } from "./YupSchema";
 import axios from "axios";
-import { RootState, useAppDispatch } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export const Checkout = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [activeStep] = useState(2);

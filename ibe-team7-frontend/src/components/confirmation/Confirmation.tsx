@@ -17,8 +17,6 @@ import { Html } from "@react-email/html";
 import { BACKEND_URL, FRONTEND_URL } from "../../constants/Constants";
 import { render } from "@react-email/render";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 
 export const Confirmation = () => {
     const { id } = useParams();
