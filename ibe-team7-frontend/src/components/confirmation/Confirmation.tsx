@@ -17,6 +17,8 @@ import { Html } from "@react-email/html";
 import { BACKEND_URL, FRONTEND_URL } from "../../constants/Constants";
 import { render } from "@react-email/render";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export const Confirmation = () => {
     const { id } = useParams();
@@ -29,6 +31,23 @@ export const Confirmation = () => {
     // const [sendEmail, setSendEmail] = useState(false);
     const [expanded, setExpanded] = useState<string | boolean>("panel1");
     const [otp, setOtp] = useState(0);
+    const [cardNumber, setCardNumber] = useState("");
+    const [expMonth, setexpMonth] = useState("");
+    const [expYear, setexpYear] = useState("");
+    const [billingEmail, setBillingEmail] = useState("");
+    const [billingPhone, setBillingPhone] = useState("");
+    const [address1, setAddress1] = useState("");
+    const [address2, setAddress2] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [country, setCountry] = useState("");
+    const [zip, setZip] = useState("");
+    const [billingFirstName, setBillingFirstName] = useState("");
+    const [billingLastName, setBillingLastName] = useState("");
+    const [travelerFirstName, setTravelerFirstName] = useState("");
+    const [travelerLastName, setTravelerLastName] = useState("");
+    const [travelerEmail, setTravelerEmail] = useState("");
+    const [travelerPhone, setTravelerPhone] = useState("");
 
     const handleChange =
         (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
@@ -42,8 +61,28 @@ export const Confirmation = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(
-                `${BACKEND_URL}/confirmation/${id}`
+                `${BACKEND_URL}/api/v1/confirmation/${id}`
             );
+            console.log(response.data);
+            setCardNumber(response.data.paymentInfoEntity.cardNo);
+            setexpMonth(response.data.paymentInfoEntity.expiryMonth);
+            setexpYear(response.data.paymentInfoEntity.expiryYear);
+            setBillingEmail(response.data.billingInfoEntity.emailId);
+            setBillingPhone(response.data.billingInfoEntity.phoneNo);
+            setAddress1(response.data.billingInfoEntity.mailingAddress1);
+            setAddress2(response.data.billingInfoEntity.mailingAddress2);
+
+            setCity(response.data.billingInfoEntity.city);
+            setState(response.data.billingInfoEntity.state);
+            setCountry(response.data.billingInfoEntity.country);
+            setZip(response.data.billingInfoEntity.zip);
+            setBillingFirstName(response.data.billingInfoEntity.firstName);
+            setBillingLastName(response.data.billingInfoEntity.lastName);
+
+            setTravelerFirstName(response.data.travelerInfoEntity.firstName);
+            setTravelerLastName(response.data.travelerInfoEntity.lastName);
+            setTravelerEmail(response.data.travelerInfoEntity.emailId);
+            setTravelerPhone(response.data.travelerInfoEntity.phoneNo);
         };
 
         fetchData();
@@ -65,7 +104,7 @@ export const Confirmation = () => {
         const params = {
             Source: "arunain.mahant@kickdrumtech.com",
             Destination: {
-                ToAddresses: ["rahul.singla@kickdrumtech.com"],
+                ToAddresses: [travelerEmail],
             },
             Message: {
                 Body: {
@@ -138,7 +177,7 @@ export const Confirmation = () => {
         const params = {
             Source: "arunain.mahant@kickdrumtech.com",
             Destination: {
-                ToAddresses: ["rahul.singla@kickdrumtech.com"],
+                ToAddresses: [travelerEmail],
             },
             Message: {
                 Body: {
@@ -341,7 +380,7 @@ export const Confirmation = () => {
                                                 First Name
                                             </div>
                                             <div className="info-price">
-                                                Rahul
+                                                {travelerFirstName}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -349,7 +388,7 @@ export const Confirmation = () => {
                                                 Last Name
                                             </div>
                                             <div className="info-price">
-                                                Singla
+                                                {travelerLastName}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -357,7 +396,7 @@ export const Confirmation = () => {
                                                 Phone
                                             </div>
                                             <div className="info-price">
-                                                +91-9876543210
+                                                {travelerPhone}
                                             </div>
                                         </div>
                                         <div className="email-info">
@@ -366,7 +405,7 @@ export const Confirmation = () => {
                                             </div>
                                             <div className="info-email">
                                                 <p className="email-p">
-                                                    abc.def@gmail.com
+                                                    {travelerEmail}
                                                 </p>
                                             </div>
                                         </div>
@@ -396,7 +435,7 @@ export const Confirmation = () => {
                                                 First Name
                                             </div>
                                             <div className="info-price">
-                                                Rahul
+                                                {billingFirstName}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -404,7 +443,7 @@ export const Confirmation = () => {
                                                 Last Name
                                             </div>
                                             <div className="info-price">
-                                                Singla
+                                                {billingLastName}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -412,7 +451,7 @@ export const Confirmation = () => {
                                                 Mailing Address1
                                             </div>
                                             <div className="info-price">
-                                                Kickdrum
+                                                {address1}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -420,7 +459,7 @@ export const Confirmation = () => {
                                                 Mailing Address2
                                             </div>
                                             <div className="info-price">
-                                                Bangalore
+                                                {address2}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -428,7 +467,7 @@ export const Confirmation = () => {
                                                 Country
                                             </div>
                                             <div className="info-price">
-                                                India
+                                                {country}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -436,7 +475,7 @@ export const Confirmation = () => {
                                                 City
                                             </div>
                                             <div className="info-price">
-                                                Bangalore
+                                                {city}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -444,7 +483,7 @@ export const Confirmation = () => {
                                                 State
                                             </div>
                                             <div className="info-price">
-                                                Karnataka
+                                                {state}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -452,7 +491,7 @@ export const Confirmation = () => {
                                                 Zip
                                             </div>
                                             <div className="info-price">
-                                                123456
+                                                {zip}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -460,7 +499,7 @@ export const Confirmation = () => {
                                                 Phone
                                             </div>
                                             <div className="info-price">
-                                                +91-9876543210
+                                                {billingPhone}
                                             </div>
                                         </div>
                                         <div className="email-info">
@@ -469,7 +508,7 @@ export const Confirmation = () => {
                                             </div>
                                             <div className="info-email">
                                                 <p className="email-p">
-                                                    abc.def@gmail.com
+                                                    {billingEmail}
                                                 </p>
                                             </div>
                                         </div>
@@ -499,21 +538,23 @@ export const Confirmation = () => {
                                                 Card No.
                                             </div>
                                             <div className="info-price">
-                                                1234 1234 1234 1234
+                                                {cardNumber}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
                                             <div className="info-title">
                                                 Exp Month
                                             </div>
-                                            <div className="info-price">04</div>
+                                            <div className="info-price">
+                                                {expMonth}
+                                            </div>
                                         </div>
                                         <div className="nightly-rate-info">
                                             <div className="info-title">
                                                 Exp Year
                                             </div>
                                             <div className="info-price">
-                                                2025
+                                                {expYear}
                                             </div>
                                         </div>
                                     </div>

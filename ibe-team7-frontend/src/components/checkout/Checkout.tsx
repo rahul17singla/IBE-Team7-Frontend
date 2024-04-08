@@ -83,6 +83,14 @@ export const Checkout = () => {
         (state: RootState) => state.selectedPromo
     );
 
+    const startDate = useSelector(
+        (state: RootState) => state.filterStates.startDate
+    );
+
+    const endDate = useSelector(
+        (state: RootState) => state.filterStates.endDate
+    );
+
     const handleTravelerInfo = async () => {
         const travellerInfoError =
             document.getElementById("travellerInfoError");
@@ -102,10 +110,10 @@ export const Checkout = () => {
                 `${BACKEND_URL}/api/v1/validatetravelerinfo`,
                 {
                     // body: {
-                        firstName: firstNameTraveler,
-                        lastName: lastNameTraveler,
-                        phoneNo: phoneTraveler,
-                        emailId: emailTraveler,
+                    firstName: firstNameTraveler,
+                    lastName: lastNameTraveler,
+                    phoneNo: phoneTraveler,
+                    emailId: emailTraveler,
                     // },
                 }
             );
@@ -148,16 +156,16 @@ export const Checkout = () => {
                 `${BACKEND_URL}/api/v1/validatebillinginfo`,
                 {
                     // params: {
-                        firstName: firstNameBilling,
-                        lastName: lastNameBilling,
-                        mailingAddress1: address1,
-                        mailingAddress2: address2,
-                        country: countryid,
-                        state: stateid,
-                        city: cityid,
-                        zip: zip,
-                        phoneNo: phoneBilling,
-                        emailId: emailBilling,
+                    firstName: firstNameBilling,
+                    lastName: lastNameBilling,
+                    mailingAddress1: address1,
+                    mailingAddress2: address2,
+                    country: countryid,
+                    state: stateid,
+                    city: cityid,
+                    zip: zip,
+                    phoneNo: phoneBilling,
+                    emailId: emailBilling,
                     // },
                 }
             );
@@ -213,9 +221,9 @@ export const Checkout = () => {
             `${BACKEND_URL}/api/v1/validatepaymentinfo`,
             {
                 // params: {
-                    cardNo: cardNumber,
-                    expiryMonth: exMonth,
-                    expiryYear: exYear,
+                cardNo: cardNumber,
+                expiryMonth: exMonth,
+                expiryYear: exYear,
                 // },
             }
         );
@@ -229,6 +237,8 @@ export const Checkout = () => {
             roomTotalPrice,
             selectedPromotionName,
             selectedPromotionDescription,
+            startDate,
+            endDate,
         });
 
         const response2 = await axios.get(
@@ -240,7 +250,7 @@ export const Checkout = () => {
             }
         );
 
-        if (response2.data === "failed") {
+        if (response2.data === "Booking failed") {
             alert("Booking failed. Please try again.");
             navigate("/");
             return;
