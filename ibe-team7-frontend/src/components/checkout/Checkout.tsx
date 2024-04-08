@@ -90,6 +90,19 @@ export const Checkout = () => {
         (state: RootState) => state.filterStates.endDate
     );
 
+    const adultCount = useSelector(
+        (state: RootState) => state.filterStates.guestsAdult
+    );
+    const teenCount = useSelector(
+        (state: RootState) => state.filterStates.guestsTeens
+    );
+    const childCount = useSelector(
+        (state: RootState) => state.filterStates.guestsChildren
+    );
+    const property3 = useSelector(
+        (state: RootState) => state.filterStates.property3
+    );
+
     const handleTravelerInfo = async () => {
         const travellerInfoError =
             document.getElementById("travellerInfoError");
@@ -233,9 +246,9 @@ export const Checkout = () => {
         }
 
         await axios.post(`${BACKEND_URL}/api/v1/roomsummary`, {
-            roomTotalPrice,
-            selectedPromotionName,
-            selectedPromotionDescription,
+            totalPrice: roomTotalPrice,
+            promotionTitle: selectedPromotionName,
+            promotionDescription: selectedPromotionDescription,
             startDate,
             endDate,
         });
@@ -245,6 +258,13 @@ export const Checkout = () => {
             {
                 params: {
                     roomTypeName: roomCart.room,
+                    adultCount,
+                    childCount: childCount + teenCount,
+                    totalCost: roomTotalPrice,
+                    amountDueAtResort:
+                        roomTotalPrice * 0.8 * 1.205 * parseInt(property3),
+                    startDate,
+                    endDate,
                 },
             }
         );

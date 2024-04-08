@@ -17,6 +17,9 @@ import { Html } from "@react-email/html";
 import { BACKEND_URL, FRONTEND_URL } from "../../constants/Constants";
 import { render } from "@react-email/render";
 import axios from "axios";
+import { Currency, Months } from "../../enums/Enums";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export const Confirmation = () => {
     const { id } = useParams();
@@ -46,6 +49,27 @@ export const Confirmation = () => {
     const [travelerLastName, setTravelerLastName] = useState("");
     const [travelerEmail, setTravelerEmail] = useState("");
     const [travelerPhone, setTravelerPhone] = useState("");
+
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [startMonth, setStartMonth] = useState("");
+    const [endMonth, setEndMonth] = useState("");
+    const [startYear, setStartYear] = useState("");
+    const [endYear, setEndYear] = useState("");
+
+    const [promotionTitle, setPromotionTitle] = useState("");
+    const [promotionText, setPromotionText] = useState("");
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    const [noOfDaysToStay, setNoOfDaysToStay] = useState(0);
+
+    const currencyValue = useSelector(
+        (state: RootState) => state.currency.value
+    );
+
+    const currencyType = useSelector(
+        (state: RootState) => state.currency.currency
+    );
 
     const handleChange =
         (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
@@ -81,6 +105,29 @@ export const Confirmation = () => {
             setTravelerLastName(response.data.travelerInfoEntity.lastName);
             setTravelerEmail(response.data.travelerInfoEntity.emailId);
             setTravelerPhone(response.data.travelerInfoEntity.phoneNo);
+
+            const startDateFromDB = response.data.roomSummaryEntity.startDate;
+            setStartDate(startDateFromDB.split("T")[0].split("-")[2]);
+            setStartMonth(startDateFromDB.split("T")[0].split("-")[1]);
+            setStartYear(startDateFromDB.split("T")[0].split("-")[0]);
+
+            const endDateFromDB = response.data.roomSummaryEntity.endDate;
+            setEndDate(endDateFromDB.split("T")[0].split("-")[2]);
+            setEndMonth(endDateFromDB.split("T")[0].split("-")[1]);
+            setEndYear(endDateFromDB.split("T")[0].split("-")[0]);
+
+            const stayDays = Math.abs(
+                new Date(endDateFromDB).getTime() -
+                    new Date(startDateFromDB).getTime()
+            );
+
+            setNoOfDaysToStay(Math.ceil(stayDays / (1000 * 3600 * 24)));
+
+            setPromotionTitle(response.data.roomSummaryEntity.promotionTitle);
+            setPromotionText(
+                response.data.roomSummaryEntity.promotionDescription
+            );
+            setTotalPrice(response.data.roomSummaryEntity.totalPrice);
         };
 
         fetchData();
@@ -225,7 +272,7 @@ export const Confirmation = () => {
                             Room 1: Executive Room
                         </div>
                         <div style={{ color: "#5d5d5d" }}>
-                            <img src={user} alt="user" /> 2 Adults, 1 Child
+                            <img src={user} alt="user" /> 2 Adults
                         </div>
                     </div>
                     <div>
@@ -239,7 +286,7 @@ export const Confirmation = () => {
                             <OTPModal
                                 onClose={() => setCancelBooking(false)}
                                 otpFromMail={otp}
-                                bookingId={"1234"}
+                                bookingId={id}
                             />
                         )}
                     </div>
@@ -257,28 +304,28 @@ export const Confirmation = () => {
                         <div className="date-boxes">
                             <div className="date-box">
                                 <div className="date-box-heading">Check-in</div>
-                                <div className="date">20</div>
+                                <div className="date">{startDate}</div>
                                 <div className="confirm-month-year">
-                                    May, 2024
+                                    {Months[parseInt(startMonth) - 1]},{" "}
+                                    {startYear}
                                 </div>
                             </div>
                             <div className="date-box">
                                 <div className="date-box-heading">
                                     Check-out
                                 </div>
-                                <div className="date">22</div>
+                                <div className="date">{endDate}</div>
                                 <div className="confirm-month-year">
-                                    May, 2024
+                                    {Months[parseInt(endMonth) - 1]}, {endYear}
                                 </div>
                             </div>
                         </div>
                         <div className="confirm-promo">
                             <div className="confirm-promo-heading">
-                                $150 Dining Credit Package
+                                {promotionTitle}
                             </div>
                             <div className="confirm-promo-text">
-                                Spend $10 every night you stay and earn $150 on
-                                doing credit at the resort.
+                                {promotionText}
                             </div>
                         </div>
                         <div className="confirm-total">
@@ -287,7 +334,14 @@ export const Confirmation = () => {
                                 applicable
                             </div>
                             <div className="confirm-price">
-                                $XXX/night total
+                                {currencyType === Currency.USD
+                                    ? `$${(totalPrice * currencyValue).toFixed(
+                                          2
+                                      )}`
+                                    : `₹${(totalPrice * currencyValue).toFixed(
+                                          2
+                                      )}`}
+                                /night
                             </div>
                         </div>
                     </div>
@@ -317,7 +371,15 @@ export const Confirmation = () => {
                                                 Nightly rate
                                             </div>
                                             <div className="info-price">
-                                                $XXX.xx
+                                                {currencyType === Currency.USD
+                                                    ? `$${(
+                                                          totalPrice *
+                                                          currencyValue
+                                                      ).toFixed(2)}`
+                                                    : `₹${(
+                                                          totalPrice *
+                                                          currencyValue
+                                                      ).toFixed(2)}`}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -325,7 +387,17 @@ export const Confirmation = () => {
                                                 Subtotal
                                             </div>
                                             <div className="info-price">
-                                                $XXX.xx
+                                                {currencyType === Currency.USD
+                                                    ? `$${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          currencyValue
+                                                      ).toFixed(2)}`
+                                                    : `₹${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          currencyValue
+                                                      ).toFixed(2)}`}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -333,7 +405,19 @@ export const Confirmation = () => {
                                                 Taxes, Surcharges, Fees
                                             </div>
                                             <div className="info-price">
-                                                $XXX.xx
+                                                {currencyType === Currency.USD
+                                                    ? `$${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          0.18 *
+                                                          currencyValue
+                                                      ).toFixed(2)}`
+                                                    : `₹${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          0.18 *
+                                                          currencyValue
+                                                      ).toFixed(2)}`}
                                             </div>
                                         </div>
                                         <div className="nightly-rate-info">
@@ -341,7 +425,19 @@ export const Confirmation = () => {
                                                 VAT
                                             </div>
                                             <div className="info-price">
-                                                $XXX.xx
+                                                {currencyType === Currency.USD
+                                                    ? `$${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          0.025 *
+                                                          currencyValue
+                                                      ).toFixed(2)}`
+                                                    : `₹${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          0.025 *
+                                                          currencyValue
+                                                      ).toFixed(2)}`}
                                             </div>
                                         </div>
                                         <div className="total-for-stay">
@@ -349,7 +445,19 @@ export const Confirmation = () => {
                                                 Total for stay
                                             </div>
                                             <div className="info-price">
-                                                $XXX.xx
+                                                {currencyType === Currency.USD
+                                                    ? `$${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          1.205 *
+                                                          currencyValue
+                                                      ).toFixed(2)}`
+                                                    : `₹${(
+                                                          totalPrice *
+                                                          noOfDaysToStay *
+                                                          1.205 *
+                                                          currencyValue
+                                                      ).toFixed(2)}`}
                                             </div>
                                         </div>
                                     </div>

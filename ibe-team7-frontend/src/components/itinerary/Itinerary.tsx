@@ -2,13 +2,15 @@ import { useNavigate } from "react-router-dom";
 import "./Itinerary.scss";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Currency, Months } from "../../enums/Enums";
 import { setShowItinerary } from "../../redux/checkoutSlice";
 
 export const Itinerary = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
+    const [noOfDays, setNoOfDays] = useState<number>(0);
 
     useEffect(() => {
         if (!property || !property3 || !startDate || !endDate) {
@@ -65,6 +67,14 @@ export const Itinerary = () => {
         navigate(resultUrl);
     };
 
+    useEffect(() => {
+        if (startDate && endDate) {
+            const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            setNoOfDays(diffDays + 1);
+        }
+    }, [startDate, endDate]);
+
     const showDates = () => {
         return startDate && endDate
             ? startDate.getDate() +
@@ -111,14 +121,7 @@ export const Itinerary = () => {
                     <div className="itinerary-text">Executive Room</div>
                     <div className="itinerary-text">
                         {currencyType === Currency.USD ? "$" : "₹"}
-                        {startDate && endDate
-                            ? (
-                                  (roomTotalPrice * currencyValue * 1.205) /
-                                  (endDate?.getDate() - startDate?.getDate())
-                              ).toFixed(2)
-                            : (roomTotalPrice * currencyValue * 1.205).toFixed(
-                                  2
-                              )}
+                        {(roomTotalPrice * currencyValue).toFixed(2)}
                         /night
                     </div>
                     <div className="itinerary-text">{property3} rooms</div>
@@ -133,7 +136,12 @@ export const Itinerary = () => {
                         <div className="itinerary-text">Subtotal</div>
                         <div className="price">
                             {currencyType === Currency.USD ? "$" : "₹"}
-                            {(roomTotalPrice * currencyValue).toFixed(2)}
+                            {(
+                                roomTotalPrice *
+                                currencyValue *
+                                parseInt(property3) *
+                                noOfDays
+                            ).toFixed(2)}
                         </div>
                     </div>
                     <div className="price-name">
@@ -142,16 +150,26 @@ export const Itinerary = () => {
                         </div>
                         <div className="price">
                             {currencyType === Currency.USD ? "$" : "₹"}
-                            {(roomTotalPrice * currencyValue * 0.18).toFixed(2)}
+                            {(
+                                roomTotalPrice *
+                                currencyValue *
+                                parseInt(property3) *
+                                noOfDays *
+                                0.18
+                            ).toFixed(2)}
                         </div>
                     </div>
                     <div className="price-name">
                         <div className="itinerary-text">VAT</div>
                         <div className="price">
                             {currencyType === Currency.USD ? "$" : "₹"}
-                            {(roomTotalPrice * currencyValue * 0.025).toFixed(
-                                2
-                            )}
+                            {(
+                                roomTotalPrice *
+                                currencyValue *
+                                parseInt(property3) *
+                                noOfDays *
+                                0.025
+                            ).toFixed(2)}
                         </div>
                     </div>
                 </div>
@@ -163,8 +181,10 @@ export const Itinerary = () => {
                             {(
                                 roomTotalPrice *
                                 currencyValue *
+                                parseInt(property3) *
+                                noOfDays *
                                 1.205 *
-                                0.5
+                                0.2
                             ).toFixed(2)}
                         </div>
                     </div>
@@ -175,8 +195,10 @@ export const Itinerary = () => {
                             {(
                                 roomTotalPrice *
                                 currencyValue *
+                                parseInt(property3) *
+                                noOfDays *
                                 1.205 *
-                                0.5
+                                0.8
                             ).toFixed(2)}
                         </div>
                     </div>

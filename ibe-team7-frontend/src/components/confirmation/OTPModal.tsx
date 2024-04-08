@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import { Box, Modal, TextField } from "@mui/material";
 import axios from "axios";
 import { BACKEND_URL } from "../../constants/Constants";
+import { useNavigate } from "react-router-dom";
 
 export interface ICancelProps {
     onClose: () => void;
     otpFromMail: number;
-    bookingId: string;
+    bookingId: string | undefined;
 }
 
 export function OTPModal({
@@ -19,11 +20,13 @@ export function OTPModal({
     const [submit, setSubmit] = useState(false);
     const [otpError, setOtpError] = useState("");
 
+    const navigate = useNavigate();
+
     const handleClose = () => {
         onClose();
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (otp.length !== 6) {
             setOtpError("OTP must be 6 characters long");
             setSubmit(false);
@@ -42,7 +45,12 @@ export function OTPModal({
         } else {
             setOtpError("");
             setSubmit(true);
-            axios.get(`${BACKEND_URL}/cancelRoom?${bookingId}`);
+            await axios.get(`${BACKEND_URL}/api/v1/cancelbooking`, {
+                params: {
+                    bookingId: bookingId,
+                },
+            });
+            navigate("/");
         }
     };
 
