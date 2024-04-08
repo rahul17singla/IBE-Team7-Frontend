@@ -85,6 +85,12 @@ export const Confirmation = () => {
             const response = await axios.get(
                 `${BACKEND_URL}/api/v1/confirmation/${id}`
             );
+
+            if (response === null || response.data === null) {
+                alert("Booking not found");
+                window.location.href = "/";
+            }
+
             console.log(response.data);
             setCardNumber(response.data.paymentInfoEntity.cardNo);
             setexpMonth(response.data.paymentInfoEntity.expiryMonth);
@@ -208,12 +214,11 @@ export const Confirmation = () => {
         // get email id from redux store
 
         // const emailHtml = render(<Email />);
-        const bookingId = "1234";
         const emailContent = render(
             <Html lang="en">
                 Here is your booking confirmation link. You can download it from
                 the page itself.
-                <a href={`${FRONTEND_URL}/confirmation/${bookingId}`}>
+                <a href={`${FRONTEND_URL}/confirmation/${id}`}>
                     Click here to view
                 </a>
             </Html>
