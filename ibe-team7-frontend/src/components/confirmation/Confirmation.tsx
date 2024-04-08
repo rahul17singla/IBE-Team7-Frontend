@@ -86,9 +86,15 @@ export const Confirmation = () => {
                 `${BACKEND_URL}/api/v1/confirmation/${id}`
             );
 
-            if (response === null || response.data === null) {
+            if (
+                response === null ||
+                response.data === null ||
+                response.data === undefined ||
+                response.data === ""
+            ) {
                 alert("Booking not found");
                 window.location.href = "/";
+                return;
             }
 
             console.log(response.data);
