@@ -12,6 +12,7 @@ import axios from "axios";
 import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Loader } from "../loader/Loader";
 
 export const Checkout = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
@@ -46,6 +47,8 @@ export const Checkout = () => {
     const [cvv, setCvv] = useState("");
     const [exMonth, setExMonth] = useState("");
     const [exYear, setExYear] = useState("");
+
+    const [isLoading, setIsLoading] = useState(false);
 
     // const [isAddress2Present, setIsAddress2Present] = useState(false);
     // const [isPhoneBillingPresent, setIsPhoneBillingPresent] = useState(false);
@@ -253,6 +256,8 @@ export const Checkout = () => {
             endDate,
         });
 
+        setIsLoading(true);
+
         const response2 = await axios.get(
             `${BACKEND_URL}/api/v1/createbooking`,
             {
@@ -376,6 +381,10 @@ export const Checkout = () => {
 
         // config file using thunk
     }, []);
+
+    if (isLoading) {
+        return <Loader />;
+    }
 
     return (
         <div>

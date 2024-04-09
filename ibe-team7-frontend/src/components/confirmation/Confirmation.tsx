@@ -315,7 +315,9 @@ export const Confirmation = () => {
                         <div className="date-boxes">
                             <div className="date-box">
                                 <div className="date-box-heading">Check-in</div>
-                                <div className="date">{startDate}</div>
+                                <div className="date">
+                                    {parseInt(startDate) + 1}
+                                </div>
                                 <div className="confirm-month-year">
                                     {Months[parseInt(startMonth) - 1]},{" "}
                                     {startYear}
@@ -325,7 +327,9 @@ export const Confirmation = () => {
                                 <div className="date-box-heading">
                                     Check-out
                                 </div>
-                                <div className="date">{endDate}</div>
+                                <div className="date">
+                                    {parseInt(endDate) + 1}
+                                </div>
                                 <div className="confirm-month-year">
                                     {Months[parseInt(endMonth) - 1]}, {endYear}
                                 </div>
