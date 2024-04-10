@@ -17,7 +17,7 @@ import {
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../constants/Constants";
-import fetchConfig from "../../redux/thunks/configThunk";
+// import fetchConfig from "../../redux/thunks/configThunk";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 import { findnextDate } from "../../utils/FindNextDateFunc";
 

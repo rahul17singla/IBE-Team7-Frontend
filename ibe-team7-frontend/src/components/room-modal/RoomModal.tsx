@@ -25,7 +25,7 @@ import {
     setSelectedPromotionDescription,
     setSelectedPromotionName,
 } from "../../redux/selectedPromoSlice";
-import { Loader } from "../loader/Loader";
+// import { Loader } from "../loader/Loader";
 
 export interface RoomModalProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
