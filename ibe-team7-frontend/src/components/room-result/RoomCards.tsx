@@ -39,27 +39,27 @@ export const RoomCards = () => {
         (state: RootState) => state.results.priceLessThan
     );
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await axios.post(BACKEND_URL + "/api/v1/dates", {
-                    property: property,
-                    startDate: findnextDate(startDate),
-                    endDate: findnextDate(endDate),
-                    roomCount: property3,
-                    bedType: bedTypes,
-                    roomType: roomType,
-                    priceLessThan: priceLessThan,
-                    sort: sort,
-                });
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData().then(() => {
-            dispatch(fetchRoomDetails());
-        });
-    }, [sort]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             await axios.post(BACKEND_URL + "/api/v1/dates", {
+    //                 property: property,
+    //                 startDate: findnextDate(startDate),
+    //                 endDate: findnextDate(endDate),
+    //                 roomCount: property3,
+    //                 bedType: bedTypes,
+    //                 roomType: roomType,
+    //                 priceLessThan: priceLessThan,
+    //                 sort: sort,
+    //             });
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     };
+    //     fetchData().then(() => {
+    //         dispatch(fetchRoomDetails());
+    //     });
+    // }, [sort]);
 
     // Calculate index of the last item to display
     const indexOfLastItem = currentPage * itemsPerPage;

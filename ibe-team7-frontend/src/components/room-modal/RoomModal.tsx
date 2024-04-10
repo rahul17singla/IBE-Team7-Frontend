@@ -25,6 +25,7 @@ import {
     setSelectedPromotionDescription,
     setSelectedPromotionName,
 } from "../../redux/selectedPromoSlice";
+import { Loader } from "../loader/Loader";
 
 export interface RoomModalProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -169,7 +170,8 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                     className="carousel-container"
                     style={{ minHeight: "235px", width: "100%" }}
                 >
-                    {
+                    {images.length === 0 && null}
+                    {images.length > 0 && (
                         <>
                             <Carousel animation="slide" className="carousel">
                                 {images.map((image, index) => (
@@ -187,7 +189,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                 {room.roomTypeName} ROOM
                             </p>
                         </>
-                    }
+                    )}
                 </div>
 
                 <div className="room-title">{room.roomTypeName}</div>

@@ -95,9 +95,9 @@ export function Search() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(fetchConfig());
-    }, []);
+    // useEffect(() => {
+    //     dispatch(fetchConfig());
+    // }, []);
 
     useEffect(() => {
         if (parseInt(property3) > guestsAdult) {
