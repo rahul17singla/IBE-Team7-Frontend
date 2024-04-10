@@ -17,7 +17,7 @@ import {
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../constants/Constants";
-// import fetchConfig from "../../redux/thunks/configThunk";
+import fetchConfig from "../../redux/thunks/configThunk";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 import { findnextDate } from "../../utils/FindNextDateFunc";
 
@@ -95,9 +95,9 @@ export function Search() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     dispatch(fetchConfig());
-    // }, []);
+    useEffect(() => {
+        dispatch(fetchConfig());
+    }, []);
 
     useEffect(() => {
         if (parseInt(property3) > guestsAdult) {
