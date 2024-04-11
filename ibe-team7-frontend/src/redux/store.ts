@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import checkoutReducer from "./checkoutSlice";
 import userInfoReducer from "./userInfoSlice";
 import selectedPromoReducer from "./selectedPromoSlice";
+import timerReducer from "./timerSlice";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         checkout: checkoutReducer,
         userInfo: userInfoReducer,
         selectedPromo: selectedPromoReducer,
+        timer: timerReducer,
     },
 });
 

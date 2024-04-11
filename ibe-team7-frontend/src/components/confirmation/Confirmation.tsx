@@ -20,6 +20,7 @@ import axios from "axios";
 import { Currency, Months } from "../../enums/Enums";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import AWS from "aws-sdk";
 
 export const Confirmation = () => {
     const { id } = useParams();
@@ -207,9 +208,15 @@ export const Confirmation = () => {
 
     const ses = new SES({
         credentials: {
-            accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-            secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-            sessionToken: import.meta.env.VITE_AWS_SESSION_TOKEN,
+            accessKeyId:
+                import.meta.env.VITE_AWS_ACCESS_KEY_ID ||
+                AWS.config.credentials?.accessKeyId,
+            secretAccessKey:
+                import.meta.env.VITE_AWS_SECRET_ACCESS_KEY ||
+                AWS.config.credentials?.secretAccessKey,
+            sessionToken:
+                import.meta.env.VITE_AWS_SESSION_TOKEN ||
+                AWS.config.credentials?.sessionToken,
         },
         apiVersion: "2010-12-01",
         region: "ap-northeast-1",

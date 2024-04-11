@@ -13,6 +13,7 @@ import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Loader } from "../loader/Loader";
+import { Timer } from "../timer/Timer";
 
 export const Checkout = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
@@ -397,6 +398,8 @@ export const Checkout = () => {
                     ))}
                 </Stepper>
             </div>
+            <Timer />
+
             <div className="checkout-text">Payment Info</div>
             <div className="checkout">
                 <div className="checkout-form">
