@@ -1,7 +1,13 @@
 import * as Yup from "yup";
 
 export const travellerInfoSchema = Yup.object().shape({
-    firstNameTraveler: Yup.string().required("First Name is required"),
+    firstNameTraveler: Yup.string()
+        .matches(/^[a-zA-Z]+$/, "First Name must be alphabetic")
+        .required("First Name is required"),
+    lastNameTraveler: Yup.string().matches(
+        /^[a-zA-Z]+$/,
+        "Last Name must be alphabetic"
+    ),
     phoneTraveler: Yup.string()
         .required("Phone is required")
         .length(10)
@@ -12,7 +18,13 @@ export const travellerInfoSchema = Yup.object().shape({
 });
 
 export const billingInfoSchema = Yup.object().shape({
-    firstNameBilling: Yup.string().required("First Name is required"),
+    firstNameBilling: Yup.string()
+        .matches(/^[a-zA-Z]+$/, "First Name must be alphabetic")
+        .required("First Name is required"),
+    lastNameBilling: Yup.string().matches(
+        /^[a-zA-Z]+$/,
+        "Last Name must be alphabetic"
+    ),
     address1: Yup.string().required("Address is required"),
     country: Yup.string().required("Country is required"),
     city: Yup.string().required("City is required"),
