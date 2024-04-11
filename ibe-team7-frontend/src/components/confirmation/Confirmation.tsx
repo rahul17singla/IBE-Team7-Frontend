@@ -20,7 +20,7 @@ import axios from "axios";
 import { Currency, Months } from "../../enums/Enums";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import AWS from "aws-sdk";
+//import AWS from "aws-sdk";
 
 export const Confirmation = () => {
     const { id } = useParams();
