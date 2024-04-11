@@ -215,17 +215,19 @@ export function Search() {
                                         guestsChildren ===
                                     1
                                         ? `1 ${t("Adult")}`
-                                        : `${guestsAdult} ${t("Adults")},
+                                        : `${guestsAdult} ${t("Adults")}
                                             ${
                                                 guestsTeens > 0
-                                                    ? guestsTeens +
+                                                    ? ", " +
+                                                      guestsTeens +
                                                       " " +
                                                       t("Teens")
                                                     : ""
-                                            },
+                                            }
                                            ${
                                                guestsChildren > 0
-                                                   ? guestsChildren +
+                                                   ? ", " +
+                                                     guestsChildren +
                                                      " " +
                                                      t("Kids")
                                                    : ""

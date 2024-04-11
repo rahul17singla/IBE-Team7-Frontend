@@ -176,9 +176,9 @@ export const RoomForm = () => {
         };
 
         fetchData()
-            .then(() => {
-                dispatch(fetchRoomDetails());
-            })
+            // .then(() => {
+            //     dispatch(fetchRoomDetails());
+            // })
             .then(() => {
                 const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
                     "en-GB"

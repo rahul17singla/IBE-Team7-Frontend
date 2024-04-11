@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>6/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -88,22 +88,25 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">360x</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1134x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-yes">136x</span>
+<span class="cline-any cline-yes">176x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">28x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">114x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -112,13 +115,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Itinerary } from "../itinerary/Itinerary";
 import { Filters } from "./Filters";
 import { RoomCards } from "./RoomCards";
 import { RoomForm } from "./RoomForm";
+import { Timer } from "../timer/Timer";
 &nbsp;
 export const Step1Page = () =&gt; {
     const { showItinerary } = useSelector(
@@ -126,13 +139,18 @@ export const Step1Page = () =&gt; {
     );
 &nbsp;
     return (
-        &lt;div className="result-page-container"&gt;
+        &lt;div<span class="branch-1 cbranch-no" title="branch not covered" > className="result-page-container"&gt;</span>
+<span class="branch-1 cbranch-no" title="branch not covered" >            {showItinerary &amp;&amp; (</span>
+                &lt;div style={{ display: "none" }}&gt;
+                    &lt;Timer /&gt;
+                &lt;/div&gt;
+            )}<span class="branch-1 cbranch-no" title="branch not covered" ></span>
             &lt;RoomForm /&gt;
             &lt;div className="filter-rooms-container"&gt;
                 &lt;Filters /&gt;
                 &lt;div className="cards-itinerary"&gt;
                     &lt;RoomCards /&gt;
-                    {showItinerary &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Itinerary /&gt;}</span>
+                    {showItinerary &amp;&amp; &lt;Itinerary /&gt;}
                 &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
@@ -145,7 +163,7 @@ export const Step1Page = () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-02T06:35:49.809Z
+                at 2024-04-11T10:41:54.470Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

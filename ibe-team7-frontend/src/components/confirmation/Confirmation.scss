@@ -1,0 +1,223 @@
+.confirmation-container {
+    padding: 2rem 15%;
+}
+
+.confirm-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirm-header-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+
+}
+
+.confirm-header-btns {
+    display: flex;
+    gap: 1rem;
+}
+
+.confirm-header-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #006eff;
+    outline: none;
+    cursor: pointer;
+}
+
+.confirm-content {
+    margin-top: 1rem;
+    padding: 2%;
+    border: 1px solid #000
+}
+
+.confirm-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.confirm-content-header-left {
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+}
+
+.confirm-content-header-left-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.confirmRoomDetails {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.date-boxes {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.date-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: max-content;
+    border: 1px solid #000;
+    padding: 2%;
+    align-items: center;
+    border-radius: 5px;
+    // justify-content: center;
+}
+
+.date-box-heading {
+    font-size: 0.8rem;
+}
+
+.date {
+    font-size: 1.2rem;
+    font-weight: 600;
+
+}
+
+.confirm-month-year {
+    width: 100%;
+}
+
+.confirm-promo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.confirm-promo-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.confirm-promo-text {
+    margin-top: 0.3rem;
+    font-size: 1rem;
+    color: #5d5d5d;
+    width: 45%;
+}
+
+.confirm-total {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirm-price {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+
+.price-breakdown {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 35px;
+}
+
+.nightly-rate-info {
+    padding-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.info-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 400;
+    color: #5d5d5d;
+}
+
+.info-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2f2f2f;
+    font-weight: 400;
+
+    @media (max-width: 600px) {
+        .email-span {
+            width: 100%;
+        }
+
+        flex-wrap: wrap;
+    }
+}
+
+
+.email-info {
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .info-email-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: #5d5d5d;
+
+    }
+
+    .info-email {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #2f2f2f;
+        font-weight: 400;
+
+        @media (max-width: 600px) {
+            justify-content: flex-end;
+
+            .email-p {
+                text-align: end;
+                word-break: break-all;
+                width: 54%;
+            }
+        }
+    }
+}
+
+.total-for-stay {
+    padding-top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .info-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: #5d5d5d;
+    }
+
+    .info-price {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #2f2f2f;
+        font-size: 20px;
+        font-weight: 400;
+    }
+}

@@ -81,8 +81,8 @@ describe("E2E Integration Tests", () => {
     // Fill in the required fields
     cy.get(".dropdown").select("Team 7 Hotel"); // Assuming '#property' is the selector for the property input
     cy.get(".dates").click(); // Click to open the calendar
-    cy.get(".react-calendar__tile").eq(3).click(); // Select a start date, change the index as needed
-    cy.get(".react-calendar__tile").eq(8).click(); // Select an end date, change the index as needed
+    cy.get(".react-calendar__tile").eq(20).click(); // Select a start date, change the index as needed
+    cy.get(".react-calendar__tile").eq(22).click(); // Select an end date, change the index as needed
     cy.wait(2000);
     // Optionally, fill in additional fields if necessary
 
@@ -105,7 +105,7 @@ describe("E2E Integration Tests", () => {
 
 describe("RoomResult Component", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173/room-result?property=Team%207%20Hotel&room=1&startDate=09/04/2024&endDate=17/04/2024&adults=1&teens=0&kids=0&sort=0"); // Assuming the RoomResult component is rendered at this URL
+    cy.visit("http://localhost:5173/room-result?property=Team%207%20Hotel&room=1&startDate=28/04/2024&endDate=30/04/2024&adults=1&teens=0&kids=0&sort=0"); // Assuming the RoomResult component is rendered at this URL
     cy.viewport(1920, 1080); // Set viewport to 1920x1080
   });
 
@@ -123,6 +123,29 @@ describe("RoomResult Component", () => {
   });
 
 });
+
+
+describe("E2E Room Results Page Testing", () => {
+  beforeEach(() => {
+      cy.visit(
+          "http://localhost:5173/room-result?property=Team%207%20Hotel&room=1&startDate=21/04/2024&endDate=23/04/2024&adults=1&teens=0&kids=0&sort=0"
+      );
+      cy.viewport(1920, 1080); // Set viewport to 550px x 750px
+  });
+  it("displays the footer", () => {
+      cy.get(".footer").should("be.visible");
+  });
+  it("displays room cards", () => {
+      cy.get(".room_card").should("be.visible");
+  });
+  it("displays the pagination", () => {
+      cy.get(".pagination").should("be.visible");
+  });
+})
+
+
+
+
 
 
 

@@ -130,6 +130,7 @@ export const RoomResult = () => {
         roomType,
         bedTypes,
         priceLessThan,
+        sort,
         navigate,
     ]);
 

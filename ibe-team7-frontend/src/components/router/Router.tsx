@@ -6,18 +6,9 @@ import { Signup } from "../signup/Signup";
 import { RoomResult } from "../room-result/RoomResult";
 import { Checkout } from "../checkout/Checkout";
 import { RatingForm } from "../ratingform/RatingForm";
+import { Confirmation } from "../confirmation/Confirmation";
 
 export const Router = () => {
-    // const [loading, setLoading] = useState<boolean>(true);
-
-    // setTimeout(() => {
-    //     setLoading(false);
-    // }, 1000);
-
-    // if (loading) {
-    //     return <Loader />;
-    // }
-
     return (
         <div>
             <BrowserRouter>
@@ -29,6 +20,10 @@ export const Router = () => {
                     <Route path="/room-result" element={<RoomResult />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/rating" element={<RatingForm />} />
+                    <Route
+                        path="/confirmation/:id"
+                        element={<Confirmation />}
+                    />
 
                     <Route path="*" element={<Home />} />
                 </Routes>
