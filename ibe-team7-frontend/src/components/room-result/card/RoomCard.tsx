@@ -94,7 +94,7 @@ export const RoomCard = ({ room }: any) => {
                 </button>
             </div>
 
-            <div>
+            <div className="samplemodal">
                 <Modal
                     open={open}
                     onClose={handleClose}

@@ -59,28 +59,42 @@ export const RoomResult = () => {
         }
 
         const fetchData = async () => {
-            console.log(property);
-            try {
-                await axios.post(BACKEND_URL + "/api/v1/dates", {
-                    property: property,
-                    startDate: findnextDate(startDate),
-                    endDate: findnextDate(endDate),
-                    roomCount: property3,
-                    bedType: bedTypes,
-                    roomType: roomType,
-                    priceLessThan: priceLessThan,
-                    sort: sort,
-                });
-                console.log("DATA IS HERE -------------");
-                console.log(startDate?.toISOString()); // Log the response data
-            } catch (error) {
-                console.error("Error:", error); // Log any errors
-            }
+            // console.log(property);
+            // try {
+            //     await axios.post(BACKEND_URL + "/api/v1/dates", {
+            //         property: property,
+            //         startDate: findnextDate(startDate),
+            //         endDate: findnextDate(endDate),
+            //         roomCount: property3,
+            //         bedType: bedTypes,
+            //         roomType: roomType,
+            //         priceLessThan: priceLessThan,
+            //         sort: sort,
+            //     });
+            //     console.log("DATA IS HERE -------------");
+            //     console.log(startDate?.toISOString()); // Log the response data
+            // } catch (error) {
+            //     console.error("Error:", error); // Log any errors
+            // }
         };
 
         fetchData()
             .then(() => {
-                dispatch(fetchRoomDetails());
+                dispatch(
+                    fetchRoomDetails({
+                        property: property,
+                        startDate: findnextDate(startDate),
+                        endDate: findnextDate(endDate),
+                        roomCount: property3,
+                        bedType: bedTypes,
+                        roomType: roomType,
+                        priceLessThan: priceLessThan,
+                        guestsAdult: guestsAdult,
+                        guestsTeens: guestsTeens,
+                        guestsChildren: guestsChildren,
+                        sort: sort,
+                    })
+                );
             })
             .then(() => {
                 const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(

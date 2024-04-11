@@ -159,20 +159,20 @@ export const RoomForm = () => {
                 dispatch(setPriceLessThan(priceLessThan));
             }
 
-            try {
-                await axios.post(`${BACKEND_URL}/api/v1/dates`, {
-                    property: property,
-                    startDate: findnextDate(startDate),
-                    endDate: findnextDate(endDate),
-                    roomCount: property3,
-                    bedType: bedTypes,
-                    roomType: roomType,
-                    priceLessThan: priceLessThan,
-                    sort: sort,
-                });
-            } catch (error) {
-                console.error("Error:", error); // Log any errors
-            }
+            // try {
+            //     await axios.post(`${BACKEND_URL}/api/v1/dates`, {
+            //         property: property,
+            //         startDate: findnextDate(startDate),
+            //         endDate: findnextDate(endDate),
+            //         roomCount: property3,
+            //         bedType: bedTypes,
+            //         roomType: roomType,
+            //         priceLessThan: priceLessThan,
+            //         sort: sort,
+            //     });
+            // } catch (error) {
+            //     console.error("Error:", error); // Log any errors
+            // }
         };
 
         fetchData()
@@ -260,8 +260,26 @@ export const RoomForm = () => {
     const sort = useSelector((state: RootState) => state.results.sort);
 
     const handleSubmit = async () => {
-        try {
-            await axios.post(`${BACKEND_URL}/api/v1/dates`, {
+        // try {
+        //     await axios.post(`${BACKEND_URL}/api/v1/dates`, {
+        //         property: property,
+        //         startDate: findnextDate(startDate),
+        //         endDate: findnextDate(endDate),
+        //         roomCount: property3,
+        //         bedType: bedTypes,
+        //         roomType: roomType,
+        //         priceLessThan: priceLessThan,
+        //         sort: sort,
+        //     });
+        //     console.log("DATA IS HERE -------------");
+        //     console.log(startDate?.toISOString()); // Log the response data
+        // } catch (error) {
+        //     console.error("Error:", error); // Log any errors
+        // }
+
+        // Make GET request immediately after POST request
+        dispatch(
+            fetchRoomDetails({
                 property: property,
                 startDate: findnextDate(startDate),
                 endDate: findnextDate(endDate),
@@ -269,16 +287,12 @@ export const RoomForm = () => {
                 bedType: bedTypes,
                 roomType: roomType,
                 priceLessThan: priceLessThan,
+                guestsAdult: guestsAdult,
+                guestsTeens: guestsTeens,
+                guestsChildren: guestsChildren,
                 sort: sort,
-            });
-            console.log("DATA IS HERE -------------");
-            console.log(startDate?.toISOString()); // Log the response data
-        } catch (error) {
-            console.error("Error:", error); // Log any errors
-        }
-
-        // Make GET request immediately after POST request
-        dispatch(fetchRoomDetails());
+            })
+        );
 
         const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
             "en-GB"

@@ -1,6 +1,5 @@
-export const BACKEND_URL =
-    // "http://localhost:8088";
-    "https://tcxv7qiee1.execute-api.ap-northeast-1.amazonaws.com/test7";
+export const BACKEND_URL = "http://localhost:8088";
+// "https://tcxv7qiee1.execute-api.ap-northeast-1.amazonaws.com/test7";
 
 export const FRONTEND_URL = "https://sprint-5.d1uu6vl2t1u60t.amplifyapp.com";
 // export const FRONTEND_URL = "http://localhost:5173";

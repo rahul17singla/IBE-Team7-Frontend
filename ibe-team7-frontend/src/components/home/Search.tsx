@@ -157,8 +157,22 @@ export function Search() {
         });
 
         //  CALL TO BACKEND HERE
-        try {
-            await axios.post(BACKEND_URL + "/api/v1/dates", {
+        // try {
+        //     await axios.post(BACKEND_URL + "/api/v1/dates", {
+        //         property: property,
+        //         startDate: findnextDate(startDate),
+        //         endDate: findnextDate(endDate),
+        //         roomCount: property3,
+        //         bedType: bedType,
+        //         roomType: roomType,
+        //         priceLessThan: priceLessThan,
+        //         sort: sort,
+        //     });
+        // } catch (error) {
+        //     console.error("Error:", error); // Log any errors
+        // }
+        dispatch(
+            fetchRoomDetails({
                 property: property,
                 startDate: findnextDate(startDate),
                 endDate: findnextDate(endDate),
@@ -166,12 +180,12 @@ export function Search() {
                 bedType: bedType,
                 roomType: roomType,
                 priceLessThan: priceLessThan,
+                guestsAdult: guestsAdult,
+                guestsTeens: guestsTeens,
+                guestsChildren: guestsChildren,
                 sort: sort,
-            });
-        } catch (error) {
-            console.error("Error:", error); // Log any errors
-        }
-        dispatch(fetchRoomDetails());
+            })
+        );
 
         navigate(
             `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString(

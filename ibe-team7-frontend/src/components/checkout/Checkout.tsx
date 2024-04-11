@@ -106,6 +106,9 @@ export const Checkout = () => {
     const property3 = useSelector(
         (state: RootState) => state.filterStates.property3
     );
+    const property = useSelector(
+        (state: RootState) => state.filterStates.property
+    );
 
     const handleTravelerInfo = async () => {
         const travellerInfoError =
@@ -249,28 +252,56 @@ export const Checkout = () => {
             return;
         }
 
-        await axios.post(`${BACKEND_URL}/api/v1/roomsummary`, {
-            totalPrice: roomTotalPrice,
-            promotionTitle: selectedPromotionName,
-            promotionDescription: selectedPromotionDescription,
-            startDate,
-            endDate,
-        });
+        // await axios.post(`${BACKEND_URL}/api/v1/roomsummary`, {
+        //     totalPrice: roomTotalPrice,
+        //     promotionTitle: selectedPromotionName,
+        //     promotionDescription: selectedPromotionDescription,
+        //     startDate,
+        //     endDate,
+        // });
 
         setIsLoading(true);
 
-        const response2 = await axios.get(
+        const response2 = await axios.post(
             `${BACKEND_URL}/api/v1/createbooking`,
             {
-                params: {
-                    roomTypeName: roomCart.room,
-                    adultCount,
-                    childCount: childCount + teenCount,
-                    totalCost: roomTotalPrice,
-                    amountDueAtResort:
-                        roomTotalPrice * 0.8 * 1.205 * parseInt(property3),
-                    startDate,
-                    endDate,
+                userEmail: emailTraveler,
+                checkInDate: startDate,
+                checkOutDate: endDate,
+                propertyId: property.slice(5, 6),
+                promotionTitle: selectedPromotionName,
+                promotionDescription: selectedPromotionDescription,
+                roomTypeName: roomCart.room,
+                totalPrice: roomTotalPrice,
+                amountDueAtResort:
+                    roomTotalPrice * 0.8 * 1.205 * parseInt(property3),
+                numberOfRooms: property3,
+                travellerInfo: {
+                    firstName: firstNameTraveler,
+                    lastName: lastNameTraveler,
+                    phoneNo: phoneTraveler,
+                    emailId: emailTraveler,
+                },
+                billingInfo: {
+                    firstName: firstNameBilling,
+                    lastName: lastNameBilling,
+                    mailingAddress1: address1,
+                    mailingAddress2: address2,
+                    country: countryid,
+                    state: stateid,
+                    city: cityid,
+                    zip: zip,
+                    phoneNo: phoneBilling,
+                    emailId: emailBilling,
+                },
+                paymentInfo: {
+                    cardNo: cardNumber,
+                    expiryMonth: exMonth,
+                    expiryYear: exYear,
+                },
+                guestInfo: {
+                    adults: adultCount,
+                    children: teenCount + childCount,
                 },
             }
         );
