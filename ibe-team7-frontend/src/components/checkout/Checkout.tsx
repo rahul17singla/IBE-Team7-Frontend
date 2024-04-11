@@ -350,7 +350,7 @@ export const Checkout = () => {
         const stateFromZip = postalArray[zip][0].state;
         const cityFromZip = postalArray[zip][0].province;
 
-        if (stateFromZip !== stateid || cityFromZip !== cityid) {
+        if (!stateid.includes(stateFromZip) || !cityid.includes(cityFromZip)) {
             alert("Invalid Zip Code");
             setZip("");
         }
