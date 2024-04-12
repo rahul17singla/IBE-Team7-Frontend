@@ -22,8 +22,6 @@ import {
     setPriceLessThan,
     setRoomType,
 } from "../../redux/resultSlice";
-import axios from "axios";
-import { BACKEND_URL } from "../../constants/Constants";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 import { findnextDate } from "../../utils/FindNextDateFunc";
 
@@ -279,7 +277,7 @@ export const RoomForm = () => {
 
         // Make GET request immediately after POST request
         // console.log(bedTypes.toString());
-        
+
         dispatch(
             fetchRoomDetails({
                 property: property.slice(5, 6),
@@ -292,7 +290,7 @@ export const RoomForm = () => {
                 guestsAdult: guestsAdult,
                 guestsTeens: guestsTeens,
                 guestsChildren: guestsChildren,
-                sort: sort
+                sort: sort,
             })
         );
 
