@@ -16,9 +16,9 @@ const fetchRoomDetails = createAsyncThunk(
                     bedType: params.bedType,
                     roomType: params.roomType,
                     priceLessThan: params.priceLessThan,
-                    guestsAdult: params.guestsAdult,
-                    guestsTeens: params.guestsTeens,
-                    guestsChildren: params.guestsChildren,
+                    // guestsAdult: params.guestsAdult,
+                    // guestsTeens: params.guestsTeens,
+                    // guestsChildren: params.guestsChildren,
                     sort: params.sort,
                 },
             }

@@ -278,19 +278,21 @@ export const RoomForm = () => {
         // }
 
         // Make GET request immediately after POST request
+        // console.log(bedTypes.toString());
+        
         dispatch(
             fetchRoomDetails({
-                property: property,
+                property: property.slice(5, 6),
                 startDate: findnextDate(startDate),
                 endDate: findnextDate(endDate),
                 roomCount: property3,
-                bedType: bedTypes,
-                roomType: roomType,
+                bedType: bedTypes.toString(),
+                roomType: roomType.toString(),
                 priceLessThan: priceLessThan,
                 guestsAdult: guestsAdult,
                 guestsTeens: guestsTeens,
                 guestsChildren: guestsChildren,
-                sort: sort,
+                sort: sort
             })
         );
 
