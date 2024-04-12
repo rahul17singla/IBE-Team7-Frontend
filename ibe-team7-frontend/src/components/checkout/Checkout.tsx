@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Loader } from "../loader/Loader";
 import { Timer } from "../timer/Timer";
+import { TncModal } from "./TncModal";
 
 export const Checkout = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
@@ -43,6 +44,7 @@ export const Checkout = () => {
     const [emailBilling, setEmailBilling] = useState("");
 
     const [isTnCChecked, setIsTnCChecked] = useState(false);
+    const [showTnC, setShowTnC] = useState(false);
 
     const [cardNumber, setCardNumber] = useState("");
     const [cvv, setCvv] = useState("");
@@ -382,6 +384,7 @@ export const Checkout = () => {
         const cityFromZip = postalArray[zip][0].province;
 
         if (cityFromZip === "Bengaluru" && cityid.includes("Bangalore")) {
+            return;
         }
 
         if (!stateid.includes(stateFromZip) || !cityid.includes(cityFromZip)) {
@@ -420,6 +423,10 @@ export const Checkout = () => {
     if (isLoading) {
         return <Loader />;
     }
+
+    // const togglePaymentInfo = () => {
+    //     setShowPaymentInfo(!showPaymentInfo);
+    // };
 
     return (
         <div>
@@ -822,11 +829,23 @@ export const Checkout = () => {
                                             />{" "}
                                             <label htmlFor="tnc">
                                                 I agree to the{" "}
-                                                <button className="tnc">
+                                                <button
+                                                    className="tnc"
+                                                    onClick={() =>
+                                                        setShowTnC(!showTnC)
+                                                    }
+                                                >
                                                     Terms and Policies
-                                                </button>
+                                                </button>{" "}
                                                 of travel.
                                             </label>
+                                            {showTnC && (
+                                                <TncModal
+                                                    onClose={() =>
+                                                        setShowTnC(false)
+                                                    }
+                                                />
+                                            )}
                                         </div>
                                     </div>
                                     <div className="checkout-form_input">

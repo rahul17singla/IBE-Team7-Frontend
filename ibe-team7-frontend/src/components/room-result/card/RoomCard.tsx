@@ -9,6 +9,7 @@ import { Modal } from "@mui/material";
 import { useState } from "react";
 import { RoomModal } from "../../room-modal/RoomModal";
 import { Currency } from "../../../enums/Enums";
+import { useNavigate } from "react-router-dom";
 
 export const RoomCard = ({ room }: any) => {
     const currencyValue = useSelector(
@@ -23,6 +24,8 @@ export const RoomCard = ({ room }: any) => {
     // const open = useSelector((state: RootState) => state.modal.open);
     const [open, setOpen] = useState(false);
 
+    const navigate = useNavigate();
+
     const openModal = () => {
         setOpen(true);
         // dispatch(setRoom(room));
@@ -30,6 +33,10 @@ export const RoomCard = ({ room }: any) => {
     };
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const showPanoView = () => {
+        navigate(`/panorama`);
     };
 
     return (
@@ -89,9 +96,17 @@ export const RoomCard = ({ room }: any) => {
                     </p>
                     <p className="room_price_txt">per night</p>
                 </div>
-                <button className="room_select_button" onClick={openModal}>
-                    SELECT ROOM
-                </button>
+                <div className="button-container-card">
+                    <button className="room_select_button" onClick={openModal}>
+                        SELECT ROOM
+                    </button>
+                    <button
+                        className="room_select_button"
+                        onClick={showPanoView}
+                    >
+                        360° VIEW
+                    </button>
+                </div>
             </div>
 
             <div className="samplemodal">

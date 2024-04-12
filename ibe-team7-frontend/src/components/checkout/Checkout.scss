@@ -168,3 +168,79 @@
     cursor: pointer;
     font-size: 1rem;
 }
+
+.tnc-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 478px;
+    background-color: #fff;
+    border-radius: 4px;
+    height: 500px;
+    padding: 30px;
+    overflow: scroll;
+
+    @media (max-width: 600px) {
+        width: 300px;
+        height: 180px;
+    }
+
+    .cancellation-title {
+        font-size: 20px;
+        width: 100%;
+        padding-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .cancellation-success {
+        font-size: 30px;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+    }
+
+    .cancel-otp-enter {
+        height: auto;
+
+        .cancel-btn-div {
+            display: flex;
+            flex-direction: row-reverse;
+
+            @media (max-width:500px) {
+                justify-content: center;
+            }
+        }
+
+        .cancellation-close-modal-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: transparent;
+            border: none;
+            font-size: 22px;
+            padding: 10px 15px;
+            z-index: 2;
+        }
+
+        .cancellation-close-modal-btn:hover {
+            cursor: pointer;
+        }
+    }
+
+    .cancellation-btn {
+        font-weight: bold;
+        color: white;
+        font-size: 16px;
+        height: 44px;
+        border-radius: 4px;
+        padding: 6px;
+        margin-top: 10px;
+        background-color: #26266d;
+    }
+
+    .cancellation-btn:hover {
+        cursor: pointer;
+    }
+}

@@ -7,6 +7,7 @@ import { RoomResult } from "../room-result/RoomResult";
 import { Checkout } from "../checkout/Checkout";
 import { RatingForm } from "../ratingform/RatingForm";
 import { Confirmation } from "../confirmation/Confirmation";
+import { Panorama } from "../room-modal/Panorama";
 
 export const Router = () => {
     return (
@@ -24,6 +25,7 @@ export const Router = () => {
                         path="/confirmation/:id"
                         element={<Confirmation />}
                     />
+                    <Route path="/panorama" element={<Panorama />} />
 
                     <Route path="*" element={<Home />} />
                 </Routes>
