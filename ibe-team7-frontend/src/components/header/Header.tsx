@@ -4,11 +4,12 @@ import currencyImg from "../../assets/USDIcon.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrency } from "../../redux/currencySlice";
 import { Currency } from "../../enums/Enums";
 import { AccountContext } from "../account/Account";
 import { setUser } from "../../redux/userSlice";
+import { RootState } from "../../redux/store";
 
 export function Header() {
     const { i18n } = useTranslation();
@@ -75,6 +76,14 @@ export function Header() {
         setStatus(false);
     };
 
+    const showMyBookings = () => {
+        if (status) {
+            window.location.href = `/mybookings`;
+        } else {
+            window.location.href = "/login";
+        }
+    };
+
     return (
         <div className="header">
             <div className="header-left">
@@ -93,7 +102,9 @@ export function Header() {
                 </Link>
             </div>
             <div className="header-right">
-                <button className="my-bookings">MY BOOKINGS</button>
+                <button className="my-bookings" onClick={showMyBookings}>
+                    MY BOOKINGS
+                </button>
                 <button className="language">
                     <img src={language} alt="EN" />
                     <select

@@ -8,6 +8,7 @@ import { Checkout } from "../checkout/Checkout";
 import { RatingForm } from "../ratingform/RatingForm";
 import { Confirmation } from "../confirmation/Confirmation";
 import { Panorama } from "../room-modal/Panorama";
+import { MyBookings } from "../mybookings/MyBookings";
 
 export const Router = () => {
     return (
@@ -26,6 +27,7 @@ export const Router = () => {
                         element={<Confirmation />}
                     />
                     <Route path="/panorama" element={<Panorama />} />
+                    <Route path="/mybookings" element={<MyBookings />} />
 
                     <Route path="*" element={<Home />} />
                 </Routes>
