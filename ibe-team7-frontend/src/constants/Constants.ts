@@ -1,4 +1,5 @@
-// export const BACKEND_URL = "http://localhost:8088";
+export const BACKEND_URL =
+ "http://localhost:8088";
 // "https://swhytqcdde.execute-api.ap-northeast-1.amazonaws.com/team7";
 "https://tcxv7qiee1.execute-api.ap-northeast-1.amazonaws.com/test7";
 
