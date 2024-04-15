@@ -4,12 +4,11 @@ import currencyImg from "../../assets/USDIcon.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCurrency } from "../../redux/currencySlice";
 import { Currency } from "../../enums/Enums";
 import { AccountContext } from "../account/Account";
 import { setUser } from "../../redux/userSlice";
-import { RootState } from "../../redux/store";
 
 export function Header() {
     const { i18n } = useTranslation();
