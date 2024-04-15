@@ -400,9 +400,18 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                                         <div className="rate">
                                             <div className="nightly-rate">
                                                 <div className="value">
-                                                    $
-                                                    {room.avgPrice *
-                                                        promotion.priceFactor}
+                                                    {currencyType ===
+                                                    Currency.USD
+                                                        ? `$${(
+                                                              room.avgPrice *
+                                                              promotion.priceFactor *
+                                                              currencyValue
+                                                          ).toFixed(2)}`
+                                                        : `₹${(
+                                                              room.avgPrice *
+                                                              promotion.priceFactor *
+                                                              currencyValue
+                                                          ).toFixed(2)}`}
                                                 </div>
                                                 <p className="per-night">
                                                     per night
