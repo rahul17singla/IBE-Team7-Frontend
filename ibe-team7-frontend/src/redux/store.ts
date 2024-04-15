@@ -9,6 +9,7 @@ import checkoutReducer from "./checkoutSlice";
 import userInfoReducer from "./userInfoSlice";
 import selectedPromoReducer from "./selectedPromoSlice";
 import timerReducer from "./timerSlice";
+import awsReducer from "./awsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
         userInfo: userInfoReducer,
         selectedPromo: selectedPromoReducer,
         timer: timerReducer,
+        aws: awsReducer,
     },
 });
 
