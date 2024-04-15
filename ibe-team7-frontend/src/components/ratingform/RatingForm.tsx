@@ -14,7 +14,7 @@ export const RatingForm = () => {
         (state: RootState) => state.filterStates.property
     );
 
-    const handleRating = async (rating: string) => {
+    const handleRating = async (rating: number) => {
         await axios.post(`${BACKEND_URL}/api/v1/updatebooking`, {
             rating: rating,
             roomTypeId: roomCart.room,
