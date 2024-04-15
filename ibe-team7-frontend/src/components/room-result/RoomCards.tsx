@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { setSort } from "../../redux/resultSlice";
-import axios from "axios";
-import { BACKEND_URL } from "../../constants/Constants";
+// import axios from "axios";
+// import { BACKEND_URL } from "../../constants/Constants";
 import { Loader } from "../loader/Loader";
-import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
-import { findnextDate } from "../../utils/FindNextDateFunc";
+// import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
+// import { findnextDate } from "../../utils/FindNextDateFunc";
 
 export const RoomCards = () => {
     const [openSortPriceDropdown, setOpenSortPriceDropdown] = useState(false);
@@ -21,45 +21,6 @@ export const RoomCards = () => {
     const dispatch = useAppDispatch();
 
     const sort = useSelector((state: RootState) => state.results.sort);
-    const property = useSelector(
-        (state: RootState) => state.filterStates.property
-    );
-    const startDate = useSelector(
-        (state: RootState) => state.filterStates.startDate
-    );
-    const endDate = useSelector(
-        (state: RootState) => state.filterStates.endDate
-    );
-    const property3 = useSelector(
-        (state: RootState) => state.filterStates.property3
-    );
-    const bedTypes = useSelector((state: RootState) => state.results.bedType);
-    const roomType = useSelector((state: RootState) => state.results.roomType);
-    const priceLessThan = useSelector(
-        (state: RootState) => state.results.priceLessThan
-    );
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await axios.post(BACKEND_URL + "/api/v1/dates", {
-                    property: property,
-                    startDate: findnextDate(startDate),
-                    endDate: findnextDate(endDate),
-                    roomCount: property3,
-                    bedType: bedTypes,
-                    roomType: roomType,
-                    priceLessThan: priceLessThan,
-                    sort: sort,
-                });
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData().then(() => {
-            dispatch(fetchRoomDetails());
-        });
-    }, [sort]);
 
     // Calculate index of the last item to display
     const indexOfLastItem = currentPage * itemsPerPage;

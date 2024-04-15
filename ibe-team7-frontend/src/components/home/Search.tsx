@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import "./Search.scss";
-import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { PropertyInput } from "./PropertyInput";
 import { CalendarInput } from "./CalendarInput";
@@ -16,7 +15,6 @@ import {
     setShowGuests,
 } from "../../redux/searchSlice";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../../constants/Constants";
 import fetchConfig from "../../redux/thunks/configThunk";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 import { findnextDate } from "../../utils/FindNextDateFunc";
@@ -157,21 +155,38 @@ export function Search() {
         });
 
         //  CALL TO BACKEND HERE
-        try {
-            await axios.post(BACKEND_URL + "/api/v1/dates", {
-                property: property,
+        // try {
+        //     await axios.post(BACKEND_URL + "/api/v1/dates", {
+        //         property: property,
+        //         startDate: findnextDate(startDate),
+        //         endDate: findnextDate(endDate),
+        //         roomCount: property3,
+        //         bedType: bedType,
+        //         roomType: roomType,
+        //         priceLessThan: priceLessThan,
+        //         sort: sort,
+        //     });
+        // } catch (error) {
+        //     console.error("Error:", error); // Log any errors
+        // }
+
+        console.log(bedType.toString());
+
+        dispatch(
+            fetchRoomDetails({
+                property: property.slice(5, 6),
                 startDate: findnextDate(startDate),
                 endDate: findnextDate(endDate),
                 roomCount: property3,
-                bedType: bedType,
-                roomType: roomType,
+                bedType: bedType.toString(),
+                roomType: roomType.toString(),
                 priceLessThan: priceLessThan,
+                guestsAdult: guestsAdult,
+                guestsTeens: guestsTeens,
+                guestsChildren: guestsChildren,
                 sort: sort,
-            });
-        } catch (error) {
-            console.error("Error:", error); // Log any errors
-        }
-        dispatch(fetchRoomDetails());
+            })
+        );
 
         navigate(
             `/room-result?property=${property}&room=${property3}&startDate=${startDate.toLocaleDateString(
@@ -215,17 +230,19 @@ export function Search() {
                                         guestsChildren ===
                                     1
                                         ? `1 ${t("Adult")}`
-                                        : `${guestsAdult} ${t("Adults")},
+                                        : `${guestsAdult} ${t("Adults")}
                                             ${
                                                 guestsTeens > 0
-                                                    ? guestsTeens +
+                                                    ? ", " +
+                                                      guestsTeens +
                                                       " " +
                                                       t("Teens")
                                                     : ""
-                                            },
+                                            }
                                            ${
                                                guestsChildren > 0
-                                                   ? guestsChildren +
+                                                   ? ", " +
+                                                     guestsChildren +
                                                      " " +
                                                      t("Kids")
                                                    : ""

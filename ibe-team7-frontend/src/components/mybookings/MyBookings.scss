@@ -1,0 +1,50 @@
+/* MyBookings.css */
+
+.my-bookings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.booking-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.booking {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.booking-details {
+    margin-bottom: 10px;
+}
+
+.booking-info {
+    margin-bottom: 5px;
+}
+
+.view-booking {
+    background-color: #287315;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.view-booking:hover {
+    scale: 1.05;
+    background-color: #279e03;
+}

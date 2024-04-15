@@ -238,7 +238,6 @@ export const CalendarInput = ({
                             <button
                                 className="apply-dates__button disabled"
                                 data-testid="apply-dates"
-                                
                                 id="apply-dates"
                                 onClick={applyDatesHandler}
                             >

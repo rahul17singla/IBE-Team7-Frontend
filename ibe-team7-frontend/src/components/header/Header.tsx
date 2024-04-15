@@ -75,6 +75,14 @@ export function Header() {
         setStatus(false);
     };
 
+    const showMyBookings = () => {
+        if (status) {
+            window.location.href = `/mybookings`;
+        } else {
+            window.location.href = "/login";
+        }
+    };
+
     return (
         <div className="header">
             <div className="header-left">
@@ -93,7 +101,9 @@ export function Header() {
                 </Link>
             </div>
             <div className="header-right">
-                <button className="my-bookings">MY BOOKINGS</button>
+                <button className="my-bookings" onClick={showMyBookings}>
+                    MY BOOKINGS
+                </button>
                 <button className="language">
                     <img src={language} alt="EN" />
                     <select

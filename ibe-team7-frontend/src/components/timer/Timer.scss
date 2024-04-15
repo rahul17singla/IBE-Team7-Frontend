@@ -1,0 +1,11 @@
+@import "../scss-variables/variables.scss";
+
+.timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #fff;
+    background-color: $PRIMARY_BLUE;
+    width: 100vw;
+}

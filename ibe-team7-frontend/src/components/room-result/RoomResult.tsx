@@ -8,8 +8,6 @@ import { Footer } from "../footer/Footer";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { BACKEND_URL } from "../../constants/Constants";
 import fetchRoomDetails from "../../redux/thunks/roomDetailsThunk";
 import { findnextDate } from "../../utils/FindNextDateFunc";
 
@@ -59,30 +57,50 @@ export const RoomResult = () => {
         }
 
         const fetchData = async () => {
-            console.log(property);
-            try {
-                await axios.post(BACKEND_URL + "/api/v1/dates", {
-                    property: property,
-                    startDate: findnextDate(startDate),
-                    endDate: findnextDate(endDate),
-                    roomCount: property3,
-                    bedType: bedTypes,
-                    roomType: roomType,
-                    priceLessThan: priceLessThan,
-                    sort: sort,
-                });
-                console.log("DATA IS HERE -------------");
-                console.log(startDate?.toISOString()); // Log the response data
-            } catch (error) {
-                console.error("Error:", error); // Log any errors
-            }
+            // console.log(property);
+            // try {
+            //     await axios.post(BACKEND_URL + "/api/v1/dates", {
+            //         property: property,
+            //         startDate: findnextDate(startDate),
+            //         endDate: findnextDate(endDate),
+            //         roomCount: property3,
+            //         bedType: bedTypes,
+            //         roomType: roomType,
+            //         priceLessThan: priceLessThan,
+            //         sort: sort,
+            //     });
+            //     console.log("DATA IS HERE -------------");
+            //     console.log(startDate?.toISOString()); // Log the response data
+            // } catch (error) {
+            //     console.error("Error:", error); // Log any errors
+            // }
         };
 
         fetchData()
             .then(() => {
-                dispatch(fetchRoomDetails());
+                dispatch(
+                    fetchRoomDetails({
+                        property: property.slice(5, 6),
+                        startDate: findnextDate(startDate),
+                        endDate: findnextDate(endDate),
+                        roomCount: property3,
+                        bedType: bedTypes.toString(),
+                        roomType: roomType.toString(),
+                        priceLessThan: priceLessThan,
+                        guestsAdult: guestsAdult,
+                        guestsTeens: guestsTeens,
+                        guestsChildren: guestsChildren,
+                        sort: sort,
+                    })
+                );
+                // console.log(bedTypes.toString());
             })
             .then(() => {
+                console.log("this is room type");
+                console.log(roomType);
+                console.log("This is bed type");
+                console.log(bedTypes);
+
                 const resultUrl = `/room-result?property=${property}&room=${property3}&startDate=${startDate?.toLocaleDateString(
                     "en-GB"
                 )}&endDate=${endDate?.toLocaleDateString(
@@ -120,7 +138,7 @@ export const RoomResult = () => {
                 }
             });
     }, [
-        property,
+        property.slice(5, 6),
         property3,
         startDate,
         endDate,
@@ -130,6 +148,7 @@ export const RoomResult = () => {
         roomType,
         bedTypes,
         priceLessThan,
+        sort,
         navigate,
     ]);
 
