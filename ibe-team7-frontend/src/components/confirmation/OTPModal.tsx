@@ -14,8 +14,8 @@ export interface ICancelProps {
 export function OTPModal({
     onClose,
     otpFromMail,
-}: // bookingId,
-Readonly<ICancelProps>) {
+    bookingId,
+}: Readonly<ICancelProps>) {
     const [otp, setOtp] = useState("");
     const [submit, setSubmit] = useState(false);
     const [otpError, setOtpError] = useState("");
@@ -45,15 +45,15 @@ Readonly<ICancelProps>) {
         } else {
             setOtpError("");
             setSubmit(true);
-            // await axios.get(`${BACKEND_URL}/api/v1/cancelbooking`, {
-            //     params: {
-            //         bookingId: bookingId,
-            //     },
-            // });
+            await axios.get(`${BACKEND_URL}/api/v1/cancelbooking`, {
+                params: {
+                    bookingId: bookingId,
+                },
+            });
 
-            setTimeout(() => {
-                navigate("/");
-            }, 2000);
+            // setTimeout(() => {
+            navigate("/");
+            // }, 2000);
         }
     };
 
