@@ -182,7 +182,7 @@ export const Confirmation = () => {
         ses.sendEmail(params);
 
         setCancelBooking(!cancelBooking);
-        navigate("/");
+        // navigate("/");
     };
 
     const handlePrint = () => {
@@ -210,9 +210,9 @@ export const Confirmation = () => {
 
     const ses = new SES({
         credentials: {
-            accessKeyId: process.env.VITE_AWS_ACCESS_KEY_ID ?? "",
-            secretAccessKey: process.env.VITE_AWS_SECRET_ACCESS_KEY ?? "",
-            sessionToken: process.env.VITE_AWS_SESSION_TOKEN ?? "",
+            accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID ?? "",
+            secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY ?? "",
+            sessionToken: import.meta.env.VITE_AWS_SESSION_TOKEN ?? "",
         },
         apiVersion: "2010-12-01",
         region: "ap-northeast-1",
