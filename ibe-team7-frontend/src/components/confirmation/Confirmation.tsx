@@ -1,5 +1,5 @@
 import "./Confirmation.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import user from "../../assets/user.svg";
 import image from "../../assets/confirm.png";
 import { styled, Typography } from "@mui/material";
@@ -80,7 +80,6 @@ export const Confirmation = () => {
     const toggleAll = (val: string | boolean) => {
         setExpanded(val);
     };
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
