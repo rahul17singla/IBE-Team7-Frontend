@@ -14,8 +14,8 @@ export interface ICancelProps {
 export function OTPModal({
     onClose,
     otpFromMail,
-    bookingId,
-}: Readonly<ICancelProps>) {
+}: // bookingId,
+Readonly<ICancelProps>) {
     const [otp, setOtp] = useState("");
     const [submit, setSubmit] = useState(false);
     const [otpError, setOtpError] = useState("");
