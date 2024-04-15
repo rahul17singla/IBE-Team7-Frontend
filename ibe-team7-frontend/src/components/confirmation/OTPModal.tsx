@@ -45,7 +45,7 @@ export function OTPModal({
         } else {
             setOtpError("");
             setSubmit(true);
-            await axios.get(`${BACKEND_URL}/api/v1/cancelbooking`, {
+            axios.get(`${BACKEND_URL}/api/v1/cancelbooking`, {
                 params: {
                     bookingId: bookingId,
                 },
