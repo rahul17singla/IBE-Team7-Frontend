@@ -45,12 +45,15 @@ export function OTPModal({
         } else {
             setOtpError("");
             setSubmit(true);
-            await axios.get(`${BACKEND_URL}/api/v1/cancelbooking`, {
-                params: {
-                    bookingId: bookingId,
-                },
-            });
-            navigate("/");
+            // await axios.get(`${BACKEND_URL}/api/v1/cancelbooking`, {
+            //     params: {
+            //         bookingId: bookingId,
+            //     },
+            // });
+
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
         }
     };
 
