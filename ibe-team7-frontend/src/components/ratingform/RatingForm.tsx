@@ -4,24 +4,28 @@ import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { BACKEND_URL } from "../../constants/Constants";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 export const RatingForm = () => {
   const [rating, setRating] = useState(5);
-  const roomCart = useSelector(
-    (state: RootState) => state.checkout.checkout.cart
-  );
+  const queryString = window.location.search;
+
+  // Create a new URLSearchParams object with the query string
+  const urlParams = new URLSearchParams(queryString);
+
+  const roomTypeName = urlParams.get("roomTypeName");
+
   const property = useSelector(
     (state: RootState) => state.filterStates.property
   );
 
   const handleRating = async () => {
-    console.log("before call");
+    console.log(rating, roomTypeName, property.substring(5, 6));
     await axios.post(`${BACKEND_URL}/api/v1/updaterating`, {
       rating: rating,
-      roomTypeId: roomCart.room,
-      propertyId: property,
+      roomTypeId: roomTypeName,
+      propertyId: property.substring(5, 6),
     });
-    console.log("after call");
 
     window.location.href = "/";
   };
