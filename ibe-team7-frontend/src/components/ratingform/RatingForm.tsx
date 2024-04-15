@@ -6,42 +6,44 @@ import { BACKEND_URL } from "../../constants/Constants";
 import axios from "axios";
 
 export const RatingForm = () => {
-    const [rating, setRating] = useState(5);
-    const roomCart = useSelector(
-        (state: RootState) => state.checkout.checkout.cart
-    );
-    const property = useSelector(
-        (state: RootState) => state.filterStates.property
-    );
+  const [rating, setRating] = useState(5);
+  const roomCart = useSelector(
+    (state: RootState) => state.checkout.checkout.cart
+  );
+  const property = useSelector(
+    (state: RootState) => state.filterStates.property
+  );
 
-    const handleRating = async (rating: number) => {
-        await axios.post(`${BACKEND_URL}/api/v1/updatebooking`, {
-            rating: rating,
-            roomTypeId: roomCart.room,
-            propertyId: property,
-        });
+  const handleRating = async () => {
+    console.log("before call");
+    await axios.post(`${BACKEND_URL}/api/v1/updaterating`, {
+      rating: rating,
+      roomTypeId: roomCart.room,
+      propertyId: property,
+    });
+    console.log("after call");
 
-        window.location.href = "/";
-    };
+    window.location.href = "/";
+  };
 
-    return (
-        <div className="ratingform">
-            <h1>Rating Form</h1>
-            <p>How was your experience?</p>
-            <select
-                name="rating"
-                id="rating"
-                onChange={(e) => setRating(parseInt(e.target.value))}
-            >
-                <option value="5">5 Star</option>
-                <option value="4">4 Star</option>
-                <option value="3">3 Star</option>
-                <option value="2">2 Star</option>
-                <option value="1">1 Star</option>
-            </select>
-            <button className="login-btn" onClick={() => handleRating(rating)}>
-                Submit
-            </button>
-        </div>
-    );
+  return (
+    <div className="ratingform">
+      <h1>Rating Form</h1>
+      <p>How was your experience?</p>
+      <select
+        name="rating"
+        id="rating"
+        onChange={(e) => setRating(parseInt(e.target.value))}
+      >
+        <option value="5">5 Star</option>
+        <option value="4">4 Star</option>
+        <option value="3">3 Star</option>
+        <option value="2">2 Star</option>
+        <option value="1">1 Star</option>
+      </select>
+      <button className="login-btn" onClick={handleRating}>
+        Submit
+      </button>
+    </div>
+  );
 };
