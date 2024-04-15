@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { Step, StepButton, Stepper } from "@mui/material";
 import { Itinerary } from "../itinerary/Itinerary";
 import "./Checkout.scss";
-import { BACKEND_URL, GEO_API_KEY } from "../../constants/Constants";
+import {
+    BACKEND_URL,
+    FRONTEND_URL,
+    GEO_API_KEY,
+} from "../../constants/Constants";
 import {
     billingInfoSchema,
     travellerInfoSchema,
@@ -15,6 +19,10 @@ import { useSelector } from "react-redux";
 import { Loader } from "../loader/Loader";
 import { Timer } from "../timer/Timer";
 import { TncModal } from "./TncModal";
+import toast, { Toaster } from "react-hot-toast";
+import { SES } from "@aws-sdk/client-ses";
+import { Html } from "@react-email/html";
+import { render } from "@react-email/render";
 
 export const Checkout = () => {
     const steps = ["Choose Room", "Choose add on", "Checkout"];
@@ -140,13 +148,15 @@ export const Checkout = () => {
             );
 
             if (response.data !== "Valid traveler information") {
-                alert(response.data);
+                toast.error(response.data);
+                // alert(response.data);
                 return;
             }
             setShowTravelerInfo(false);
             setShowBillingInfo(true);
             setShowPaymentInfo(false);
         } catch (error) {
+            toast.error("Enter All Fields Correctly!");
             // alert("Enter All Fields Correctly!");
             travellerInfoError?.classList.remove("hidden");
             console.log(error);
@@ -192,7 +202,8 @@ export const Checkout = () => {
             );
 
             if (response.data !== "Valid billing information") {
-                alert(response.data);
+                toast.error(response.data);
+                // alert(response.data);
                 return;
             }
 
@@ -200,6 +211,7 @@ export const Checkout = () => {
             setShowBillingInfo(false);
             setShowPaymentInfo(true);
         } catch (error) {
+            toast.error("Enter All Fields Correctly!");
             // alert("Enter All Fields Correctly!");
             travellerInfoError?.classList.remove("hidden");
             console.log(error);
@@ -212,7 +224,7 @@ export const Checkout = () => {
 
     const handlePaymentInfo = async () => {
         if (!isTnCChecked) {
-            alert("Please agree to the Terms and Conditions");
+            toast.error("Please agree to the terms and conditions");
             return;
         }
         const currentYear = new Date().getFullYear();
@@ -221,7 +233,7 @@ export const Checkout = () => {
             parseInt(exMonth) > 12 ||
             currentYear > parseInt(exYear)
         ) {
-            alert("Please enter correct payment details!");
+            toast.error("Please enter correct payment details!");
             return;
         }
         try {
@@ -233,7 +245,7 @@ export const Checkout = () => {
                 { abortEarly: false }
             );
         } catch (error) {
-            alert("Please enter correct payment details!");
+            toast.error("Please enter correct payment details!");
             console.log(error);
             return;
         }
@@ -250,17 +262,9 @@ export const Checkout = () => {
         );
 
         if (response.data !== "Valid payment info") {
-            alert(response.data);
+            toast.error(response.data);
             return;
         }
-
-        // await axios.post(`${BACKEND_URL}/api/v1/roomsummary`, {
-        //     totalPrice: roomTotalPrice,
-        //     promotionTitle: selectedPromotionName,
-        //     promotionDescription: selectedPromotionDescription,
-        //     startDate,
-        //     endDate,
-        // });
 
         setIsLoading(true);
 
@@ -315,6 +319,51 @@ export const Checkout = () => {
         }
 
         // const bookingId = response2.data;
+
+        const ses = new SES({
+            credentials: {
+                accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+                secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+                sessionToken: import.meta.env.VITE_AWS_SESSION_TOKEN,
+            },
+            apiVersion: "2010-12-01",
+            region: "ap-northeast-1",
+        });
+
+        const emailContent = render(
+            <Html lang="en">
+                Here is your booking confirmation link. You can download it from
+                the page itself.
+                <a
+                    href={`${FRONTEND_URL}/rating?roomTypeName=${
+                        roomCart.room
+                    }&property=${property.substring(5, 6)}`}
+                >
+                    Click here to view
+                </a>
+            </Html>
+        );
+
+        const params = {
+            Source: "arunain.mahant@kickdrumtech.com",
+            Destination: {
+                ToAddresses: [emailTraveler],
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: emailContent,
+                    },
+                },
+                Subject: {
+                    Charset: "UTF-8",
+                    Data: "KICKDRUM - Booking Confirmation",
+                },
+            },
+        };
+
+        ses.sendEmail(params);
 
         const resultUrl = `/confirmation/${response2.data}`;
 
@@ -388,7 +437,7 @@ export const Checkout = () => {
         }
 
         if (!stateid.includes(stateFromZip) || !cityid.includes(cityFromZip)) {
-            alert("Invalid Zip Code");
+            toast.error("Invalid Zip Code");
             setZip("");
         }
     };
@@ -430,6 +479,7 @@ export const Checkout = () => {
 
     return (
         <div>
+            <Toaster position="bottom-center" reverseOrder={false} />
             <div className="options">
                 <Stepper activeStep={activeStep} alternativeLabel>
                     {steps.map((label, index) => (
