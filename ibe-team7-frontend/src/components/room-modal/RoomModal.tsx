@@ -126,7 +126,7 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                 }
             );
             console.log(response);
-            if (response.data !== "") {
+            if (response.data.message !== "Invalid promo code") {
                 const invalidPromoPara =
                     document.getElementById("invalidPromoPara");
                 if (invalidPromoPara) {
@@ -138,10 +138,13 @@ export function RoomModal({ setOpen, room }: RoomModalProps) {
                     !customPromotions.some(
                         (promotion) =>
                             promotion.promoCodeTitle ===
-                            response.data.promoCodeTitle
+                            response.data.promoCodesEntity.promoCodeTitle
                     )
                 ) {
-                    setCustomPromotions([...customPromotions, response.data]);
+                    setCustomPromotions([
+                        ...customPromotions,
+                        response.data.promoCodesEntity,
+                    ]);
                 }
 
                 // setCustomPromotions([...customPromotions, response.data]);
